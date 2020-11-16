@@ -42,7 +42,7 @@ Output:
 }
 ```
 
-### /auth_token/\<name>/\<key> (GET)
+### /auth_debug/\<name>/\<key> (GET)
 
 Similar to `/auth_debug/<name>`, but requires the key specified in `.env`. Also available when compiled for production.
 
