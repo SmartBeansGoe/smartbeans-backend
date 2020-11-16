@@ -23,7 +23,7 @@
     
 ### systemd-service
 
-- Copy the following to `/etc/systemd/system/verysmartape.service`. Replace <username> by the user you want to run the application and <path_to_repo> by the path to this repository. Change the path to cargo if you have installed it somewhere else.
+- Copy the following to `/etc/systemd/system/verysmartape.service`. Replace \<username> by the user you want to run the application and <path_to_repo> by the path to this repository. Change the path to cargo if you have installed it somewhere else.
 
 ```
 [Unit]
