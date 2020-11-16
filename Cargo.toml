@@ -7,3 +7,17 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+rocket = "0.4.6"
+serde_json = "1.0.59"
+dotenv = "0.15.0"
+dotenv_codegen = "0.15.0"
+rand = "0.7.3"
+diesel = { version = "1.4.5", features = ["sqlite"] }
+diesel_migrations = "1.4.0"
+rocket_cors = "0.5.2"
+colored = "2.0.0"
+
+[dependencies.rocket_contrib]
+version = "*"
+default-features = false
+features = ["json", "diesel_sqlite_pool"]

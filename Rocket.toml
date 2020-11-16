@@ -1,0 +1,10 @@
+[development]
+address = "localhost"
+port = 4224
+
+[production]
+address = "0.0.0.0"
+port = 4224
+
+[global.databases]
+main_db = { url = "db.sqlite" }
