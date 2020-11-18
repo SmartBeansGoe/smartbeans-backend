@@ -31,7 +31,7 @@ Output:
 
 Similar to `auth_token`, but instead of returning a JSON object, it stores the token in a cookie and redirects to the frontend. The frontend URL can be changed in `.env`.
 
-### /auth_debug/<name> (GET)
+### /auth_debug/\<name> (GET)
 
 Returns an auth_token for an arbitrary username. Disabled when compiled for production.
 
@@ -42,13 +42,13 @@ Output:
 }
 ```
 
-### /auth_token/<name>/<key> (GET)
+### /auth_debug/\<name>/\<key> (GET)
 
 Similar to `/auth_debug/<name>`, but requires the key specified in `.env`. Also available when compiled for production.
 
 ## misc
 
-### /rand/<min>/<max> (GET)
+### /rand/\<min>/\<max> (GET)
 
 Returns a random integer between <min> and <max>.
 
