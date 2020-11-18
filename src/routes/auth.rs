@@ -7,6 +7,7 @@ use rand::{thread_rng, Rng, distributions::Alphanumeric};
 use diesel::prelude::*;
 use rocket_contrib::json::Json;
 use serde_json::Value;
+use std::env;
 
 use crate::models;
 
@@ -26,7 +27,7 @@ pub fn auth_debug(_username: String) -> Status {
 
 #[get("/auth_debug/<username>/<key>")]
 pub fn auth_debug_production(username: String, key: String,conn: crate::MainDbConn) -> Result<Json<Value>, Status> {
-    if key != dotenv!["DEBUG_ACCESS_KEY"] || key == "changeme" {
+    if key != env::var("DEBUG_ACCESS_KEY").unwrap() || key == "changeme" {
         return Err(Status::Unauthorized);
     }
 
@@ -51,7 +52,7 @@ pub fn auth_cookie(mut cookies: Cookies, data: LenientForm<LTIData>, conn: crate
     }
 
     cookies.add(Cookie::new("auth_token", create_session(data.lis_person_sourcedid.clone(), conn)));
-    Ok(Redirect::to(dotenv!["FRONTEND_URL"]))
+    Ok(Redirect::to(env::var("FRONTEND_URL").unwrap()))
 }
 
 /// Similar to auth_cookie, but instead of a redirect to the frontend, the auth token is returned.
@@ -80,7 +81,7 @@ fn create_session(username: String, conn: crate::MainDbConn) -> String {
         .collect();
 
     // expiration_time = now + 8h in epoch time
-    let duration = dotenv!["TOKEN_DURATION"].parse::<u64>().expect("Invalid TOKEN_DURATION in .env");
+    let duration = env::var("TOKEN_DURATION").unwrap().parse::<u64>().expect("Invalid TOKEN_DURATION in .env");
     let expiration_time = (SystemTime::now() + Duration::new(60 * duration, 0))
         .duration_since(UNIX_EPOCH)
         .unwrap()

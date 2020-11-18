@@ -14,7 +14,6 @@
 
 - Clone this repository.
 - Copy `.env.sample` to `.env` and adjust the containing values accordingly.
-    - For some reason you have to recompile in order to apply changes in .env to the application.
 - Execute `cargo run` or `cargo run --release` (for production).
     - Alternative option: Use a systemd-service (see below).
 - The server runs on localhost:4224 (dev) or 0.0.0.0:4224 (production).

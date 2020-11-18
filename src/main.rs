@@ -13,7 +13,10 @@ use backend::routes;
 
 fn main() {
     // Load environment variables from .env
-    dotenv().ok();
+    if dotenv().is_err() {
+        println!("{}", "Error: .env not found. Exiting...".red());
+        std::process::exit(1);
+    }
 
     // Run database migrations at startup
     embed_migrations!();
