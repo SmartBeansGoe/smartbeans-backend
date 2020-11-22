@@ -51,7 +51,13 @@ pub fn auth_cookie(mut cookies: Cookies, data: LenientForm<LTIData>, conn: crate
         return Err(Status::Unauthorized);
     }
 
-    cookies.add(Cookie::new("auth_token", create_session(data.lis_person_sourcedid.clone(), conn)));
+    let auth_token = create_session(data.lis_person_sourcedid.clone(), conn);
+    cookies.add(
+        Cookie::build("auth_token", auth_token)
+            .path("/")
+            .finish()
+    );
+
     Ok(Redirect::to(env::var("FRONTEND_URL").unwrap()))
 }
 
