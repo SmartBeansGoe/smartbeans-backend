@@ -4,7 +4,9 @@ All routes except the ones listed under "auth" and "public" require an Authoriza
 
 ## public
 
-*no routes yet*
+### /version (GET)
+
+Returns the short git commit hash as a string.
 
 ## auth
 

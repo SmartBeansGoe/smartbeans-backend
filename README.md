@@ -8,7 +8,7 @@
     - Select the nightly toolchain
         - either globally... (`rustup default nightly`)
         - ...or locally in the project folder (`rustup override set nightly`)
-- SQLite 3 (you possibly also need some sqlite3-dev package)
+- SQLite 3 (you possibly also need some libsqlite3-dev package)
 
 ## Installation and Execution
 
