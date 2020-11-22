@@ -46,6 +46,7 @@ fn main() {
     // Launch rocket
     rocket::ignite()
         .mount("/", routes![
+            routes::public::version,
             routes::auth::auth_cookie,
             routes::auth::auth_token,
             routes::auth::auth_debug,
