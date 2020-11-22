@@ -1,4 +1,4 @@
 #[get("/version")]
 pub fn version() -> String {
-    "Hello World".to_string()
+    env!("GIT_HASH").to_string()
 }
