@@ -13,7 +13,7 @@
 ## Installation and Execution
 
 - Clone this repository.
-- Copy `.env.sample` to `.env` and adjust the containing values accordingly.
+- `.env-default` provides default values for configuration variables. If you want to change them, you can just copy the file to `.env`. Variables set in `.env` will override the values from `.env-default`.
 - Execute `cargo run` or `cargo run --release` (for production).
     - Alternative option: Use a systemd-service (see below).
 - The server runs on localhost:4224 (dev) or 0.0.0.0:4224 (production).
