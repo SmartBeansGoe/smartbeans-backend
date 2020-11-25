@@ -3,7 +3,6 @@
 #[macro_use] extern crate rocket;
 #[macro_use] extern crate diesel_migrations;
 
-use dotenv::dotenv;
 use rocket::http::Method;
 use rocket_cors::{AllowedOrigins, AllowedHeaders};
 use diesel::prelude::*;
@@ -13,8 +12,11 @@ use backend::routes;
 
 fn main() {
     // Load environment variables from .env
-    if dotenv().is_err() {
-        println!("{}", "Error: .env not found. Exiting...".red());
+    dotenv::dotenv().ok();
+
+    // Load default values from .env-default
+    if dotenv::from_filename(".env-default").is_err() {
+        println!("{}", "Error: .env-default not found. Exiting...".red());
         std::process::exit(1);
     }
 
