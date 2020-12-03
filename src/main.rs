@@ -8,7 +8,7 @@ use rocket_cors::{AllowedOrigins, AllowedHeaders};
 use diesel::prelude::*;
 use colored::*;
 
-use backend::routes;
+use smartbeans_backend::routes;
 
 fn main() {
     // Load environment variables from .env
@@ -56,7 +56,7 @@ fn main() {
             routes::misc::get_username,
             routes::misc::rand
         ])
-        .attach(backend::MainDbConn::fairing())
+        .attach(smartbeans_backend::MainDbConn::fairing())
         .attach(cors)
         .launch();
 }

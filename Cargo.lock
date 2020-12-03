@@ -88,27 +88,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cdb031dd78e28731d87d56cc8ffef4a8f36ca26c38fe2de700543e627f8a464a"
 
 [[package]]
-name = "backend"
-version = "0.1.0"
-dependencies = [
- "base64 0.13.0",
- "colored",
- "crypto-hashes",
- "diesel",
- "diesel_migrations",
- "dotenv",
- "hmac 0.10.1",
- "percent-encoding 2.1.0",
- "rand",
- "reqwest",
- "rocket",
- "rocket_contrib",
- "rocket_cors",
- "serde_json",
- "serde_urlencoded",
-]
-
-[[package]]
 name = "base64"
 version = "0.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1834,6 +1813,27 @@ name = "smallvec"
 version = "1.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fbee7696b84bbf3d89a1c2eccff0850e3047ed46bfcd2e92c29a2d074d57e252"
+
+[[package]]
+name = "smartbeans-backend"
+version = "0.1.0"
+dependencies = [
+ "base64 0.13.0",
+ "colored",
+ "crypto-hashes",
+ "diesel",
+ "diesel_migrations",
+ "dotenv",
+ "hmac 0.10.1",
+ "percent-encoding 2.1.0",
+ "rand",
+ "reqwest",
+ "rocket",
+ "rocket_contrib",
+ "rocket_cors",
+ "serde_json",
+ "serde_urlencoded",
+]
 
 [[package]]
 name = "socket2"

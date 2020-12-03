@@ -6,6 +6,7 @@ use std::env;
 use reqwest::blocking::Response;
 use reqwest::header::COOKIE;
 use rocket::http::Status;
+use serde_json::Value;
 
 /// Wrapper for "GET /sessiondata: Hand out Session data to the frontend"
 /// Result string can be interpreted as valid JSON.
@@ -19,10 +20,10 @@ pub fn sessiondata(token: &str) -> Result<String, Status> {
 }
 
 /// Wrapper for "POST /course/:courseid/progress: Get a users progress"
-pub fn progress(token: &str, courseid: &str) -> Result<i64, Status> {
+pub fn progress(token: &str) -> Result<i64, Status> {
     let response = call_smartape_api(
         "GET",
-        &format!("/course/{}/progress", courseid),
+        &format!("/course/{}/progress", courseid(&token)?),
         token,
         ""
     )?;
@@ -32,10 +33,10 @@ pub fn progress(token: &str, courseid: &str) -> Result<i64, Status> {
 
 /// Wrapper for "GET /course/:courseid/tasks: Get a list of all tasks"
 /// Result string can be interpreted as valid JSON.
-pub fn tasks(token: &str, courseid: &str) -> Result<String, Status> {
+pub fn tasks(token: &str) -> Result<String, Status> {
     Ok(call_smartape_api(
         "GET",
-        &format!("/course/{}/tasks", courseid),
+        &format!("/course/{}/tasks", courseid(&token)?),
         token,
         ""
     )?.text().unwrap())
@@ -43,10 +44,10 @@ pub fn tasks(token: &str, courseid: &str) -> Result<String, Status> {
 
 /// Wrapper for "GET /course/:courseid/tasks/:taskid: Get a detailed description of a task"
 /// Result string can be interpreted as valid JSON.
-pub fn task(token: &str, courseid: &str, taskid: &str) -> Result<String, Status> {
+pub fn task(token: &str, taskid: &str) -> Result<String, Status> {
     Ok(call_smartape_api(
         "GET",
-        &format!("/course/{}/tasks/{}", courseid, taskid),
+        &format!("/course/{}/tasks/{}", courseid(&token)?, taskid),
         token,
         ""
     )?.text().unwrap())
@@ -54,10 +55,10 @@ pub fn task(token: &str, courseid: &str, taskid: &str) -> Result<String, Status>
 
 /// Wrapper for "GET /course/:courseid/tasks/:taskid/submissions: Get a list of all submission atempts"
 /// Result string can be interpreted as valid JSON.
-pub fn submissions(token: &str, courseid: &str, taskid: &str) -> Result<String, Status> {
+pub fn submissions(token: &str, taskid: &str) -> Result<String, Status> {
     Ok(call_smartape_api(
         "GET",
-        &format!("/course/{}/tasks/{}/submissions", courseid, taskid),
+        &format!("/course/{}/tasks/{}/submissions", courseid(&token)?, taskid),
         token,
         ""
     )?.text().unwrap())
@@ -65,10 +66,10 @@ pub fn submissions(token: &str, courseid: &str, taskid: &str) -> Result<String, 
 
 /// Wrapper for "GET /course/:courseid/tasks/:taskid/submissions/:timestamp: Get details for a submission, including results"
 /// Result string can be interpreted as valid JSON.
-pub fn submission(token: &str, courseid: &str, taskid: &str, timestamp: &str) -> Result<String, Status> {
+pub fn submission(token: &str, taskid: &str, timestamp: &str) -> Result<String, Status> {
     Ok(call_smartape_api(
         "GET",
-        &format!("/course/{}/tasks/{}/submissions/{}", courseid, taskid, timestamp),
+        &format!("/course/{}/tasks/{}/submissions/{}", courseid(&token)?, taskid, timestamp),
         token,
         ""
     )?.text().unwrap())
@@ -131,4 +132,12 @@ fn call_smartape_api(method: &str, route: &str, session_token: &str, body: &str)
         // As far as I can see, SmartApe always returns 500 when something went wrong
         Err(Status::InternalServerError)
     }
+}
+
+/// Returns the course id corresponding to the session
+fn courseid(session_token: &str) -> Result<String, Status> {
+    let response = sessiondata(session_token)?;
+    let response_json: Value = serde_json::from_str(&response).unwrap();
+
+    Ok(response_json["courseid"].as_str().unwrap().to_string())
 }
