@@ -82,18 +82,6 @@ pub fn submit() {
     unimplemented!()
 }
 
-/// Wrapper for "GET /listshares: List all shared tasks"
-/// Result string can be interpreted as valid JSON.
-/// Currently, this returns 404 from SmartApe. Further investigation needed. (TODO)
-pub fn listshares(token: &str) -> Result<String, Status> {
-    Ok(call_smartape_api(
-        "GET",
-        "/listshares",
-        token,
-        ""
-    )?.text().unwrap())
-}
-
 /// Wrapper for "POST /share: Share a task i.e. create a pad"
 /// Currently unimplemented
 pub fn share() {
