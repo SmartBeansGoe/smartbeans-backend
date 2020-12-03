@@ -10,6 +10,7 @@ pub mod models;
 
 pub mod routes;
 pub mod guards;
+pub mod smartape;
 
 /// Struct can be used as a request guard whenever a connection
 /// to the main database is needed.
