@@ -68,6 +68,23 @@ Output:
 ]
 ```
 
+Please note: It seems that there are tasks without shortname.
+
+### GET /task/\<taskid>
+
+Returns a task.
+
+Output:
+```
+{
+    name: "A1 Task 1"
+    shortname: "A1"
+    task: "Description"
+}
+```
+
+Please note: It seems that there are tasks without shortname.
+
 ## misc
 
 ### /rand/\<min>/\<max> (GET)

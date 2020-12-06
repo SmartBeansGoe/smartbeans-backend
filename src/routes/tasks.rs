@@ -7,3 +7,8 @@ use crate::{guards, smartape};
 pub fn get_tasks(user: guards::User) -> Result<Json<Value>, Status> {
     Ok(Json(smartape::tasks(&user.token)?))
 }
+
+#[get("/task/<id>")]
+pub fn get_task(user: guards::User, id: String) -> Result<Json<Value>, Status> {
+    Ok(Json(smartape::task(&user.token, &id)?))
+}
