@@ -1,6 +1,7 @@
 # API Documentation
 
 All routes except the ones listed under "auth" and "public" require an Authorization header containing a valid auth token (`Authorization: Bearer <auth_token>`). They return 400/Bad request if the header is missing or in the wrong format and 401/Unauthorized if the auth token is invalid or expired.
+"user" is the user that corresponds to the auth token sent in the header. "course" is the course the user used to login (if he authenticated via Stud.IP/LTI) or the course the user selected on his first SmartApe login (if he used one of the auth_debug routes).
 
 ## public
 
@@ -47,6 +48,25 @@ Output:
 ### /auth_debug/\<name>/\<key> (GET)
 
 Similar to `/auth_debug/<name>`, but requires the key specified in `.env`. Also available when compiled for production.
+
+## tasks
+
+### GET /tasks
+
+Returns all tasks of the course of the user.
+
+Output:
+```
+[
+    {
+        name: "A1 Task 1"
+        shortname: "A1"
+        task: "Description"
+        taskid: 42
+    },
+    ...
+]
+```
 
 ## misc
 

@@ -54,7 +54,8 @@ fn main() {
             routes::auth::auth_debug,
             routes::auth::auth_debug_production,
             routes::misc::get_username,
-            routes::misc::rand
+            routes::misc::rand,
+            routes::tasks::get_tasks,
         ])
         .attach(smartbeans_backend::MainDbConn::fairing())
         .attach(cors)

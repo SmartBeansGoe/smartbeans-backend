@@ -6,15 +6,18 @@ use diesel::prelude::*;
 
 /// Request guard for authentication
 #[derive(Debug)]
-pub struct Username(pub String);
+pub struct User {
+    pub name: String,
+    pub token: String
+}
 
-impl<'a, 'r> FromRequest<'a, 'r> for Username {
+impl<'a, 'r> FromRequest<'a, 'r> for User {
     type Error = ();
 
-    /// Returns a guards::Username when the user is logged in,
+    /// Returns a guards::User when the user is logged in,
     /// 400 on invalid Authorization header (missing or wrong Syntax)
     /// 401 on invalid auth token
-    fn from_request(request: &'a Request<'r>) -> Outcome<Username, Self::Error> {
+    fn from_request(request: &'a Request<'r>) -> Outcome<User, Self::Error> {
         // Get auth token from Authorization header
         let auth_header = request.headers()
             .get("Authorization")
@@ -55,7 +58,7 @@ impl<'a, 'r> FromRequest<'a, 'r> for Username {
             .filter(expiration_time.gt(epoch_time_now))
             .select(username)
             .first(&*conn) {
-            Outcome::Success(Username(name))
+            Outcome::Success(User { name, token: request_token.to_string() })
         } else {
             Outcome::Failure((Status::Unauthorized, ()))
         }

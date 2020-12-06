@@ -5,6 +5,7 @@ pub struct Session {
     pub auth_token: String,
     pub expiration_time: i64,
     pub username: String,
+    pub smartape_token: String,
 }
 
 #[derive(Insertable)]
@@ -12,5 +13,6 @@ pub struct Session {
 pub struct NewSession {
     pub auth_token: String,
     pub expiration_time: i64,
-    pub username: String
+    pub username: String,
+    pub smartape_token: String,
 }

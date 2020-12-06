@@ -15,10 +15,10 @@ use crate::models;
 
 #[cfg(debug_assertions)]
 #[get("/auth_debug/<username>")]
-pub fn auth_debug(username: String, conn: crate::MainDbConn) -> Json<Value> {
-    Json(json!({
-        "auth_token": create_session(username, conn)
-    }))
+pub fn auth_debug(username: String, conn: crate::MainDbConn) -> Result<Json<Value>, Status> {
+    Ok(Json(json!({
+        "auth_token": create_session(username, conn, None)?
+    })))
 }
 
 #[cfg(not(debug_assertions))]
@@ -34,7 +34,7 @@ pub fn auth_debug_production(username: String, key: String,conn: crate::MainDbCo
     }
 
     Ok(Json(json!({
-        "auth_token": create_session(username, conn)
+        "auth_token": create_session(username, conn, None)?
     })))
 }
 
@@ -49,7 +49,7 @@ pub fn auth_cookie(mut cookies: Cookies, data: String, conn: crate::MainDbConn) 
         &env::var("LTI_SECRET").unwrap()
     )?;
 
-    let auth_token = create_session(username, conn);
+    let auth_token = create_session(username, conn, Some(&data))?;
     cookies.add(
         Cookie::build("auth_token", auth_token)
             .path("/")
@@ -69,7 +69,7 @@ pub fn auth_token(data: String, conn: crate::MainDbConn) -> Result<Json<Value>, 
     )?;
 
     Ok(Json(json!({
-        "auth_token": create_session(username, conn)
+        "auth_token": create_session(username, conn, Some(&data))?
     })))
 }
 
@@ -136,12 +136,14 @@ fn perc_encode(input: &str) -> String {
 }
 
 // Creates a session for a user and returns the auth token
-fn create_session(username: String, conn: crate::MainDbConn) -> String {
+fn create_session(username: String, conn: crate::MainDbConn, ltidata: Option<&str>) -> Result<String, Status> {
     // Create random auth token
     let auth_token: String = thread_rng()
         .sample_iter(&Alphanumeric)
         .take(32)
         .collect();
+
+    let smartape_token = crate::smartape::login(&username, ltidata)?;
 
     // expiration_time = now + 8h in epoch time
     let duration = env::var("TOKEN_DURATION").unwrap().parse::<u64>().expect("Invalid TOKEN_DURATION in .env");
@@ -156,9 +158,10 @@ fn create_session(username: String, conn: crate::MainDbConn) -> String {
             auth_token: auth_token.clone(),
             expiration_time: expiration_time as i64,
             username,
+            smartape_token
         })
         .execute(&*conn)
         .unwrap();
 
-    auth_token
+    Ok(auth_token)
 }

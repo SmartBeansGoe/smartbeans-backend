@@ -5,15 +5,15 @@ use crate::guards;
 
 /// Just an example
 #[get("/username")]
-pub fn get_username(username: guards::Username) -> Json<Value> {
+pub fn get_username(user: guards::User) -> Json<Value> {
     Json(json!({
-        "username": username.0
+        "username": user.name
     }))
 }
 
 /// Another example
 #[get("/rand/<min>/<max>")]
-pub fn rand(min: i32, max: i32, _username: guards::Username) -> Json<Value> {
+pub fn rand(min: i32, max: i32, _user: guards::User) -> Json<Value> {
     let rand_num = rand::thread_rng().gen_range(min, max);
     Json(json!({
         "rand": rand_num

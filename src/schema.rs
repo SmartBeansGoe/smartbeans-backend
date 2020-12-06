@@ -3,5 +3,6 @@ table! {
         auth_token -> Text,
         expiration_time -> BigInt,
         username -> Text,
+        smartape_token -> Text,
     }
 }
