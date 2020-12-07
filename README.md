@@ -9,6 +9,8 @@
         - either globally... (`rustup default nightly`)
         - ...or locally in the project folder (`rustup override set nightly`)
 - SQLite 3 (you possibly also need some libsqlite3-dev package)
+- OpenSSL
+    - If you run into problems, try to install `pkg-config` and `libssl-dev` (Ubuntu) and set the environment variable`OPENSSL_DIR`. If you are lucky, this solves your problem.
 
 ## Installation and Execution
 
