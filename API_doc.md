@@ -51,39 +51,34 @@ Similar to `/auth_debug/<name>`, but requires the key specified in `.env`. Also 
 
 ## tasks
 
-### GET /tasks
+### GET /tasks?id=\<id\>&solved=\<true|false\>
 
-Returns all tasks of the course of the user.
+Returns all tasks of the course of the user. You can use the query string for filtering. All query paramters are optional.
 
-Output:
+Example output:
 ```
 [
     {
-        name: "A1 Task 1"
-        shortname: "A1"
-        task: "Description"
+        name: "A1 Task 1",
+        shortname: "A1",
+        solved: true,
+        task: "Description",
         taskid: 42
     },
     ...
 ]
 ```
 
-Please note: It seems that there are tasks without shortname.
+Please note: There might be tasks without shortname. In this case, "null" is returned.
 
-### GET /task/\<taskid>
+### GET /progress
 
-Returns a task.
+Returns the taskids of all solved tasks.
 
-Output:
+Example output:
 ```
-{
-    name: "A1 Task 1"
-    shortname: "A1"
-    task: "Description"
-}
+[1, 2, 3, 17, 42]
 ```
-
-Please note: It seems that there are tasks without shortname.
 
 ## misc
 

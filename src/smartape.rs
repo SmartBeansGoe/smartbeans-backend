@@ -46,20 +46,24 @@ pub fn sessiondata(token: &str) -> Result<Value, Status> {
     Ok(serde_json::from_str(&data_str).unwrap())
 }
 
-/// Wrapper for "POST /course/:courseid/progress: Get a users progress"
-pub fn progress(token: &str) -> Result<i64, Status> {
+/// Wrapper for POST /course/:courseid/progresses: Returns a vector of all solved tasks
+pub fn progress(token: &str) -> Result<Vec<i64>, Status> {
     let response = call_smartape_api(
         "GET",
-        &format!("/course/{}/progress", courseid(&token)?),
+        &format!("/course/{}/progresses", courseid(&token)?),
         Some(token),
         "",
         false
-    )?;
+    )?.text().unwrap();
 
-    Ok(response.text().unwrap().parse().unwrap())
+    Ok(String::from(&response[1..response.len()-1])
+        .split(',')
+        .map(|id| id.parse::<i64>().unwrap())
+        .collect())
 }
 
 /// Wrapper for "GET /course/:courseid/tasks: Get a list of all tasks"
+/// Also contains information whether a task is solved.
 pub fn tasks(token: &str) -> Result<Value, Status> {
     let tasks_str = call_smartape_api(
         "GET",
@@ -69,20 +73,32 @@ pub fn tasks(token: &str) -> Result<Value, Status> {
         false
     )?.text().unwrap();
 
-    Ok(serde_json::from_str(&tasks_str).unwrap())
-}
+    // Repack data to add "solved" item
+    let tasks: Value = serde_json::from_str(&tasks_str).unwrap();
+    let solved = progress(token)?;
 
-/// Wrapper for "GET /course/:courseid/tasks/:taskid: Get a detailed description of a task"
-pub fn task(token: &str, taskid: &str) -> Result<Value, Status> {
-    let task_str = call_smartape_api(
-        "GET",
-        &format!("/course/{}/tasks/{}", courseid(&token)?, taskid),
-        Some(token),
-        "",
-        false
-    )?.text().unwrap();
+    let tasks_vec = tasks.as_array()
+        .unwrap()
+        .iter()
+        .map(|task| {
+            serde_json::from_str::<Value>(
+                &format!("{{\
+                    \"name\":{},\
+                    \"shortname\":{},\
+                    \"task\":{},\
+                    \"taskid\":{},\
+                    \"solved\":{}\
+                }}",
+                task["name"],
+                task["shortname"],
+                task["task"],
+                task["taskid"],
+                solved.contains(&serde_json::to_string(&task["taskid"]).unwrap().parse().unwrap()))
+            ).unwrap()
+        })
+        .collect::<Vec<_>>();
 
-    Ok(serde_json::from_str(&task_str).unwrap())
+    Ok(serde_json::to_value(tasks_vec).unwrap())
 }
 
 /// Wrapper for "GET /course/:courseid/tasks/:taskid/submissions: Get a list of all submission atempts"

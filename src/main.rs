@@ -56,7 +56,7 @@ fn main() {
             routes::misc::get_username,
             routes::misc::rand,
             routes::tasks::get_tasks,
-            routes::tasks::get_task,
+            routes::tasks::progress,
         ])
         .attach(smartbeans_backend::MainDbConn::fairing())
         .attach(cors)
