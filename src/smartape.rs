@@ -56,6 +56,10 @@ pub fn progress(token: &str) -> Result<Vec<i64>, Status> {
         false
     )?.text().unwrap();
 
+    if response.len() <= 2 {
+        return Ok(Vec::new());
+    }
+
     Ok(String::from(&response[1..response.len()-1])
         .split(',')
         .map(|id| id.parse::<i64>().unwrap())
