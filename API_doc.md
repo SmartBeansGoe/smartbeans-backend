@@ -36,7 +36,7 @@ Similar to `auth_token`, but instead of returning a JSON object, it stores the t
 
 ### /auth_debug/\<name> (GET)
 
-Returns an auth_token for an arbitrary username. Disabled when compiled for production.
+Returns an auth_token for an arbitrary username. Returns 404 if the user is not in the SmartApe databse. This route is disabled when the backend is compiled for production.
 
 Output:
 ```
@@ -78,6 +78,20 @@ Returns the taskids of all solved tasks.
 Example output:
 ```
 [1, 2, 3, 17, 42]
+```
+
+### POST /submit/\<taskid\>
+
+Submits a solution for a task.
+
+Input (`Content-Type` header has to be `text/plain`):
+```
+<content of the submitted file>
+```
+
+Output:
+```
+Currently only an empty string, but we could change that, if necessary.
 ```
 
 ## misc

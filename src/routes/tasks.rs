@@ -19,3 +19,10 @@ pub fn get_tasks(user: guards::User, solved: Option<bool>, id: Option<i64>) -> R
 pub fn progress(user: guards::User) -> Result<String, Status> {
     Ok(format!("{:?}", smartape::progress(&user.token)?))
 }
+
+#[post("/submit/<taskid>", format = "text/plain", data = "<data>")]
+pub fn submit(user:guards::User, taskid: String, data: String) -> Result<String, Status> {
+    smartape::submit(&user.token, &taskid, &data)?;
+
+    Ok(String::new())
+}

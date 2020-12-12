@@ -132,10 +132,14 @@ pub fn submission(token: &str, taskid: &str, timestamp: &str) -> Result<Value, S
 }
 
 /// Wrapper for "POST /course/:courseid/tasks/:taskid/submissions: Submit a task"
-/// Currently unimplemented
-pub fn submit() {
-    // TODO
-    unimplemented!()
+pub fn submit(token: &str, taskid: &str, submission: &str) -> Result<String, Status> {
+    Ok(call_smartape_api(
+        "POST",
+        &format!("/course/{}/tasks/{}/submissions", courseid(&token)?, taskid),
+        Some(token),
+        &format!("{{\"sourceCode\":\"{}\"}}", submission),
+        true
+    )?.text().unwrap())
 }
 
 /// Wrapper for "POST /share: Share a task i.e. create a pad"
