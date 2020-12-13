@@ -1,10 +1,10 @@
-name: Rust
+name: Continuous Integration SmartBeans
 
 on:
   push:
-    branches: [ ole, master ]
+    branches: [ master ]
   pull_request:
-    branches: [ ole, master ]
+    branches: [ master ]
 
 env:
   CARGO_TERM_COLOR: always
