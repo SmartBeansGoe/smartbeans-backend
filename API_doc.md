@@ -91,8 +91,96 @@ Input (`Content-Type` header has to be `text/plain`):
 
 Output:
 ```
-Currently only an empty string, but we could change that, if necessary.
+Currently only an empty string, but we could change that, if more information is needed.
 ```
+
+### GET /submissions/\<taskid\>
+
+Returns all submitted solutions for a task.
+
+Example output:
+```
+[
+    {
+        "result": {
+            "compileResult": {
+                "cmd": "isolate -b 79 -t 5 --fsize=1000000 --mem=100000 --processes=10 --stderr-to-stdout --dir=/usr/bin --run -- /usr/bin/clang /box/main.c",
+                "code": 0,
+                "failed": false,
+                "killed": false,
+                "signal": null,
+                "stderr": "OK (0.278 sec real, 0.307 sec wall)",
+                "stdout": "/box/main.c:3:2: warning: implicitly declaring library function 'printf' with type 'int (const char *, ...)' [-Wimplicit-function-declaration]\n        printf(\"HelloWorld\\n\");\n        ^\n/box/main.c:3:2: note: include the header <stdio.h> or explicitly provide a declaration for 'printf'\n1 warning generated.",
+                "timedOut": false
+            },
+            "feedback": [
+                {
+                    "reason": "WRONG_ANSWER",
+                    "score": 0,
+                    "testCase": {
+                        "args": [],
+                        "stdin": "",
+                        "stdout": "Hallo Welt"
+                    },
+                    "testResult": {
+                        "code": 0,
+                        "stderr": "OK (0.005 sec real, 0.051 sec wall)",
+                        "stdout": "HelloWorld"
+                    }
+                }
+            ],
+            "score": 0,
+            "testtype": "simple",
+            "type": "WRONG_ANSWER"
+        },
+        "sourceCode": "int main(int argc, char const *argv[])\n{\n\tprintf(\"HelloWorld\\n\");\n\treturn 0;\n}",
+        "timestamp": 1607615806262
+    },
+    {
+        "result": {
+            "compileResult": {
+                "cmd": "isolate -b 86 -t 5 --fsize=1000000 --mem=100000 --processes=10 --stderr-to-stdout --dir=/usr/bin --run -- /usr/bin/clang /box/main.c",
+                "code": 0,
+                "failed": false,
+                "killed": false,
+                "signal": null,
+                "stderr": "OK (0.273 sec real, 0.317 sec wall)",
+                "stdout": "/box/main.c:3:2: warning: implicitly declaring library function 'printf' with type 'int (const char *, ...)' [-Wimplicit-function-declaration]\n        printf(\"Hallo Welt\\n\");\n        ^\n/box/main.c:3:2: note: include the header <stdio.h> or explicitly provide a declaration for 'printf'\n1 warning generated.",
+                "timedOut": false
+            },
+            "feedback": [
+                {
+                    "reason": "SUCCESS",
+                    "score": 1,
+                    "testCase": {
+                        "args": [],
+                        "stdin": "",
+                        "stdout": "Hallo Welt"
+                    },
+                    "testResult": {
+                        "cmd": "isolate -b 79 -t 5 --fsize=1000000 --mem=100000 --processes=10 --stderr-to-stdout --dir=/data=/submissions/ge3bgpa0b --run -- /data/a.out",
+                        "code": 0,
+                        "failed": false,
+                        "killed": false,
+                        "signal": null,
+                        "stderr": "OK (0.005 sec real, 0.046 sec wall)",
+                        "stdout": "Hallo Welt",
+                        "timedOut": false
+                    }
+                }
+            ],
+            "score": 1,
+            "testtype": "simple",
+            "type": "SUCCESS"
+        },
+        "sourceCode": "int main(int argc, char const *argv[])\n{\n\tprintf(\"Hallo Welt\\n\");\n\treturn 0;\n}",
+        "timestamp": 1607615973307
+    },
+    ...
+]
+```
+
+For more information regarding the content of the "result" item of a submission, see [here](https://pad.gwdg.de/VL4fUT5gSvKQWSIT8w5lag?view#Spezifikation-der-REST-API-Schnittstelle). You probably want to to read the paragraph "Ausgabe für `POST /evaluate`". Good luck!
 
 ## misc
 

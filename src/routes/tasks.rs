@@ -21,8 +21,30 @@ pub fn progress(user: guards::User) -> Result<String, Status> {
 }
 
 #[post("/submit/<taskid>", format = "text/plain", data = "<data>")]
-pub fn submit(user:guards::User, taskid: String, data: String) -> Result<String, Status> {
+pub fn submit(user: guards::User, taskid: String, data: String) -> Result<String, Status> {
     smartape::submit(&user.token, &taskid, &data)?;
 
     Ok(String::new())
+}
+
+#[get("/submissions/<taskid>")]
+pub fn submissions(user: guards::User, taskid: String) -> Result<Json<Value>, Status> {
+    let subs = smartape::submissions(&user.token, &taskid)?
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|sub_timestamp| {
+            let mut submission = smartape::submission(
+                &user.token,
+                &taskid,
+                &sub_timestamp["timestamp"].as_i64().unwrap().to_string()
+            ).unwrap();
+
+            submission["timestamp"] = sub_timestamp["timestamp"].clone();
+
+            submission
+        })
+        .collect::<Vec<_>>();
+
+    Ok(Json(serde_json::to_value(subs).unwrap()))
 }
