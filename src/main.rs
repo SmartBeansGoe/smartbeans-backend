@@ -57,6 +57,8 @@ fn main() {
             routes::misc::rand,
             routes::tasks::get_tasks,
             routes::tasks::progress,
+            routes::tasks::submit,
+            routes::tasks::submissions,
         ])
         .attach(smartbeans_backend::MainDbConn::fairing())
         .attach(cors)

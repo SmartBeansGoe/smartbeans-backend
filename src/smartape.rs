@@ -77,7 +77,7 @@ pub fn tasks(token: &str) -> Result<Value, Status> {
         false
     )?.text().unwrap();
 
-    // Repack data to add "solved" item
+    // Add "solved" to tasks
     let tasks: Value = serde_json::from_str(&tasks_str).unwrap();
     let solved = progress(token)?;
 
@@ -85,20 +85,13 @@ pub fn tasks(token: &str) -> Result<Value, Status> {
         .unwrap()
         .iter()
         .map(|task| {
-            serde_json::from_str::<Value>(
-                &format!("{{\
-                    \"name\":{},\
-                    \"shortname\":{},\
-                    \"task\":{},\
-                    \"taskid\":{},\
-                    \"solved\":{}\
-                }}",
-                task["name"],
-                task["shortname"],
-                task["task"],
-                task["taskid"],
-                solved.contains(&serde_json::to_string(&task["taskid"]).unwrap().parse().unwrap()))
-            ).unwrap()
+            let mut task = task.clone();
+            let is_solved = solved.contains(&serde_json::to_string(&task["taskid"])
+                .unwrap()
+                .parse()
+                .unwrap());
+            task["solved"] = serde_json::to_value(is_solved).unwrap();
+            task
         })
         .collect::<Vec<_>>();
 
@@ -132,10 +125,14 @@ pub fn submission(token: &str, taskid: &str, timestamp: &str) -> Result<Value, S
 }
 
 /// Wrapper for "POST /course/:courseid/tasks/:taskid/submissions: Submit a task"
-/// Currently unimplemented
-pub fn submit() {
-    // TODO
-    unimplemented!()
+pub fn submit(token: &str, taskid: &str, submission: &str) -> Result<String, Status> {
+    Ok(call_smartape_api(
+        "POST",
+        &format!("/course/{}/tasks/{}/submissions", courseid(&token)?, taskid),
+        Some(token),
+        &format!("{{\"sourceCode\":\"{}\"}}", submission),
+        true
+    )?.text().unwrap())
 }
 
 /// Wrapper for "POST /share: Share a task i.e. create a pad"
