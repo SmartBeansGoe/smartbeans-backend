@@ -130,7 +130,7 @@ pub fn submit(token: &str, taskid: &str, submission: &str) -> Result<String, Sta
         "POST",
         &format!("/course/{}/tasks/{}/submissions", courseid(&token)?, taskid),
         Some(token),
-        &format!("{{\"sourceCode\":\"{}\"}}", submission),
+        &serde_json::to_string(&json!({"sourceCode": submission})).unwrap(),
         true
     )?.text().unwrap())
 }
