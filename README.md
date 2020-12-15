@@ -47,7 +47,7 @@ WantedBy=multi-user.target
 
 - Run `sudo systemctl daemon-reload`.
 - You might want to compile manually before starting the systemd-unit (otherwise it might time out due to the long compilation).
-- Now you can use `sudo systemctl (start|stop|enable|disable) verysmartape.service` to start/stop the application and enable/disable autorun.
+- Now you can use `sudo systemctl (start|stop|enable|disable) smartbeans.service` to start/stop the application and enable/disable autorun.
     
 ## Backup and Update
 
