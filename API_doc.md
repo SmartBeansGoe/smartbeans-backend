@@ -69,7 +69,7 @@ Example output:
 ]
 ```
 
-Please note: There might be tasks without shortname. In this case, "null" is returned.
+Please note: There might be tasks without shortname.
 
 ### GET /progress
 
