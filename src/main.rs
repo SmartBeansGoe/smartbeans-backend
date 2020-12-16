@@ -7,6 +7,16 @@ use rocket::http::Method;
 use rocket_cors::{AllowedOrigins, AllowedHeaders};
 use diesel::prelude::*;
 use colored::*;
+use rocket_slog::SlogFairing;
+use sloggers::{
+    Build,
+    file::FileLoggerBuilder,
+    terminal::{
+        TerminalLoggerBuilder,
+        Destination,
+    },
+    types::Severity
+};
 
 use smartbeans_backend::routes;
 
@@ -25,20 +35,32 @@ fn main() {
     embedded_migrations::run(&diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap()).unwrap();
 
     // CORS stuff (to prevent problems with same origin policy)
-    let origins = AllowedOrigins::all();
-    // For production, we might want to restrict the allowed origins. On the other hand, allowing
-    // all probably isn't really a security risk (in this case), so we can decide either way.
-    // let origins = AllowedOrigins::some(
-    //    &[dotenv!["FRONTEND_URL"]],
-    //    &[dotenv!["LTI_SOURCE_REGEX"]]);
-
     let cors = rocket_cors::CorsOptions {
-        allowed_origins: origins,
+        allowed_origins: AllowedOrigins::all(),
         allowed_methods: vec![Method::Get, Method::Post].into_iter().map(From::from).collect(),
         allowed_headers: AllowedHeaders::all(),
         allow_credentials: true,
         ..Default::default()
     }.to_cors().unwrap();
+
+    // slog logger to replace the default rocket logging
+    let logger = if cfg!(debug_assertions) {
+        TerminalLoggerBuilder::new()
+            .level(Severity::Debug)
+            .destination(Destination::Stderr)
+            .build()
+            .unwrap()
+    }
+    else {
+        FileLoggerBuilder::new("log/rocket.log")
+            .level(Severity::Debug)
+            .rotate_size(10000000)
+            .rotate_keep(10)
+            .build()
+            .unwrap()
+    };
+
+    std::fs::create_dir("log").ok();
 
     // A word of warning
     if cfg!(debug_assertions) {
@@ -62,5 +84,6 @@ fn main() {
         ])
         .attach(smartbeans_backend::MainDbConn::fairing())
         .attach(cors)
+        .attach(SlogFairing::new(logger))
         .launch();
 }

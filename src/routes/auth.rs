@@ -13,7 +13,7 @@ use crypto_hashes::sha1::Sha1;
 
 use crate::models;
 
-#[cfg(debug_assertions)]
+//#[cfg(debug_assertions)] TODO: Reenable this before final
 #[get("/auth_debug/<username>")]
 pub fn auth_debug(username: String, conn: crate::MainDbConn) -> Result<Json<Value>, Status> {
     Ok(Json(json!({
@@ -21,11 +21,11 @@ pub fn auth_debug(username: String, conn: crate::MainDbConn) -> Result<Json<Valu
     })))
 }
 
-#[cfg(not(debug_assertions))]
+/*#[cfg(not(debug_assertions))]
 #[get("/auth_debug/<_username>")]
 pub fn auth_debug(_username: String) -> Status {
     Status::NotFound
-}
+}*/
 
 #[get("/auth_debug/<username>/<key>")]
 pub fn auth_debug_production(username: String, key: String,conn: crate::MainDbConn) -> Result<Json<Value>, Status> {
@@ -42,7 +42,9 @@ pub fn auth_debug_production(username: String, key: String,conn: crate::MainDbCo
 /// successful, a cookie with an auth token is set and the user gets redirected to the frontend.
 /// Otherwise a 401 error is returned.
 #[post("/auth_cookie", data = "<data>")]
-pub fn auth_cookie(mut cookies: Cookies, data: String, conn: crate::MainDbConn) -> Result<Redirect, Status> {
+pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data, conn: crate::MainDbConn) -> Result<Redirect, Status> {
+    let data = crate::data_to_string(data);
+
     let username = validate_lti(
         &format!("{}/auth_cookie", env::var("BACKEND_URL").unwrap()),
         &data,
@@ -61,7 +63,9 @@ pub fn auth_cookie(mut cookies: Cookies, data: String, conn: crate::MainDbConn) 
 
 /// Similar to auth_cookie, but instead of a redirect to the frontend, the auth token is returned.
 #[post("/auth_token", data = "<data>")]
-pub fn auth_token(data: String, conn: crate::MainDbConn) -> Result<Json<Value>, Status> {
+pub fn auth_token(data: rocket::Data, conn: crate::MainDbConn) -> Result<Json<Value>, Status> {
+    let data = crate::data_to_string(data);
+
     let username = validate_lti(
         &format!("{}/auth_token", env::var("BACKEND_URL").unwrap()),
         &data,
