@@ -21,9 +21,9 @@ pub fn progress(user: guards::User) -> Result<String, Status> {
 }
 
 #[post("/submit/<taskid>", format = "text/plain", data = "<data>")]
-pub fn submit(user: guards::User, taskid: String, data: String) -> Result<String, Status> {
+pub fn submit(user: guards::User, taskid: String, data: rocket::Data) -> Result<String, Status> {
+    let data = crate::data_to_string(data);
     smartape::submit(&user.token, &taskid, &data)?;
-
     Ok(String::new())
 }
 
