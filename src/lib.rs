@@ -11,6 +11,7 @@ pub mod models;
 pub mod routes;
 pub mod guards;
 pub mod smartape;
+pub mod achievements;
 
 use std::io::Read;
 
