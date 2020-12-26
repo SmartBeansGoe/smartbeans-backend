@@ -15,3 +15,29 @@ pub fn get_username(user: guards::User) -> Json<Value> {
 pub fn get_achievements(user: guards::User) -> Json<Value> {
     Json(crate::achievements::achievements(&user.name))
 }
+
+#[get("/system_messages")]
+pub fn system_messages(user: guards::User) -> Json<Value> {
+    // TODO: Actual implementation
+
+    use serde_json::Number;
+    let mut message = json!({});
+    message["type"] = Value::String("text".to_string());
+    message["timestamp"] = Value::Number(Number::from(crate::epoch()));
+    message["content"] = Value::String("Hello World".to_string());
+
+    use rand::Rng;
+    let rand_num = rand::thread_rng().gen_range(0, 4);
+
+    let mut result = Vec::new();
+
+    match rand_num {
+        0 => {}
+        1 => {}
+        2 => { result.push(message.clone()); }
+        3 => { result.push(message.clone()); result.push(message.clone()); }
+        _ => unreachable!()
+    }
+
+    Json(serde_json::to_value(result).unwrap())
+}
