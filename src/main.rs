@@ -52,6 +52,7 @@ fn main() {
             .unwrap()
     }
     else {
+        std::fs::create_dir("log").ok();
         FileLoggerBuilder::new("log/rocket.log")
             .level(Severity::Debug)
             .rotate_size(10000000)
@@ -59,8 +60,6 @@ fn main() {
             .build()
             .unwrap()
     };
-
-    std::fs::create_dir("log").ok();
 
     // A word of warning
     if cfg!(debug_assertions) {
@@ -75,7 +74,8 @@ fn main() {
             routes::auth::auth_token,
             routes::auth::auth_debug,
             routes::auth::auth_debug_production,
-            routes::misc::get_username,
+            routes::user::get_username,
+            routes::user::get_achievements,
             routes::misc::rand,
             routes::tasks::get_tasks,
             routes::tasks::progress,
