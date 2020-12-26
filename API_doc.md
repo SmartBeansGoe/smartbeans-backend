@@ -195,6 +195,37 @@ Output:
 }
 ```
 
+### /system_messages (GET)
+
+General route for system messages.
+
+Output:
+```
+[
+    {
+        'type': <String>,
+        'timestamp': <Integer (Epoch)>,
+        'content': <depends on type>
+    },
+    ...
+]
+```
+
+Currently there are two possible types:
+
+- `text`: General text messages (mainly for debugging purposes)
+```
+content: <String>
+```
+- `achievement_unlocked`: User unlocked a new achievement
+```
+content: {
+    'id': <Integer>,
+    'name': <String>,
+    'description': <String>
+}
+```
+
 ### /achievements (GET)
 
 Returns all achievements.
