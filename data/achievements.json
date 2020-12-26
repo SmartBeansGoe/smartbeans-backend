@@ -2,10 +2,10 @@
 
   {
     "id": 1,
-    "name": "My first achievement",
+    "name": "First Login",
     "description": {
       "open": "This could be a description how to obtain the achievement",
-      "completed": "This description shows up after the achievement is finished"
+      "completed": "You logged in at least once."
     },
     "hidden": false,
     "triggers": ["submission"]
@@ -13,9 +13,9 @@
 
   {
     "id": 2,
-    "name": "A locked achievement",
+    "name": "Impossible",
     "description": {
-      "open": "",
+      "open": "You cannot get this achievement.",
       "completed": "This description shows up after the achievement is finished"
     },
     "hidden": false,

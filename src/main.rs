@@ -52,6 +52,7 @@ fn main() {
             .unwrap()
     }
     else {
+        std::fs::create_dir("log").ok();
         FileLoggerBuilder::new("log/rocket.log")
             .level(Severity::Debug)
             .rotate_size(10000000)
@@ -59,8 +60,6 @@ fn main() {
             .build()
             .unwrap()
     };
-
-    std::fs::create_dir("log").ok();
 
     // A word of warning
     if cfg!(debug_assertions) {
