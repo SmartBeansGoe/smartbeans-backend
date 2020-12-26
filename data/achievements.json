@@ -1,0 +1,25 @@
+[
+
+  {
+    "id": 1,
+    "name": "My first achievement",
+    "description": {
+      "open": "This could be a description how to obtain the achievement",
+      "completed": "This description shows up after the achievement is finished"
+    },
+    "hidden": false,
+    "triggers": ["submission"]
+  },
+
+  {
+    "id": 2,
+    "name": "A locked achievement",
+    "description": {
+      "open": "",
+      "completed": "This description shows up after the achievement is finished"
+    },
+    "hidden": false,
+    "triggers": ["submission"]
+  }
+
+]
