@@ -82,6 +82,8 @@ fn main() {
             routes::tasks::progress,
             routes::tasks::submit,
             routes::tasks::submissions,
+            routes::character::get_character,
+            routes::character::post_character,
         ])
         .attach(smartbeans_backend::MainDbConn::fairing())
         .attach(cors)
