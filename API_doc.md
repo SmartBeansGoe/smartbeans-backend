@@ -243,6 +243,42 @@ Output:
 ]
 ```
 
+## character
+
+Character data is initialized with `null` for every field on first login.
+
+### /character (GET)
+
+Returns all character data.
+
+Output:
+```
+{
+    body_color: <String or null>,
+    hat_id: <String or null>,
+    face_id: <String or null>,
+    shirt_id: <String or null>,
+    pants_id: <String or null>,
+}
+```
+
+### /character (POST)
+
+Changes character data.
+
+Input:
+```
+{
+    body_color: <String or null>,
+    hat_id: <String or null>,
+    face_id: <String or null>,
+    shirt_id: <String or null>,
+    pants_id: <String or null>,
+}
+```
+
+Please note: A field that is not present in a JSON value is implicitly treated as `null`. Therefore you have to set every field that has a non-null value, even if you don't want to change it. (In fact, what this route really does is deleting and recreating the character dataset.)
+
 ## misc
 
 ### /rand/\<min>/\<max> (GET)

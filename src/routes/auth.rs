@@ -157,6 +157,9 @@ fn create_session(username: String, conn: crate::MainDbConn, ltidata: Option<&st
         .unwrap()
         .as_secs();
 
+    // Create new character if necessary
+    crate::routes::character::init_char(&username);
+
     // Check for new achievements
     crate::achievements::AchievementTrigger::new(&username)?.run("all");
 

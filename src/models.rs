@@ -16,3 +16,13 @@ pub struct NewSession {
     pub username: String,
     pub smartape_token: String,
 }
+
+#[derive(Queryable)]
+pub struct Character {
+    pub username: String,
+    pub body_color: Option<String>,
+    pub hat_id: Option<String>,
+    pub face_id: Option<String>,
+    pub shirt_id: Option<String>,
+    pub pants_id: Option<String>
+}
