@@ -29,9 +29,17 @@ pub struct CharacterJson {
 }
 
 #[post("/character", data = "<data>")]
-pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Status {
+pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<Status, Status> {
     use crate::schema::characters::dsl::*;
     let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
+
+    // If someone tries to write a locked asset, return 403
+    let unlocked = unlocked_assets(&user)?;
+    if [&data.hat_id, &data.face_id, &data.shirt_id, &data.pants_id].iter().any(
+        |id| id.is_some() && unlocked.contains(&id.as_ref().unwrap()
+        )) {
+        return Err(Status::Unauthorized);
+    }
 
     // Because we rewrite every value anyway, we can just delete and recreate the dataset
     diesel::delete(characters.filter(username.eq(&user.name)))
@@ -50,7 +58,7 @@ pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Status {
         .execute(&conn)
         .expect("Database error");
 
-    Status::Ok
+    Ok(Status::Ok)
 }
 
 pub fn character_information(user: &str) -> Option<Character> {
@@ -72,4 +80,63 @@ pub fn init_char(user: &str) {
             .execute(&conn)
             .expect("Database error");
     }
+}
+
+#[get("/assets")]
+pub fn get_assets(user: guards::User) -> Result<Json<Value>, Status> {
+    let unlocked_assets = unlocked_assets(&user)?;
+    let assets = assets_from_datafile().into_iter()
+        .filter(|asset| unlocked_assets.contains(&serde_json::to_string(&asset["asset_id"]).unwrap()));
+
+    let hats = assets.clone()
+        .filter(|asset| asset["category"] == Value::String("hats".to_string()))
+        .collect::<Vec<Value>>();
+    let faces = assets.clone()
+        .filter(|asset| asset["category"] == Value::String("faces".to_string()))
+        .collect::<Vec<Value>>();
+    let shirts = assets.clone()
+        .filter(|asset| asset["category"] == Value::String("shirts".to_string()))
+        .collect::<Vec<Value>>();
+    let pants = assets.clone()
+        .filter(|asset| asset["category"] == Value::String("pants".to_string()))
+        .collect::<Vec<Value>>();
+
+    let mut all = serde_json::map::Map::new();
+    all.insert("hats".to_string(), serde_json::to_value(hats).unwrap());
+    all.insert("faces".to_string(), serde_json::to_value(faces).unwrap());
+    all.insert("shirts".to_string(), serde_json::to_value(shirts).unwrap());
+    all.insert("pants".to_string(), serde_json::to_value(pants).unwrap());
+
+    Ok(Json(Value::Object(all)))
+}
+
+pub fn unlocked_assets(user: &crate::guards::User) -> Result<Vec<String>, Status> {
+    Ok(assets_from_datafile().iter()
+        .filter(|asset| {
+            if asset["precondition"] == Value::Null {
+                return true;
+            }
+
+            let precondition = asset["precondition"].as_str().unwrap();
+            let split: Vec<&str> = precondition.split_whitespace().collect();
+            let id = split[1].parse::<i64>().unwrap();
+
+            match split[0] {
+                "achievement" => {
+                    crate::achievements::completed_achievements(&user.name).contains(&id)
+                }
+                "task" => {
+                    crate::smartape::progress(&user.token).unwrap().contains(&id)
+                }
+                _ => true
+            }
+        })
+        .map(|asset| serde_json::to_string(&asset["asset_id"].clone()).unwrap())
+        .collect())
+}
+
+fn assets_from_datafile() -> Vec<Value> {
+    serde_json::from_str::<Value>(
+        &std::fs::read_to_string("data/assets.json").unwrap()
+    ).unwrap().as_array().unwrap().clone()
 }

@@ -102,7 +102,7 @@ pub fn achievements(username: &str) -> Value {
     serde_json::to_value(result).unwrap()
 }
 
-fn completed_achievements(name: &str) -> Vec<i64> {
+pub fn completed_achievements(name: &str) -> Vec<i64> {
     use crate::schema::achievements::dsl::*;
     let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
 
