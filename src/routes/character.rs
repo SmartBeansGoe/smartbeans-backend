@@ -30,6 +30,7 @@ pub struct CharacterJson {
 
 #[post("/character", data = "<data>")]
 pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<Status, Status> {
+    // TODO: Race Condition?
     use crate::schema::characters::dsl::*;
     let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
 
@@ -71,12 +72,19 @@ pub fn character_information(user: &str) -> Option<Character> {
 }
 
 pub fn init_char(user: &str) {
+    use crate::schema::{charnames, characters};
     use crate::schema::characters::dsl::*;
+    use crate::schema::charnames::dsl::*;
     let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
 
     if character_information(user).is_none() {
         diesel::insert_into(characters)
-            .values(username.eq(user))
+            .values(characters::dsl::username.eq(user))
+            .execute(&conn)
+            .expect("Database error");
+
+        diesel::insert_into(charnames)
+            .values((charnames::dsl::username.eq(user), charname.eq(user)))
             .execute(&conn)
             .expect("Database error");
     }
@@ -139,4 +147,32 @@ fn assets_from_datafile() -> Vec<Value> {
     serde_json::from_str::<Value>(
         &std::fs::read_to_string("data/assets.json").unwrap()
     ).unwrap().as_array().unwrap().clone()
+}
+
+#[get("/charname")]
+pub fn get_charname(user: guards::User) -> Json<Value> {
+    use crate::schema::charnames::dsl::*;
+    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
+
+    let name: String = charnames.filter(username.eq(&user.name))
+        .select(charname)
+        .first(&conn)
+        .expect("Database error");
+
+    Json(json!({
+        "charname": name
+    }))
+}
+
+#[post("/charname", data = "<data>", format = "text/plain")]
+pub fn post_charname(user: guards::User, data: rocket::Data) -> Status {
+    use crate::schema::charnames::dsl::*;
+    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
+
+    diesel::update(charnames.find(&user.name))
+        .set(charname.eq(crate::data_to_string(data)))
+        .execute(&conn)
+        .expect("Database error");
+
+    Status::Ok
 }

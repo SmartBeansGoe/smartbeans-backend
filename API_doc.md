@@ -245,7 +245,7 @@ Output:
 
 ## character
 
-Character data is initialized with `null` for every field on first login.
+Character data is initialized with `null` for every field on first login. Character name is initialized with user name.
 
 ### /character (GET)
 
@@ -264,7 +264,7 @@ Output:
 
 ### /character (POST)
 
-Changes character data.
+Changes character data. Returns 200 on success.
 
 Input:
 ```
@@ -299,6 +299,25 @@ Output:
     'shirts': [ ... ],
     'pants': [ ... ]
 }
+```
+### /charname (GET)
+
+Returns the character name.
+
+Output:
+```
+{
+    charname: <String>
+}
+```
+
+### /charname (POST)
+
+Changes the character name. Expects `text/plain` as content type. Returns 200 on success.
+
+Input:
+```
+<String>
 ```
 
 ## misc
