@@ -85,6 +85,8 @@ fn main() {
             routes::character::get_character,
             routes::character::post_character,
             routes::character::get_assets,
+            routes::character::get_charname,
+            routes::character::post_charname,
         ])
         .attach(smartbeans_backend::MainDbConn::fairing())
         .attach(cors)

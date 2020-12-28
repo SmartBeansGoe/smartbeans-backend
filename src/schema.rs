@@ -19,6 +19,13 @@ table! {
 }
 
 table! {
+    charnames (username) {
+        username -> Text,
+        charname -> Text,
+    }
+}
+
+table! {
     sessions (auth_token) {
         auth_token -> Text,
         expiration_time -> BigInt,
@@ -30,5 +37,6 @@ table! {
 allow_tables_to_appear_in_same_query!(
     achievements,
     characters,
+    charnames,
     sessions,
 );
