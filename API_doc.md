@@ -182,6 +182,144 @@ Example output:
 
 For more information regarding the content of the "result" item of a submission, see [here](https://pad.gwdg.de/VL4fUT5gSvKQWSIT8w5lag?view#Spezifikation-der-REST-API-Schnittstelle). You probably want to to read the paragraph "Ausgabe für `POST /evaluate`". Good luck!
 
+## user
+
+### /username (GET)
+
+Returns the name of the user.
+
+Output:
+```
+{
+    'username': '...'
+}
+```
+
+### /system_messages (GET)
+
+General route for system messages.
+
+Output:
+```
+[
+    {
+        'type': <String>,
+        'timestamp': <Integer (Epoch)>,
+        'content': <depends on type>
+    },
+    ...
+]
+```
+
+Currently there are two possible types:
+
+- `text`: General text messages (mainly for debugging purposes)
+```
+content: <String>
+```
+- `achievement_unlocked`: User unlocked a new achievement
+```
+content: {
+    'id': <Integer>,
+    'name': <String>,
+    'description': <String>
+}
+```
+
+### /achievements (GET)
+
+Returns all achievements.
+
+Output:
+```
+[
+    {
+        'id': <Integer>,
+        'name': <String>,
+        'description': <String>,
+        'completed': <Bool>
+    },
+    ...
+]
+```
+
+## character
+
+Character data is initialized with `null` for every field on first login. Character name is initialized with user name.
+
+### /character (GET)
+
+Returns all character data.
+
+Output:
+```
+{
+    'body_color': <String or null>,
+    'hat_id': <String or null>,
+    'face_id': <String or null>,
+    'shirt_id': <String or null>,
+    'pants_id': <String or null>,
+}
+```
+
+### /character (POST)
+
+Changes character data. Returns 200 on success.
+
+Input:
+```
+{
+    'body_color': <String or null>,
+    'hat_id': <String or null>,
+    'face_id': <String or null>,
+    'shirt_id': <String or null>,
+    'pants_id': <String or null>,
+}
+```
+
+Please note: A field that is not present in a JSON value is implicitly treated as `null`. Therefore you have to set every field that has a non-null value, even if you don't want to change it. (In fact, what this route really does is deleting and recreating the character dataset.)
+
+### /assets (GET)
+
+Returns all unlocked assets.
+
+Output:
+```
+{
+    'hats': [
+        {
+            'asset_id': <String>,
+            'category': <array name as string ('hats' in this case)>,
+            'name': <String>,
+            'precondition': <String or null>
+        },
+        ...
+    ],
+    'faces': [ ... ],
+    'shirts': [ ... ],
+    'pants': [ ... ]
+}
+```
+### /charname (GET)
+
+Returns the character name.
+
+Output:
+```
+{
+    charname: <String>
+}
+```
+
+### /charname (POST)
+
+Changes the character name. Expects `text/plain` as content type. Returns 200 on success.
+
+Input:
+```
+<String>
+```
+
 ## misc
 
 ### /rand/\<min>/\<max> (GET)
@@ -192,16 +330,5 @@ Output:
 ```
 {
     'rand': '...'
-}
-```
-
-### /username (GET)
-
-Returns the name of the user.
-
-Output:
-```
-{
-    'username': '...'
 }
 ```

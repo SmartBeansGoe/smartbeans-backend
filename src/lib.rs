@@ -3,6 +3,7 @@
 #[macro_use] extern crate rocket;
 #[macro_use] extern crate rocket_contrib;
 #[macro_use] extern crate diesel;
+#[macro_use] extern crate serde;
 #[macro_use] extern crate serde_json;
 
 pub mod schema;
@@ -14,6 +15,7 @@ pub mod smartape;
 pub mod achievements;
 
 use std::io::Read;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 /// Struct can be used as a request guard whenever a connection
 /// to the main database is needed.
@@ -27,4 +29,11 @@ pub fn data_to_string(data: rocket::Data) -> String {
     let mut data_str = String::new();
     data.open().read_to_string(&mut data_str).unwrap();
     data_str
+}
+
+pub fn epoch() -> i64 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_secs() as i64
 }

@@ -1,5 +1,3 @@
-use std::time::{SystemTime, UNIX_EPOCH};
-
 use rocket::request::{Request, FromRequest, Outcome};
 use rocket::http::Status;
 use diesel::prelude::*;
@@ -37,25 +35,12 @@ impl<'a, 'r> FromRequest<'a, 'r> for User {
 
         let request_token = auth_header[1];
 
-        // Get auth token from cookie
-        // (alternative to Authorization header; just in case we need this in the future)
-        /*let cookies = Cookies::from_request(request).unwrap();
-        let cookie_token = cookies.get("auth_token");
-
-        if cookie_token.is_none() {
-            return Outcome::Failure((Status::Unauthorized, ()));
-        }
-
-        let request_token = cookie_token.unwrap().value();*/
-
         // Check if there is a valid session in the database
-        let epoch_time_now = SystemTime::now().duration_since(UNIX_EPOCH)
-            .unwrap().as_secs() as i64;
-
         use crate::schema::sessions::dsl::*;
         let conn = crate::MainDbConn::from_request(request).unwrap();
+
         if let Ok(name) = sessions.filter(auth_token.eq(request_token))
-            .filter(expiration_time.gt(epoch_time_now))
+            .filter(expiration_time.gt(crate::epoch()))
             .select(username)
             .first(&*conn) {
             Outcome::Success(User { name, token: request_token.to_string() })
