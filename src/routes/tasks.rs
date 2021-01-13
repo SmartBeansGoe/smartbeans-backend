@@ -24,6 +24,9 @@ pub fn progress(user: guards::User) -> Result<String, Status> {
 pub fn submit(user: guards::User, taskid: String, data: rocket::Data) -> Result<String, Status> {
     let data = crate::data_to_string(data);
     smartape::submit(&user.token, &taskid, &data)?;
+
+    crate::achievements::AchievementTrigger::new(&user)?.run("submission");
+
     Ok(String::new())
 }
 

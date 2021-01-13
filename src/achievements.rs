@@ -6,25 +6,29 @@ use diesel::insert_into;
 pub struct AchievementTrigger {
     /// User name
     username: String,
+    /// Token
+    token: String,
     /// All achievements as JSON values (see data/achievements.json)
     achievements: Vec<Value>,
-    /// A list with the ids of open achievements
+    /// A list with the ids of completed achievements
     completed: Vec<i64>,
+    /// A list with all completed tasks
+    solved_tasks: Vec<i64>,
     /// All submissions as JSON values
     submissions: Vec<Value>,
 }
 
 impl AchievementTrigger {
-    pub fn new(username: &str) -> Result<AchievementTrigger, Status> {
-        let achievements = achievements_from_datafile();
-
-        let completed = completed_achievements(username);
-        let submissions = Vec::new(); // TODO
+    pub fn new(user: &crate::guards::User) -> Result<AchievementTrigger, Status> {
+        let submissions = crate::smartape::all_submissions(&user.token)?
+            .as_array().unwrap().to_owned();
 
         Ok(AchievementTrigger {
-            username: username.to_string(),
-            achievements,
-            completed,
+            username: String::from(&user.name),
+            token: String::from(&user.token),
+            achievements: achievements_from_datafile(),
+            completed: completed_achievements(&user.name),
+            solved_tasks: crate::smartape::progress(&user.token)?,
             submissions
         })
     }
@@ -38,8 +42,7 @@ impl AchievementTrigger {
                 !self.completed.contains(&achievement["id"].as_i64().unwrap())
             })
             .filter(|achievement| {
-                trigger.as_str() == Some("all")
-                    || achievement["triggers"].as_array().unwrap().contains(&trigger)
+                achievement["triggers"].as_array().unwrap().contains(&trigger)
             })
             .map(|achievement| {
                 achievement["id"].as_i64().unwrap()
@@ -58,18 +61,50 @@ impl AchievementTrigger {
         match id {
             1 => self.check_1(),
             2 => self.check_2(),
+            3 => self.check_3(),
+            4 => self.check_4(),
+            5 => self.check_5(),
+            6 => self.check_6(),
             _ => panic!("Non-existent achievement id")
         }
     }
 
     // === Check functions for individual achievements =====
 
+    // Erste Erfolge; login, submission
     fn check_1(&self) -> bool {
+        self.solved_tasks.len() >= 3
+    }
+
+    // Alles eine Frage des Systems; login, submission
+    fn check_2(&self) -> bool {
+        self.solved_tasks.len() >= 16
+    }
+
+    // Auf alles eine Antwort; login, submission
+    fn check_3(&self) -> bool {
+        self.solved_tasks.len() >= 42
+    }
+
+    // Perfektionist; login, submission
+    fn check_4(&self) -> bool {
+        self.solved_tasks.len() >= crate::smartape::tasks(&self.token).unwrap().as_array().unwrap().len()
+    }
+
+    // Namen sind Schall und Rauch; nickname_changed
+    fn check_5(&self) -> bool {
         true
     }
 
-    fn check_2(&self) -> bool {
-        false
+    // Verkleidungskünstler; char_changed
+    fn check_6(&self) -> bool {
+        let char = crate::routes::character::character_information(&self.username)
+            .unwrap();
+
+        char.body_color.is_some()
+        && char.hat_id.is_some()
+        && char.shirt_id.is_some()
+        && char.pants_id.is_some()
     }
 }
 

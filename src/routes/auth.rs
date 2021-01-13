@@ -51,12 +51,15 @@ pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data, conn: crate::MainDb
         &env::var("LTI_SECRET").unwrap()
     )?;
 
-    let auth_token = create_session(username, conn, Some(&data))?;
+    let auth_token = create_session(username.clone(), conn, Some(&data))?;
     cookies.add(
-        Cookie::build("auth_token", auth_token)
+        Cookie::build("auth_token", auth_token.clone())
             .path("/")
             .finish()
     );
+
+    // Check for new achievements
+    crate::achievements::AchievementTrigger::new(&crate::guards::User{ name: username, token: auth_token })?.run("login");
 
     Ok(Redirect::to(env::var("FRONTEND_URL").unwrap()))
 }
@@ -159,9 +162,6 @@ fn create_session(username: String, conn: crate::MainDbConn, ltidata: Option<&st
 
     // Create new character if necessary
     crate::routes::character::init_char(&username);
-
-    // Check for new achievements
-    crate::achievements::AchievementTrigger::new(&username)?.run("all");
 
     // Write into session table
     diesel::insert_into(crate::schema::sessions::table)

@@ -2,24 +2,68 @@
 
   {
     "id": 1,
-    "name": "First Login",
+    "name": "Erste Erfolge",
     "description": {
-      "open": "This could be a description how to obtain the achievement",
-      "completed": "You logged in at least once."
+      "open": "Löse drei Aufgaben.",
+      "completed": "Du hast drei Aufgaben gelöst."
     },
     "hidden": false,
-    "triggers": ["submission"]
+    "triggers": ["login","submission"]
   },
 
   {
     "id": 2,
-    "name": "Impossible",
+    "name": "Alles eine Frage des Systems",
     "description": {
-      "open": "You cannot get this achievement.",
-      "completed": "This description shows up after the achievement is finished"
+      "open": "Löse 10000 Aufgaben.",
+      "completed": "Du hast 0b10000 Aufgaben gelöst."
     },
     "hidden": false,
-    "triggers": ["submission"]
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 3,
+    "name": "Auf alles eine Antwort",
+    "description": {
+      "open": "Löse 42 Aufgaben.",
+      "completed": "Du hast 42 Aufgaben gelöst."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 4,
+    "name": "Perfektionist",
+    "description": {
+      "open": "Löse alle Aufgaben.",
+      "completed": "Du hast alle Aufgaben gelöst."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 5,
+    "name": "Namen sind Schall und Rauch.",
+    "description": {
+      "open": "Ändere deinen Namen.",
+      "completed": "Du hast deinen Namen geändert."
+    },
+    "hidden": false,
+    "triggers": ["nickname_changed"]
+  },
+
+  {
+    "id": 6,
+    "name": "Verkleidungskünstler.",
+    "description": {
+      "open": "Ziehe deinen Charakter vollständig an.",
+      "completed": "Du hast deinen Charakter vollständig angezogen."
+    },
+    "hidden": false,
+    "triggers": ["char_changed"]
   }
 
 ]

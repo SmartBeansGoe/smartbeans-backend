@@ -124,6 +124,19 @@ pub fn submission(token: &str, taskid: &str, timestamp: &str) -> Result<Value, S
     Ok(serde_json::from_str(&submission_str).unwrap())
 }
 
+/// Wrapper for "GET /course/:courseid/submissions
+pub fn all_submissions(token: &str) -> Result<Value, Status> {
+    let submissions_str = call_smartape_api(
+        "GET",
+        &format!("/course/{}/submissions", courseid(&token)?),
+        Some(token),
+        "",
+        false
+    )?.text().unwrap();
+
+    Ok(serde_json::from_str(&submissions_str).unwrap())
+}
+
 /// Wrapper for "POST /course/:courseid/tasks/:taskid/submissions: Submit a task"
 pub fn submit(token: &str, taskid: &str, submission: &str) -> Result<String, Status> {
     Ok(call_smartape_api(

@@ -49,7 +49,7 @@ pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<S
 
     diesel::insert_into(characters)
         .values((
-            username.eq(user.name),
+            username.eq(&user.name),
             body_color.eq(&data.body_color),
             hat_id.eq(&data.hat_id),
             face_id.eq(&data.face_id),
@@ -58,6 +58,8 @@ pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<S
             ))
         .execute(&conn)
         .expect("Database error");
+
+    crate::achievements::AchievementTrigger::new(&user)?.run("char_changed");
 
     Ok(Status::Ok)
 }
@@ -173,6 +175,8 @@ pub fn post_charname(user: guards::User, data: rocket::Data) -> Status {
         .set(charname.eq(crate::data_to_string(data)))
         .execute(&conn)
         .expect("Database error");
+
+    crate::achievements::AchievementTrigger::new(&user).unwrap().run("nickname_changed");
 
     Status::Ok
 }
