@@ -161,7 +161,9 @@ fn create_session(username: String, conn: crate::database::MainDbConn, ltidata: 
         .as_secs();
 
     // Create new character if necessary
-    crate::routes::character::init_char(&username);
+    if crate::routes::character::character_information(&username).is_none() {
+        crate::init_user::init(&username);
+    }
 
     // Write into session table
     diesel::insert_into(crate::schema::sessions::table)

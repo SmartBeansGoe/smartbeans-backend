@@ -5,7 +5,6 @@
 
 use rocket::http::Method;
 use rocket_cors::{AllowedOrigins, AllowedHeaders};
-use diesel::prelude::*;
 use colored::*;
 use rocket_slog::SlogFairing;
 use sloggers::{
@@ -87,6 +86,7 @@ fn main() {
             routes::character::get_assets,
             routes::character::get_charname,
             routes::character::post_charname,
+            smartbeans_backend::init_user::reinit_route,
         ])
         .attach(smartbeans_backend::database::MainDbConn::fairing())
         .attach(cors)

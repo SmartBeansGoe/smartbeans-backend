@@ -72,26 +72,6 @@ pub fn character_information(user: &str) -> Option<Character> {
         .ok()
 }
 
-pub fn init_char(user: &str) {
-    use crate::schema::{charnames, characters};
-    use crate::schema::characters::dsl::*;
-    use crate::schema::charnames::dsl::*;
-
-    let conn = crate::database::establish_connection();
-
-    if character_information(user).is_none() {
-        diesel::insert_into(characters)
-            .values(characters::dsl::username.eq(user))
-            .execute(&conn)
-            .expect("Database error");
-
-        diesel::insert_into(charnames)
-            .values((charnames::dsl::username.eq(user), charname.eq(user)))
-            .execute(&conn)
-            .expect("Database error");
-    }
-}
-
 #[get("/assets")]
 pub fn get_assets(user: guards::User) -> Result<Json<Value>, Status> {
     let unlocked_assets = unlocked_assets(&user)?;
