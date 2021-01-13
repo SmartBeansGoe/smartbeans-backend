@@ -32,7 +32,7 @@ pub struct CharacterJson {
 pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<Status, Status> {
     // TODO: Race Condition?
     use crate::schema::characters::dsl::*;
-    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
+    let conn = crate::database::establish_connection();
 
     // If someone tries to write a locked asset, return 403
     let unlocked = unlocked_assets(&user)?;
@@ -66,10 +66,9 @@ pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<S
 
 pub fn character_information(user: &str) -> Option<Character> {
     use crate::schema::characters::dsl::*;
-    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
 
     characters.filter(username.eq(user))
-        .first(&conn)
+        .first(&crate::database::establish_connection())
         .ok()
 }
 
@@ -77,7 +76,8 @@ pub fn init_char(user: &str) {
     use crate::schema::{charnames, characters};
     use crate::schema::characters::dsl::*;
     use crate::schema::charnames::dsl::*;
-    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
+
+    let conn = crate::database::establish_connection();
 
     if character_information(user).is_none() {
         diesel::insert_into(characters)
@@ -154,11 +154,10 @@ fn assets_from_datafile() -> Vec<Value> {
 #[get("/charname")]
 pub fn get_charname(user: guards::User) -> Json<Value> {
     use crate::schema::charnames::dsl::*;
-    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
 
     let name: String = charnames.filter(username.eq(&user.name))
         .select(charname)
-        .first(&conn)
+        .first(&crate::database::establish_connection())
         .expect("Database error");
 
     Json(json!({
@@ -169,11 +168,10 @@ pub fn get_charname(user: guards::User) -> Json<Value> {
 #[post("/charname", data = "<data>", format = "text/plain")]
 pub fn post_charname(user: guards::User, data: rocket::Data) -> Status {
     use crate::schema::charnames::dsl::*;
-    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
 
     diesel::update(charnames.find(&user.name))
         .set(charname.eq(crate::data_to_string(data)))
-        .execute(&conn)
+        .execute(&crate::database::establish_connection())
         .expect("Database error");
 
     crate::achievements::AchievementTrigger::new(&user).unwrap().run("nickname_changed");

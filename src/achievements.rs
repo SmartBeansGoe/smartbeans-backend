@@ -139,7 +139,7 @@ pub fn achievements(username: &str) -> Value {
 
 pub fn completed_achievements(name: &str) -> Vec<i64> {
     use crate::schema::achievements::dsl::*;
-    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
+    let conn = crate::database::establish_connection();
 
     achievements.filter(username.eq(name))
         .select(achievementId)
@@ -155,7 +155,7 @@ fn achievements_from_datafile() -> Vec<Value> {
 
 fn achievement_completed(uname: &str, achievemet_id: i64) {
     use crate::schema::achievements::dsl::*;
-    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
+    let conn = crate::database::establish_connection();
 
     insert_into(achievements).values((
             username.eq(uname),

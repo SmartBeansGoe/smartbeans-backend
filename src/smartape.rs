@@ -207,7 +207,7 @@ fn smartape_token(token: Option<&str>) -> Result<String, Status> {
 
     use crate::schema::sessions::dsl::*;
 
-    let conn = diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap();
+    let conn = crate::database::establish_connection();
 
     if let Ok(ape_token) = sessions.filter(auth_token.eq(token))
         .select(smartape_token)

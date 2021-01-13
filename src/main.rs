@@ -32,7 +32,7 @@ fn main() {
 
     // Run database migrations at startup
     embed_migrations!();
-    embedded_migrations::run(&diesel::sqlite::SqliteConnection::establish("db.sqlite").unwrap()).unwrap();
+    embedded_migrations::run(&smartbeans_backend::database::establish_connection()).unwrap();
 
     // CORS stuff (to prevent problems with same origin policy)
     let cors = rocket_cors::CorsOptions {
@@ -88,7 +88,7 @@ fn main() {
             routes::character::get_charname,
             routes::character::post_charname,
         ])
-        .attach(smartbeans_backend::MainDbConn::fairing())
+        .attach(smartbeans_backend::database::MainDbConn::fairing())
         .attach(cors)
         .attach(SlogFairing::new(logger))
         .launch();

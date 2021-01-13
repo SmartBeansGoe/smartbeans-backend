@@ -37,12 +37,11 @@ impl<'a, 'r> FromRequest<'a, 'r> for User {
 
         // Check if there is a valid session in the database
         use crate::schema::sessions::dsl::*;
-        let conn = crate::MainDbConn::from_request(request).unwrap();
 
         if let Ok(name) = sessions.filter(auth_token.eq(request_token))
             .filter(expiration_time.gt(crate::epoch()))
             .select(username)
-            .first(&*conn) {
+            .first(&crate::database::establish_connection()) {
             Outcome::Success(User { name, token: request_token.to_string() })
         } else {
             Outcome::Failure((Status::Unauthorized, ()))
