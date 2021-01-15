@@ -203,6 +203,7 @@ Output:
 ```
 [
     {
+        'id': <Integer>
         'type': <String>,
         'timestamp': <Integer (Epoch)>,
         'content': <depends on type>

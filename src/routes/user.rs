@@ -22,6 +22,7 @@ pub fn system_messages(user: guards::User) -> Json<Value> {
 
     use serde_json::Number;
     let mut message = json!({});
+    message["id"] = Value::Number(Number::from(0));
     message["type"] = Value::String("text".to_string());
     message["timestamp"] = Value::Number(Number::from(crate::epoch()));
     message["content"] = Value::String("Hello World".to_string());
@@ -34,8 +35,13 @@ pub fn system_messages(user: guards::User) -> Json<Value> {
     match rand_num {
         0 => {}
         1 => {}
-        2 => { result.push(message.clone()); }
-        3 => { result.push(message.clone()); result.push(message.clone()); }
+        2 => {
+            result.push(message);
+        }
+        3 => {
+            result.push(message.clone());
+            message["id"] = Value::Number(Number::from(1));
+            result.push(message); }
         _ => unreachable!()
     }
 
