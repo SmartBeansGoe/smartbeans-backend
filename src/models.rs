@@ -26,3 +26,12 @@ pub struct Character {
     pub shirt_id: Option<String>,
     pub pants_id: Option<String>
 }
+
+#[derive(Queryable)]
+pub struct SystemMessage {
+    pub id: i32,
+    pub user: String,
+    pub message_type: String,
+    pub time: i64,
+    pub content: String
+}

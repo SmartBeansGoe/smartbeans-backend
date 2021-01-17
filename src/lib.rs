@@ -15,6 +15,7 @@ pub mod guards;
 pub mod smartape;
 pub mod achievements;
 pub mod init_user;
+pub mod system_messages;
 
 use std::io::Read;
 use std::time::{SystemTime, UNIX_EPOCH};

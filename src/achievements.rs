@@ -52,7 +52,16 @@ impl AchievementTrigger {
         for id in ids {
             if self.check(id) {
                 set_achievement_completed(&self.username, id);
-                // TODO: Add frontend message
+                let achievement_json = achievements(&self.username)
+                    .into_iter()
+                    .find(|a| a["id"] == id)
+                    .unwrap();
+
+                crate::system_messages::send_message(
+                    &self.username,
+                    "achievement_unlocked",
+                    &achievement_json.to_string()
+                )
             }
         }
     }
@@ -110,7 +119,7 @@ impl AchievementTrigger {
 
 /// Returns achievements for a user.
 /// Return format: [ { "id": ..., "name": ..., "description": ..., "completed" ... }, ... ]
-pub fn achievements(username: &str) -> Value {
+pub fn achievements(username: &str) -> Vec<Value> {
     let mut result = Vec::new();
 
     for achievement in achievements_from_datafile() {
@@ -133,7 +142,7 @@ pub fn achievements(username: &str) -> Value {
         }
     }
 
-    serde_json::to_value(result).unwrap()
+    result
 }
 
 pub fn completed_achievements(name: &str) -> Vec<i64> {

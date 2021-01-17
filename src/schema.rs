@@ -34,9 +34,20 @@ table! {
     }
 }
 
+table! {
+    system_messages (id) {
+        id -> Integer,
+        user -> Text,
+        messageType -> Text,
+        time -> BigInt,
+        content -> Text,
+    }
+}
+
 allow_tables_to_appear_in_same_query!(
     achievements,
     characters,
     charnames,
     sessions,
+    system_messages,
 );
