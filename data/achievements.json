@@ -63,7 +63,7 @@
       "completed": "Du hast deinen Charakter vollständig angezogen."
     },
     "hidden": false,
-    "triggers": ["char_changed"]
+    "triggers": ["login","char_changed"]
   }
 
 ]
