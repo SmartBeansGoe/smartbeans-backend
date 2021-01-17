@@ -238,7 +238,7 @@ Output:
         'id': <Integer>,
         'name': <String>,
         'description': <String>,
-        'completed': <Bool>
+        'completed': <Timestamp or null>
     },
     ...
 ]

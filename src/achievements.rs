@@ -51,7 +51,7 @@ impl AchievementTrigger {
 
         for id in ids {
             if self.check(id) {
-                achievement_completed(&self.username, id);
+                set_achievement_completed(&self.username, id);
                 // TODO: Add frontend message
             }
         }
@@ -113,23 +113,22 @@ impl AchievementTrigger {
 pub fn achievements(username: &str) -> Value {
     let mut result = Vec::new();
 
-    let completed_vec = completed_achievements(username);
     for achievement in achievements_from_datafile() {
         let mut val = json!({});
 
         let id = achievement["id"].as_i64().unwrap();
-        let completed = completed_vec.contains(&id);
+        let completed = get_achievement_completed(username, id);
 
         val["id"] = achievement["id"].clone();
         val["name"] = achievement["name"].clone();
-        val["description"] = if completed {
+        val["description"] = if completed.is_some() {
             achievement["description"]["completed"].clone()
         } else {
             achievement["description"]["open"].clone()
         };
         val["completed"] = serde_json::to_value(completed).unwrap();
 
-        if achievement["hidden"].as_bool() == Some(false) || completed {
+        if achievement["hidden"].as_bool() == Some(false) || completed.is_some() {
             result.push(val);
         }
     }
@@ -153,7 +152,18 @@ fn achievements_from_datafile() -> Vec<Value> {
     ).unwrap().as_array().unwrap().clone()
 }
 
-fn achievement_completed(uname: &str, achievemet_id: i64) {
+fn get_achievement_completed(uname: &str, achievement_id: i64) -> Option<i64> {
+    use crate::schema::achievements::dsl::*;
+    let conn = crate::database::establish_connection();
+
+    achievements.filter(username.eq(uname))
+        .filter(achievementId.eq(achievement_id))
+        .select(completionTime)
+        .first(&conn)
+        .ok()
+}
+
+fn set_achievement_completed(uname: &str, achievemet_id: i64) {
     use crate::schema::achievements::dsl::*;
     let conn = crate::database::establish_connection();
 
