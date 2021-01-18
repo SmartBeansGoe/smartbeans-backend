@@ -87,6 +87,7 @@ fn main() {
             routes::character::get_charname,
             routes::character::post_charname,
             smartbeans_backend::init_user::reinit_route,
+            routes::user::message_test,
         ])
         .attach(smartbeans_backend::database::MainDbConn::fairing())
         .attach(cors)
