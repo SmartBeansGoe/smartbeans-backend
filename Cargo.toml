@@ -24,6 +24,7 @@ percent-encoding = "2.1.0"
 reqwest = { version = "0.10.9", features = ["blocking", "json", "cookies"] }
 rocket-slog = "0.4.0"
 sloggers = "1.0.1"
+lazy_static = "1.4.0"
 
 [dependencies.rocket_contrib]
 version = "*"

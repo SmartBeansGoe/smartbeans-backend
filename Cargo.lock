@@ -2208,6 +2208,7 @@ dependencies = [
  "diesel_migrations",
  "dotenv",
  "hmac 0.10.1",
+ "lazy_static",
  "percent-encoding 2.1.0",
  "rand",
  "reqwest",

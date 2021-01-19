@@ -3,13 +3,15 @@ use serde_json::Value;
 use diesel::prelude::*;
 use diesel::insert_into;
 
+use crate::static_data::ACHIEVEMENTS;
+
 pub struct AchievementTrigger {
     /// User name
     username: String,
     /// Token
     token: String,
     /// All achievements as JSON values (see data/achievements.json)
-    achievements: Vec<Value>,
+    achievements: &'static Vec<Value>,
     /// A list with the ids of completed achievements
     completed: Vec<i64>,
     /// A list with all completed tasks
@@ -26,7 +28,7 @@ impl AchievementTrigger {
         Ok(AchievementTrigger {
             username: String::from(&user.name),
             token: String::from(&user.token),
-            achievements: achievements_from_datafile(),
+            achievements: &ACHIEVEMENTS,
             completed: completed_achievements(&user.name),
             solved_tasks: crate::smartape::progress(&user.token)?,
             submissions
@@ -122,7 +124,7 @@ impl AchievementTrigger {
 pub fn achievements(username: &str) -> Vec<Value> {
     let mut result = Vec::new();
 
-    for achievement in achievements_from_datafile() {
+    for achievement in ACHIEVEMENTS.iter() {
         let mut val = json!({});
 
         let id = achievement["id"].as_i64().unwrap();
@@ -130,12 +132,12 @@ pub fn achievements(username: &str) -> Vec<Value> {
 
         val["id"] = achievement["id"].clone();
         val["name"] = achievement["name"].clone();
+        val["completed"] = serde_json::to_value(completed).unwrap();
         val["description"] = if completed.is_some() {
             achievement["description"]["completed"].clone()
         } else {
             achievement["description"]["open"].clone()
         };
-        val["completed"] = serde_json::to_value(completed).unwrap();
 
         if achievement["hidden"].as_bool() == Some(false) || completed.is_some() {
             result.push(val);
@@ -153,12 +155,6 @@ pub fn completed_achievements(name: &str) -> Vec<i64> {
         .select(achievementId)
         .load(&conn)
         .expect("Database error")
-}
-
-fn achievements_from_datafile() -> Vec<Value> {
-    serde_json::from_str::<Value>(
-        &std::fs::read_to_string("data/achievements.json").unwrap()
-    ).unwrap().as_array().unwrap().clone()
 }
 
 fn get_achievement_completed(uname: &str, achievement_id: i64) -> Option<i64> {

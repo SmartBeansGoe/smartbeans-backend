@@ -5,6 +5,7 @@
 #[macro_use] extern crate diesel;
 #[macro_use] extern crate serde;
 #[macro_use] extern crate serde_json;
+#[macro_use] extern crate lazy_static;
 
 pub mod schema;
 pub mod models;
@@ -16,6 +17,7 @@ pub mod smartape;
 pub mod achievements;
 pub mod init_user;
 pub mod system_messages;
+pub mod static_data;
 
 use std::io::Read;
 use std::time::{SystemTime, UNIX_EPOCH};
