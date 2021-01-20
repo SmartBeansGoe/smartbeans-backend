@@ -22,8 +22,7 @@ pub struct AchievementTrigger {
 
 impl AchievementTrigger {
     pub fn new(user: &crate::guards::User) -> Result<AchievementTrigger, Status> {
-        let submissions = crate::smartape::all_submissions(&user.token)?
-            .as_array().unwrap().to_owned();
+        let submissions = crate::smartape::all_submissions(&user.token)?;
 
         Ok(AchievementTrigger {
             username: String::from(&user.name),
@@ -99,7 +98,7 @@ impl AchievementTrigger {
 
     // Perfektionist; login, submission
     fn check_4(&self) -> bool {
-        self.solved_tasks.len() >= crate::smartape::tasks(&self.token).unwrap().as_array().unwrap().len()
+        self.solved_tasks.len() >= crate::smartape::tasks(self.token.clone()).unwrap().len()
     }
 
     // Namen sind Schall und Rauch; nickname_changed

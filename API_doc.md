@@ -138,6 +138,7 @@ Example output:
             "type": "WRONG_ANSWER"
         },
         "sourceCode": "int main(int argc, char const *argv[])\n{\n\tprintf(\"HelloWorld\\n\");\n\treturn 0;\n}",
+        "taskid": 1,
         "timestamp": 1607615806262
     },
     {
@@ -178,6 +179,7 @@ Example output:
             "type": "SUCCESS"
         },
         "sourceCode": "int main(int argc, char const *argv[])\n{\n\tprintf(\"Hallo Welt\\n\");\n\treturn 0;\n}",
+        "taskid": 1,
         "timestamp": 1607615973307
     },
     ...

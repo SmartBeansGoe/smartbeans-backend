@@ -8,6 +8,7 @@ use reqwest::header::{COOKIE, CONTENT_TYPE};
 use rocket::http::Status;
 use serde_json::Value;
 use diesel::prelude::*;
+use cached::proc_macro::cached;
 
 use crate::static_data::TASK_STATS;
 
@@ -69,31 +70,22 @@ pub fn progress(token: &str) -> Result<Vec<i64>, Status> {
 }
 
 /// Wrapper for "GET /course/:courseid/tasks: Get a list of all tasks"
-/// Also contains information whether a task is solved and stats data from data/tash_stats.json.
-pub fn tasks(token: &str) -> Result<Value, Status> {
+/// Also contains stats data from data/task_stats.json.
+#[cached(time = 3600)]
+pub fn tasks(token: String) -> Result<Vec<Value>, Status> {
     let tasks_str = call_smartape_api(
         "GET",
         &format!("/course/{}/tasks", courseid(&token)?),
-        Some(token),
+        Some(&token),
         "",
         false
     )?.text().unwrap();
 
-    // Add "solved" to tasks
-    let tasks: Value = serde_json::from_str(&tasks_str).unwrap();
-    let solved = progress(token)?;
-
-    let tasks_vec = tasks.as_array()
+    Ok(serde_json::from_str::<Vec<Value>>(&tasks_str)
         .unwrap()
-        .iter()
-        .map(|task| {
-            let mut task = task.clone();
+        .into_iter()
+        .map(|mut task| {
             let taskid = task["taskid"].as_i64().unwrap();
-            let is_solved = solved.contains(&serde_json::to_string(&task["taskid"])
-                .unwrap()
-                .parse()
-                .unwrap());
-            task["solved"] = serde_json::to_value(is_solved).unwrap();
 
             // Add stats data to tasks
             if TASK_STATS.contains_key(&taskid) {
@@ -105,9 +97,7 @@ pub fn tasks(token: &str) -> Result<Value, Status> {
 
             task
         })
-        .collect::<Vec<_>>();
-
-    Ok(serde_json::to_value(tasks_vec).unwrap())
+        .collect())
 }
 
 /// Wrapper for "GET /course/:courseid/tasks/:taskid/submissions: Get a list of all submission atempts"
@@ -137,7 +127,7 @@ pub fn submission(token: &str, taskid: &str, timestamp: &str) -> Result<Value, S
 }
 
 /// Wrapper for "GET /course/:courseid/submissions
-pub fn all_submissions(token: &str) -> Result<Value, Status> {
+pub fn all_submissions(token: &str) -> Result<Vec<Value>, Status> {
     let submissions_str = call_smartape_api(
         "GET",
         &format!("/course/{}/submissions", courseid(&token)?),
