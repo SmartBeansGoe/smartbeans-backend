@@ -1,8 +1,8 @@
 CREATE TABLE characters (
-    username VARCHAR PRIMARY KEY NOT NULL,
-    body_color TEXT DEFAULT null,
-    hat_id TEXT DEFAULT null,
-    face_id TEXT DEFAULT null,
-    shirt_id TEXT DEFAULT null,
-    pants_id TEXT DEFAULT null
+    username VARCHAR(128) PRIMARY KEY NOT NULL,
+    body_color TEXT DEFAULT NULL,
+    hat_id TEXT DEFAULT NULL,
+    face_id TEXT DEFAULT NULL,
+    shirt_id TEXT DEFAULT NULL,
+    pants_id TEXT DEFAULT NULL
 )

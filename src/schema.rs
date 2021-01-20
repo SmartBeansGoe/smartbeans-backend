@@ -2,14 +2,14 @@ table! {
     achievements (id) {
         id -> Integer,
         username -> Text,
-        achievementId -> BigInt,
-        completionTime -> BigInt,
+        achievementId -> Bigint,
+        completionTime -> Bigint,
     }
 }
 
 table! {
     characters (username) {
-        username -> Text,
+        username -> Varchar,
         body_color -> Nullable<Text>,
         hat_id -> Nullable<Text>,
         face_id -> Nullable<Text>,
@@ -20,15 +20,15 @@ table! {
 
 table! {
     charnames (username) {
-        username -> Text,
+        username -> Varchar,
         charname -> Text,
     }
 }
 
 table! {
     sessions (auth_token) {
-        auth_token -> Text,
-        expiration_time -> BigInt,
+        auth_token -> Varchar,
+        expiration_time -> Bigint,
         username -> Text,
         smartape_token -> Text,
     }
@@ -39,7 +39,7 @@ table! {
         id -> Integer,
         user -> Text,
         messageType -> Text,
-        time -> BigInt,
+        time -> Bigint,
         content -> Text,
     }
 }

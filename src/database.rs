@@ -1,10 +1,6 @@
 use diesel::prelude::*;
+use std::env;
 
-/// Struct can be used as a request guard whenever a connection
-/// to the main database is needed.
-#[database("main_db")]
-pub struct MainDbConn(diesel::SqliteConnection);
-
-pub fn establish_connection() -> SqliteConnection {
-    SqliteConnection::establish("db.sqlite").unwrap()
+pub fn establish_connection() -> MysqlConnection {
+    MysqlConnection::establish(&env::var("DATABASE_URL").expect("DATABASE_URL must be set")).unwrap()
 }

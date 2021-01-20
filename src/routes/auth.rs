@@ -15,9 +15,9 @@ use crate::models;
 
 //#[cfg(debug_assertions)] TODO: Reenable this before final
 #[get("/auth_debug/<username>")]
-pub fn auth_debug(username: String, conn: crate::database::MainDbConn) -> Result<Json<Value>, Status> {
+pub fn auth_debug(username: String) -> Result<Json<Value>, Status> {
     Ok(Json(json!({
-        "auth_token": create_session(username, conn, None)?
+        "auth_token": create_session(username, None)?
     })))
 }
 
@@ -28,13 +28,13 @@ pub fn auth_debug(_username: String) -> Status {
 }*/
 
 #[get("/auth_debug/<username>/<key>")]
-pub fn auth_debug_production(username: String, key: String,conn: crate::database::MainDbConn) -> Result<Json<Value>, Status> {
+pub fn auth_debug_production(username: String, key: String) -> Result<Json<Value>, Status> {
     if key != env::var("DEBUG_ACCESS_KEY").unwrap() || key == "changeme" {
         return Err(Status::Unauthorized);
     }
 
     Ok(Json(json!({
-        "auth_token": create_session(username, conn, None)?
+        "auth_token": create_session(username, None)?
     })))
 }
 
@@ -42,7 +42,7 @@ pub fn auth_debug_production(username: String, key: String,conn: crate::database
 /// successful, a cookie with an auth token is set and the user gets redirected to the frontend.
 /// Otherwise a 401 error is returned.
 #[post("/auth_cookie", data = "<data>")]
-pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data, conn: crate::database::MainDbConn) -> Result<Redirect, Status> {
+pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data) -> Result<Redirect, Status> {
     let data = crate::data_to_string(data);
 
     let username = validate_lti(
@@ -51,7 +51,7 @@ pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data, conn: crate::databa
         &env::var("LTI_SECRET").unwrap()
     )?;
 
-    let auth_token = create_session(username.clone(), conn, Some(&data))?;
+    let auth_token = create_session(username.clone(), Some(&data))?;
     cookies.add(
         Cookie::build("auth_token", auth_token.clone())
             .path("/")
@@ -66,7 +66,7 @@ pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data, conn: crate::databa
 
 /// Similar to auth_cookie, but instead of a redirect to the frontend, the auth token is returned.
 #[post("/auth_token", data = "<data>")]
-pub fn auth_token(data: rocket::Data, conn: crate::database::MainDbConn) -> Result<Json<Value>, Status> {
+pub fn auth_token(data: rocket::Data) -> Result<Json<Value>, Status> {
     let data = crate::data_to_string(data);
 
     let username = validate_lti(
@@ -76,7 +76,7 @@ pub fn auth_token(data: rocket::Data, conn: crate::database::MainDbConn) -> Resu
     )?;
 
     Ok(Json(json!({
-        "auth_token": create_session(username, conn, Some(&data))?
+        "auth_token": create_session(username, Some(&data))?
     })))
 }
 
@@ -144,7 +144,9 @@ fn perc_encode(input: &str) -> String {
 }
 
 // Creates a session for a user and returns the auth token
-fn create_session(username: String, conn: crate::database::MainDbConn, ltidata: Option<&str>) -> Result<String, Status> {
+fn create_session(username: String, ltidata: Option<&str>) -> Result<String, Status> {
+    let conn = crate::database::establish_connection();
+
     // Create random auth token
     let auth_token: String = thread_rng()
         .sample_iter(&Alphanumeric)
@@ -173,7 +175,7 @@ fn create_session(username: String, conn: crate::database::MainDbConn, ltidata: 
             username,
             smartape_token
         })
-        .execute(&*conn)
+        .execute(&conn)
         .unwrap();
 
     Ok(auth_token)

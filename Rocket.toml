@@ -7,6 +7,3 @@ log = "off"
 address = "0.0.0.0"
 port = 4224
 log = "off"
-
-[global.databases]
-main_db = { url = "db.sqlite" }

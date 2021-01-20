@@ -1,1 +1,0 @@
--- Dropping columns is not supported in SQLite

@@ -1,4 +1,4 @@
 CREATE TABLE charnames (
-    username VARCHAR PRIMARY KEY NOT NULL,
+    username VARCHAR(128) PRIMARY KEY NOT NULL,
     charname TEXT NOT NULL
 )
