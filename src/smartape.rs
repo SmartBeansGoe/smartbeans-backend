@@ -9,6 +9,8 @@ use rocket::http::Status;
 use serde_json::Value;
 use diesel::prelude::*;
 
+use crate::static_data::TASK_STATS;
+
 /// Wrapper for GET/POST /login/... . Returns a session token. Returns 404 if the user does not
 /// exist in the SmartApe database.
 pub fn login(username: &str, ltidata: Option<&str>) -> Result<String, Status> {
@@ -67,7 +69,7 @@ pub fn progress(token: &str) -> Result<Vec<i64>, Status> {
 }
 
 /// Wrapper for "GET /course/:courseid/tasks: Get a list of all tasks"
-/// Also contains information whether a task is solved.
+/// Also contains information whether a task is solved and stats data from data/tash_stats.json.
 pub fn tasks(token: &str) -> Result<Value, Status> {
     let tasks_str = call_smartape_api(
         "GET",
@@ -86,11 +88,21 @@ pub fn tasks(token: &str) -> Result<Value, Status> {
         .iter()
         .map(|task| {
             let mut task = task.clone();
+            let taskid = task["taskid"].as_i64().unwrap();
             let is_solved = solved.contains(&serde_json::to_string(&task["taskid"])
                 .unwrap()
                 .parse()
                 .unwrap());
             task["solved"] = serde_json::to_value(is_solved).unwrap();
+
+            // Add stats data to tasks
+            if TASK_STATS.contains_key(&taskid) {
+                task["difficulty"] = TASK_STATS[&taskid]["difficulty"].clone();
+                task["categories"] = TASK_STATS[&taskid]["categories"].clone();
+                task["points"] = TASK_STATS[&taskid]["points"].clone();
+                task["skills"] = TASK_STATS[&taskid]["skills"].clone();
+            }
+
             task
         })
         .collect::<Vec<_>>();

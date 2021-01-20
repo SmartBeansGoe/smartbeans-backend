@@ -59,11 +59,15 @@ Example output:
 ```
 [
     {
-        name: "A1 Task 1",
-        shortname: "A1",
-        solved: true,
-        task: "Description",
-        taskid: 42
+        'taskid': <Integer>,
+        'name': <String>,
+        'shortname': <String>,
+        'solved': <Bool>,
+        'task': <String>,
+        'difficulty': <String>,
+        'points': Integer,
+        'categories': [ <String>, ... ].
+        'skills': [ { 'name': <String>, 'points': <Integer> }, ... ]
     },
     ...
 ]
