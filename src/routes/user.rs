@@ -31,8 +31,6 @@ pub fn system_messages(user: guards::User) -> Json<Value> {
         };
         message_json["type"] = Value::String(message.message_type);
 
-        println!("{:?}", message_json["content"]);
-
         messages_json.push(message_json);
     }
 
