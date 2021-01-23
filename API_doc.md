@@ -95,8 +95,14 @@ Input (`Content-Type` header has to be `text/plain`):
 
 Output:
 ```
-Currently only an empty string, but we could change that, if more information is needed.
+The result of the evaluation (see /submissions/<taskid> for an example)
 ```
+
+### GET /submissions/all
+
+Returns all submitted solutions of the user.
+
+Output is similar to GET /submissions/\<taskid\>, with the exception that there is an additional field 'taskid' in every submission.
 
 ### GET /submissions/\<taskid\>
 

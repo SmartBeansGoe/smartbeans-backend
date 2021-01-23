@@ -140,14 +140,16 @@ pub fn all_submissions(token: &str) -> Result<Vec<Value>, Status> {
 }
 
 /// Wrapper for "POST /course/:courseid/tasks/:taskid/submissions: Submit a task"
-pub fn submit(token: &str, taskid: &str, submission: &str) -> Result<String, Status> {
-    Ok(call_smartape_api(
+pub fn submit(token: &str, taskid: &str, submission: &str) -> Result<Value, Status> {
+    let result = call_smartape_api(
         "POST",
         &format!("/course/{}/tasks/{}/submissions", courseid(&token)?, taskid),
         Some(token),
         &serde_json::to_string(&json!({"sourceCode": submission})).unwrap(),
         true
-    )?.text().unwrap())
+    )?.text().unwrap();
+
+    Ok(serde_json::from_str(&result).unwrap())
 }
 
 /// Wrapper for "POST /share: Share a task i.e. create a pad"

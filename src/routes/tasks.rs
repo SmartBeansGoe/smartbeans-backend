@@ -29,13 +29,18 @@ pub fn progress(user: guards::User) -> Result<String, Status> {
 }
 
 #[post("/submit/<taskid>", format = "text/plain", data = "<data>")]
-pub fn submit(user: guards::User, taskid: String, data: rocket::Data) -> Result<String, Status> {
+pub fn submit(user: guards::User, taskid: String, data: rocket::Data) -> Result<Json<Value>, Status> {
     let data = crate::data_to_string(data);
-    smartape::submit(&user.token, &taskid, &data)?;
+    let result = smartape::submit(&user.token, &taskid, &data)?;
 
     crate::achievements::AchievementTrigger::new(&user)?.run("submission");
 
-    Ok(String::new())
+    Ok(Json(result))
+}
+
+#[get("/submissions/all")]
+pub fn all_submissions(user: guards::User) -> Result<Json<Value>, Status> {
+    Ok(Json(serde_json::to_value(smartape::all_submissions(&user.token)?).unwrap()))
 }
 
 #[get("/submissions/<taskid>")]

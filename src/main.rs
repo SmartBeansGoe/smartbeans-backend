@@ -81,6 +81,7 @@ fn main() {
             routes::tasks::progress,
             routes::tasks::submit,
             routes::tasks::submissions,
+            routes::tasks::all_submissions,
             routes::character::get_character,
             routes::character::post_character,
             routes::character::get_assets,
