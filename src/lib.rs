@@ -17,6 +17,7 @@ pub mod achievements;
 pub mod init_user;
 pub mod system_messages;
 pub mod static_data;
+pub mod level;
 
 use std::io::Read;
 use std::time::{SystemTime, UNIX_EPOCH};

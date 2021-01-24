@@ -207,6 +207,26 @@ Output:
 }
 ```
 
+### /level_data (GET)
+
+Output:
+```
+{
+  "level": <current level>,
+  "max_level": <maximum level>,
+  "next_points": <points needed for next level>,
+  "points": <current points>,
+  "skills": [
+    {
+      "name": <String>,
+      "max_points": <maximum points for this skill>,
+      "points": <current points in this skill>
+    },
+    ...
+  ]
+}
+```
+
 ### /system_messages (GET)
 
 General route for system messages.

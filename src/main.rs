@@ -76,6 +76,7 @@ fn main() {
             routes::user::get_username,
             routes::user::get_achievements,
             routes::user::system_messages,
+            routes::user::level_data,
             routes::misc::rand,
             routes::tasks::get_tasks,
             routes::tasks::progress,
