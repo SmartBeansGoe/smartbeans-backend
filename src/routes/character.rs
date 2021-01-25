@@ -32,7 +32,6 @@ pub struct CharacterJson {
 
 #[post("/character", data = "<data>")]
 pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<Status, Status> {
-    // TODO: Race Condition?
     use crate::schema::characters::dsl::*;
     let conn = crate::database::establish_connection();
 

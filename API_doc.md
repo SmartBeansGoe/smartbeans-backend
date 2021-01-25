@@ -194,6 +194,10 @@ Example output:
 
 For more information regarding the content of the "result" item of a submission, see [here](https://pad.gwdg.de/VL4fUT5gSvKQWSIT8w5lag?view#Spezifikation-der-REST-API-Schnittstelle). You probably want to to read the paragraph "Ausgabe für `POST /evaluate`". Good luck!
 
+### /share/\<taskid\>/\<submission timestamp\>
+
+Creates a CodiMD pad for sharing a solution. Returns the URL of the pad as plain text.
+
 ## user
 
 ### /username (GET)

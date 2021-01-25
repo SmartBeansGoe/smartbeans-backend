@@ -101,7 +101,7 @@ pub fn tasks(token: String) -> Result<Vec<Value>, Status> {
 }
 
 /// Wrapper for "GET /course/:courseid/tasks/:taskid/submissions: Get a list of all submission atempts"
-pub fn submissions(token: &str, taskid: &str) -> Result<Value, Status> {
+pub fn submissions(token: &str, taskid: i64) -> Result<Value, Status> {
     let submissions_str = call_smartape_api(
         "GET",
         &format!("/course/{}/tasks/{}/submissions", courseid(&token)?, taskid),
@@ -114,7 +114,7 @@ pub fn submissions(token: &str, taskid: &str) -> Result<Value, Status> {
 }
 
 /// Wrapper for "GET /course/:courseid/tasks/:taskid/submissions/:timestamp: Get details for a submission, including results"
-pub fn submission(token: &str, taskid: &str, timestamp: &str) -> Result<Value, Status> {
+pub fn submission(token: &str, taskid: i64, timestamp: i64) -> Result<Value, Status> {
     let submission_str = call_smartape_api(
         "GET",
         &format!("/course/{}/tasks/{}/submissions/{}", courseid(&token)?, taskid, timestamp),
@@ -153,10 +153,16 @@ pub fn submit(token: &str, taskid: &str, submission: &str) -> Result<Value, Stat
 }
 
 /// Wrapper for "POST /share: Share a task i.e. create a pad"
-/// Currently unimplemented
-pub fn share() {
-    // TODO
-    unimplemented!()
+pub fn share(token: &str, taskid: i64, submission: i64, content: &str) -> Result<String, Status> {
+    let result = call_smartape_api(
+        "POST",
+        "/share",
+        Some(token),
+        &serde_json::to_string(&json!({"taskid": taskid, "timestamp": submission, "content": content})).unwrap(),
+        true
+    )?.text().unwrap();
+
+    Ok(result)
 }
 
 /// Calls the SmartApe backend API (URL specified in .env). Returns 500 if something went wrong.

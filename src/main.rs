@@ -83,6 +83,7 @@ fn main() {
             routes::tasks::submit,
             routes::tasks::submissions,
             routes::tasks::all_submissions,
+            routes::tasks::share,
             routes::character::get_character,
             routes::character::post_character,
             routes::character::get_assets,

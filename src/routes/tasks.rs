@@ -53,3 +53,45 @@ pub fn submissions(user: guards::User, taskid: i64) -> Result<Json<Value>, Statu
 
     Ok(Json(serde_json::to_value(subs).unwrap()))
 }
+
+#[post("/share/<taskid>/<timestamp>")]
+pub fn share(user: guards::User, taskid: i64, timestamp: i64) -> Result<String, Status> {
+    let task = smartape::tasks(user.token.clone())?.into_iter()
+        .find(|task| task["taskid"].as_i64() == Some(taskid))
+        .ok_or(Status::NotFound)?;
+    let submission = smartape::submission(&user.token, taskid, timestamp)?;
+
+    let content = format!(
+r#"# {}
+User: {}
+
+## Abgegebene Lösung
+
+```c=
+{}
+```
+
+## Problem
+
+*Beschreibe hier (kurz), wobei du Hilfe brauchst.*
+
+## Lösungsauswertung
+
+```json=
+{:#}
+```
+
+## Aufgabenstellung
+
+{}
+"#,
+    task["name"].as_str().unwrap(),
+    user.name,
+    submission["sourceCode"].as_str().unwrap(),
+    submission["result"],
+    task["task"].as_str().unwrap());
+
+
+
+    smartape::share(&user.token, taskid, timestamp, &content)
+}
