@@ -44,10 +44,18 @@ table! {
     }
 }
 
+table! {
+    users (username) {
+        username -> Varchar,
+        first_login -> Bool,
+    }
+}
+
 allow_tables_to_appear_in_same_query!(
     achievements,
     characters,
     charnames,
     sessions,
     system_messages,
+    users,
 );

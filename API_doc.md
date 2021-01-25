@@ -270,7 +270,8 @@ Output:
         'id': <Integer>,
         'name': <String>,
         'description': <String>,
-        'completed': <Timestamp or null>
+        'completed': <Timestamp or null>,
+        'frequency': <Relative number of times this achievement has been completed (in %)>
     },
     ...
 ]
