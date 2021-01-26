@@ -2,10 +2,10 @@
 
   {
     "id": 1,
-    "name": "Erste Erfolge",
+    "name": "Ein erster Schritt...",
     "description": {
-      "open": "Löse drei Aufgaben.",
-      "completed": "Du hast drei Aufgaben gelöst."
+      "open": "...auf dem Weg zum Erfolg.",
+      "completed": "...auf dem Weg zum Erfolg. Du hast deine erste Aufgabe gelöst."
     },
     "hidden": false,
     "triggers": ["login","submission"]
@@ -35,7 +35,7 @@
 
   {
     "id": 4,
-    "name": "Perfektionist",
+    "name": "Perfektion",
     "description": {
       "open": "Löse alle Aufgaben.",
       "completed": "Du hast alle Aufgaben gelöst."
@@ -46,9 +46,9 @@
 
   {
     "id": 5,
-    "name": "Schall und Rauch?",
+    "name": "Nur Schall und Rauch?",
     "description": {
-      "open": "Ändere deinen Namen.",
+      "open": "Nomen est omen!",
       "completed": "Du hast deinen Namen geändert."
     },
     "hidden": false,
@@ -57,13 +57,144 @@
 
   {
     "id": 6,
-    "name": "Verkleidungskünstler.",
+    "name": "Verkleidungskünstler",
     "description": {
       "open": "Ziehe deinen Charakter vollständig an.",
       "completed": "Du hast deinen Charakter vollständig angezogen."
     },
     "hidden": false,
     "triggers": ["login","char_changed"]
-  }
+  },
 
+  {
+    "id": 7,
+    "name": "Trollmathematik (WIP)",
+    "description": {
+      "open": "Löse viele Aufgaben.",
+      "completed": "Du hast 1, 2, 3, viele Aufgaben gelöst."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 8,
+    "name": "Kompilations-Komplikationen (WIP)",
+    "description": {
+      "open": "\"But it worked on my machine.\"",
+      "completed": "Du hast 3 Compilerfehler verursacht."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 9,
+    "name": "Aber es muss funktionieren! (WIP)",
+    "description": {
+      "open": "Die Definition von Wahnsinn ist, immer wieder das Gleiche zu tun und andere Ergebnisse zu erwarten.",
+      "completed": "Du hast in einer Aufgabe zwei mal die gleiche, falsche Lösung hochgeladen."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 10,
+    "name": "Doppelt hält besser (WIP)",
+    "description": {
+      "open": "Nur um ganz sicherzugehen...",
+      "completed": "Du hast in einer Aufgabe zwei richtige Lösungen hochgeladen."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 11,
+    "name": "Multitalent (WIP)",
+    "description": {
+      "open": "Erreiche in jeder Fähigkeit mindestens 50%.",
+      "completed": "Du hast in jeder Fähigkeit mindestens 50% erreicht.."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 12,
+    "name": "Maximiert (WIP)",
+    "description": {
+      "open": "Erreiche in drei Fähigkeiten 100%.",
+      "completed": "Du hast in drei Fähigkeiten 100% erreicht."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 13,
+    "name": "Unentschlossen (WIP)",
+    "description": {
+      "open": "So viel Auswahl...",
+      "completed": "Du hast dich 7 Mal umgekleidet."
+    },
+    "hidden": false,
+    "triggers": ["login","char_changed"]
+  },
+
+  {
+    "id": 14,
+    "name": "Von allem ein bisschen (WIP)",
+    "description": {
+      "open": "Löse zu jeder Fähigkeit eine Aufgabe.",
+      "completed": "Du hast zu jeder Fähigkeit eine Aufgabe gelöst."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 15,
+    "name": "404 (WIP)",
+    "description": {
+      "open": "Achievement not found",
+      "completed": "Achievement found!"
+    },
+    "hidden": false,
+    "triggers": ["404"]
+  },
+
+  {
+    "id": 16,
+    "name": "Durchgespielt (WIP)",
+    "description": {
+      "open": "Schalte alle (anderen) Errungenschaften frei.",
+      "completed": "Du hast alle Errungenschaften freigeschaltet."
+    },
+    "hidden": false,
+    "triggers": ["login","???"]
+  },
+
+  {
+    "id": 17,
+    "name": "Schnörkellos (WIP)",
+    "description": {
+      "open": "Löse E8, ohne eine Schleife zu verwenden.",
+      "completed": "Du hast E8 gelöst, ohne eine Schleife zu verwenden."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 18,
+    "name": "Auf dem Weg nach oben (WIP)",
+    "description": {
+      "open": "Erreiche Stufe 5.",
+      "completed": "Du hast Stufe 5 erreicht."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  }
 ]

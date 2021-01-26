@@ -78,15 +78,27 @@ impl AchievementTrigger {
             4 => self.check_4(),
             5 => self.check_5(),
             6 => self.check_6(),
+            7 => self.check_7(),
+            8 => self.check_8(),
+            9 => self.check_9(),
+            10 => self.check_10(),
+            11 => self.check_11(),
+            12 => self.check_12(),
+            13 => self.check_13(),
+            14 => self.check_14(),
+            15 => self.check_15(),
+            16 => self.check_16(),
+            17 => self.check_17(),
+            18 => self.check_18(),
             _ => panic!("Non-existent achievement id")
         }
     }
 
     // === Check functions for individual achievements =====
 
-    // Erste Erfolge; login, submission
+    // Ein erster Schritt...; login, submission
     fn check_1(&self) -> bool {
-        self.solved_tasks.len() >= 3
+        !self.solved_tasks.is_empty()
     }
 
     // Alles eine Frage des Systems; login, submission
@@ -104,7 +116,7 @@ impl AchievementTrigger {
         self.solved_tasks.len() >= crate::smartape::tasks(self.token.clone()).unwrap().len()
     }
 
-    // Namen sind Schall und Rauch; nickname_changed
+    // Nur Schall und Rauch?; nickname_changed
     fn check_5(&self) -> bool {
         true
     }
@@ -118,6 +130,54 @@ impl AchievementTrigger {
         && char.hat_id.is_some()
         && char.shirt_id.is_some()
         && char.pants_id.is_some()
+    }
+
+    fn check_7(&self) -> bool {
+        false
+    }
+
+    fn check_8(&self) -> bool {
+        false
+    }
+
+    fn check_9(&self) -> bool {
+        false
+    }
+
+    fn check_10(&self) -> bool {
+        false
+    }
+
+    fn check_11(&self) -> bool {
+        false
+    }
+
+    fn check_12(&self) -> bool {
+        false
+    }
+
+    fn check_13(&self) -> bool {
+        false
+    }
+
+    fn check_14(&self) -> bool {
+        false
+    }
+
+    fn check_15(&self) -> bool {
+        false
+    }
+
+    fn check_16(&self) -> bool {
+        false
+    }
+
+    fn check_17(&self) -> bool {
+        false
+    }
+
+    fn check_18(&self) -> bool {
+        false
     }
 }
 
