@@ -211,6 +211,22 @@ Output:
 }
 ```
 
+### /user/data (GET)
+
+Returns some userdata.
+
+Output:
+```
+{
+    'username': <string>,
+    'first_login': <bool>
+}
+```
+
+### /user/first_login_done (POST)
+
+Sets the first_login variable to false.
+
 ### /level_data (GET)
 
 Output:

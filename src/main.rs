@@ -78,6 +78,8 @@ fn main() {
             routes::user::system_messages,
             routes::user::level_data,
             routes::user::set_404,
+            routes::user::get_userdata,
+            routes::user::first_login_done,
             routes::misc::rand,
             routes::tasks::get_tasks,
             routes::tasks::progress,

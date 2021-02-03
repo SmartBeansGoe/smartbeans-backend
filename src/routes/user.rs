@@ -1,6 +1,7 @@
 use rocket_contrib::json::Json;
 use rocket::http::Status;
 use serde_json::{Value, Number};
+use diesel::prelude::*;
 use crate::guards;
 use crate::level;
 
@@ -10,6 +11,36 @@ pub fn get_username(user: guards::User) -> Json<Value> {
     Json(json!({
         "username": user.name
     }))
+}
+
+/// Returns some userdata
+#[get("/user/data")]
+pub fn get_userdata(user: guards::User) -> Json<Value> {
+    use crate::schema::users::dsl::*;
+
+    let the_first_login_that_is_not_the_table_column: bool = users
+        .filter(username.eq(&user.name))
+        .select(first_login)
+        .first(&crate::database::establish_connection())
+        .expect("Database error");
+
+    Json(json!({
+        "username": user.name,
+        "first_login": the_first_login_that_is_not_the_table_column
+    }))
+}
+
+/// Sets first_login to false
+#[post("/user/first_login_done")]
+pub fn first_login_done(user: guards::User) -> Status {
+    use crate::schema::users::dsl::*;
+
+    diesel::update(users.filter(username.eq(&user.name)))
+        .set(first_login.eq(false))
+        .execute(&crate::database::establish_connection())
+        .expect("Database error");
+
+    Status::Ok
 }
 
 #[get("/level_data")]
@@ -77,6 +108,7 @@ pub fn system_messages(user: guards::User) -> Json<Value> {
     Json(serde_json::to_value(messages_json).unwrap())
 }
 
+// DEBUG TODO
 #[get("/message_test")]
 pub fn message_test(user: guards::User) -> Json<Value> {
     let mut achievement = json!({});
