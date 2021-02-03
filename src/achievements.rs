@@ -164,8 +164,9 @@ impl AchievementTrigger {
         false
     }
 
+    // 404; 404
     fn check_15(&self) -> bool {
-        false
+        true
     }
 
     fn check_16(&self) -> bool {

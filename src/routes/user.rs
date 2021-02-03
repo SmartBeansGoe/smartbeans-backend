@@ -49,6 +49,13 @@ pub fn get_achievements(user: guards::User) -> Json<Value> {
     Json(serde_json::to_value(crate::achievements::achievements(&user.name)).unwrap())
 }
 
+#[post("/achievements/404")]
+pub fn set_404(user: guards::User) -> Result<Status, Status> {
+    crate::achievements::AchievementTrigger::new(&user)?.run("404");
+
+    Ok(Status::Ok)
+}
+
 #[get("/system_messages")]
 pub fn system_messages(user: guards::User) -> Json<Value> {
     let messages = crate::system_messages::receive_messages(&user.name);

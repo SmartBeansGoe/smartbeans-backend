@@ -281,6 +281,10 @@ Output:
 ]
 ```
 
+### /achievements/404 (POST)
+
+Sets the 404 achievement. Returns Status::Ok (200?) if successful.
+
 ## character
 
 Character data is initialized with `null` for every field on first login. Character name is initialized with user name.

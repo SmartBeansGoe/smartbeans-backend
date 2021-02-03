@@ -145,7 +145,7 @@
 
   {
     "id": 14,
-    "name": "Von allem ein bisschen (WIP)",
+    "name": "Von allem etwas (WIP)",
     "description": {
       "open": "Löse zu jeder Fähigkeit eine Aufgabe.",
       "completed": "Du hast zu jeder Fähigkeit eine Aufgabe gelöst."
@@ -156,7 +156,7 @@
 
   {
     "id": 15,
-    "name": "404 (WIP)",
+    "name": "404",
     "description": {
       "open": "Achievement not found",
       "completed": "Achievement found!"
@@ -193,6 +193,17 @@
     "description": {
       "open": "Erreiche Stufe 5.",
       "completed": "Du hast Stufe 5 erreicht."
+    },
+    "hidden": false,
+    "triggers": ["login","submission"]
+  },
+
+  {
+    "id": 19,
+    "name": "Etwas von allem (WIP)",
+    "description": {
+      "open": "Erreiche 50% Flächenabdeckung im Fähigkeiten-Netzdiagramm.",
+      "completed": "Du hast 50% Abdeckung im Fähigkeiten-Netzdiagramm erreicht."
     },
     "hidden": false,
     "triggers": ["login","submission"]
