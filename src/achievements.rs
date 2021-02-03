@@ -90,6 +90,7 @@ impl AchievementTrigger {
             16 => self.check_16(),
             17 => self.check_17(),
             18 => self.check_18(),
+            19 => self.check_19(),
             _ => panic!("Non-existent achievement id")
         }
     }
@@ -178,6 +179,10 @@ impl AchievementTrigger {
     }
 
     fn check_18(&self) -> bool {
+        false
+    }
+
+    fn check_19(&self) -> bool {
         false
     }
 }
