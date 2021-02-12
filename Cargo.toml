@@ -3,6 +3,7 @@ name = "smartbeans-backend"
 version = "0.1.0"
 authors = ["Niklas Birth <birth@posteo.de>"]
 edition = "2018"
+default-run = "backend"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -26,6 +27,9 @@ rocket-slog = "0.4.0"
 sloggers = "1.0.1"
 lazy_static = "1.4.0"
 cached = "0.23.0"
+telegram-bot = "0.8.0"
+tokio = { version = "0.2", features = ["macros", "time", "fs"] }
+futures = "0.3"
 
 [dependencies.rocket_contrib]
 version = "*"
