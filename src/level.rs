@@ -27,6 +27,10 @@ pub fn total_points() -> HashMap<String, u64> {
 pub fn user_points(token: &str) -> Result<HashMap<String, u64>, Status> {
     let mut map = HashMap::new();
 
+    for key in total_points().keys() {
+        map.insert(key.to_string(), 0);
+    }
+
     let progress = crate::smartape::progress(&token)?;
     let tasks = crate::smartape::tasks(token.to_string())?
         .into_iter()
