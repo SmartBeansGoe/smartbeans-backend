@@ -81,6 +81,7 @@ fn main() {
             routes::user::get_userdata,
             routes::user::first_login_done,
             routes::misc::rand,
+            routes::misc::error,
             routes::tasks::get_tasks,
             routes::tasks::progress,
             routes::tasks::submit,
