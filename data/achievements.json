@@ -59,8 +59,8 @@
     "id": 6,
     "name": "Verkleidungskünstler",
     "description": {
-      "open": "Ziehe deinen Charakter vollständig an.",
-      "completed": "Du hast deinen Charakter vollständig angezogen."
+      "open": "Kleider machen Leute",
+      "completed": "Du hast deinen Charakter angezogen."
     },
     "hidden": false,
     "triggers": ["login","char_changed"]
@@ -68,7 +68,7 @@
 
   {
     "id": 7,
-    "name": "Trollmathematik (WIP)",
+    "name": "Trollmathematik",
     "description": {
       "open": "Löse viele Aufgaben.",
       "completed": "Du hast 1, 2, 3, viele Aufgaben gelöst."
@@ -79,7 +79,7 @@
 
   {
     "id": 8,
-    "name": "Kompilations-Komplikationen (WIP)",
+    "name": "Kompilations-Komplikationen",
     "description": {
       "open": "\"But it worked on my machine.\"",
       "completed": "Du hast 3 Compilerfehler verursacht."
@@ -90,7 +90,7 @@
 
   {
     "id": 9,
-    "name": "Aber es muss funktionieren! (WIP)",
+    "name": "Aber es muss funktionieren!",
     "description": {
       "open": "Die Definition von Wahnsinn ist, immer wieder das Gleiche zu tun und andere Ergebnisse zu erwarten.",
       "completed": "Du hast in einer Aufgabe zwei mal die gleiche, falsche Lösung hochgeladen."
@@ -101,7 +101,7 @@
 
   {
     "id": 10,
-    "name": "Doppelt hält besser (WIP)",
+    "name": "Doppelt hält besser",
     "description": {
       "open": "Nur um ganz sicherzugehen...",
       "completed": "Du hast in einer Aufgabe zwei richtige Lösungen hochgeladen."
@@ -112,7 +112,7 @@
 
   {
     "id": 11,
-    "name": "Multitalent (WIP)",
+    "name": "Multitalent",
     "description": {
       "open": "Erreiche in jeder Fähigkeit mindestens 50%.",
       "completed": "Du hast in jeder Fähigkeit mindestens 50% erreicht.."
@@ -123,7 +123,7 @@
 
   {
     "id": 12,
-    "name": "Maximiert (WIP)",
+    "name": "Maximiert",
     "description": {
       "open": "Erreiche in drei Fähigkeiten 100%.",
       "completed": "Du hast in drei Fähigkeiten 100% erreicht."
@@ -145,7 +145,7 @@
 
   {
     "id": 14,
-    "name": "Von allem etwas (WIP)",
+    "name": "Von allem etwas",
     "description": {
       "open": "Löse zu jeder Fähigkeit eine Aufgabe.",
       "completed": "Du hast zu jeder Fähigkeit eine Aufgabe gelöst."
@@ -189,7 +189,7 @@
 
   {
     "id": 18,
-    "name": "Auf dem Weg nach oben (WIP)",
+    "name": "Auf dem Weg nach oben",
     "description": {
       "open": "Erreiche Stufe 5.",
       "completed": "Du hast Stufe 5 erreicht."

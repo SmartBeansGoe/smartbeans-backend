@@ -21,6 +21,8 @@ pub struct AchievementTrigger {
     solved_tasks: Vec<i64>,
     /// All submissions as JSON values
     submissions: Vec<Value>,
+    /// User's points
+    points: HashMap<String, u64>
 }
 
 impl AchievementTrigger {
@@ -33,7 +35,8 @@ impl AchievementTrigger {
             achievements: &ACHIEVEMENTS,
             completed: completed_achievements(&user.name),
             solved_tasks: crate::smartape::progress(&user.token)?,
-            submissions
+            submissions,
+            points: crate::level::user_points(&user.token)?
         })
     }
 
@@ -133,36 +136,106 @@ impl AchievementTrigger {
         && char.pants_id.is_some()
     }
 
+    // Trollmathematik; login, submission
     fn check_7(&self) -> bool {
-        false
+        self.solved_tasks.len() >= 3 && self.solved_tasks.contains(&48)
     }
 
+    // Kompilations-Komplikationen; login, submission
     fn check_8(&self) -> bool {
-        false
+        self.submissions.iter()
+            .filter(|submission| {
+                submission["result"]["type"] == Value::String("COMPILE_ERROR".to_string())
+            })
+            .count() >= 3
     }
 
+    // Aber es muss funktionieren!; login, submission
     fn check_9(&self) -> bool {
+        let mut wrong_submissions = self.submissions.iter()
+            .filter(|submission| {
+                submission["result"]["type"] != Value::String("SUCCESS".to_string())
+            })
+            .collect::<Vec<_>>();
+
+        wrong_submissions.sort_unstable_by(|a, b| {
+            Value::as_str(&a["sourceCode"]).unwrap()
+                .cmp(&Value::as_str(&b["sourceCode"]).unwrap())
+        });
+
+        for i in 0..wrong_submissions.len() - 1 {
+            if wrong_submissions[i]["sourceCode"] == wrong_submissions[i+1]["sourceCode"]
+                && wrong_submissions[i]["taskid"] == wrong_submissions[i+1]["taskid"] {
+                return true;
+            }
+        }
+
         false
     }
 
+    // Doppelt hält besser; login, submission
     fn check_10(&self) -> bool {
+        let mut correct_submissions = self.submissions.iter()
+            .filter(|submission| {
+                submission["result"]["type"] == Value::String("SUCCESS".to_string())
+            })
+            .collect::<Vec<_>>();
+
+        correct_submissions.sort_unstable_by(|a, b| {
+            Value::as_i64(&a["taskid"]).unwrap()
+                .cmp(&Value::as_i64(&b["taskid"]).unwrap())
+        });
+
+        for i in 0..correct_submissions.len() - 1 {
+            if correct_submissions[i]["taskid"] == correct_submissions[i+1]["taskid"] {
+                return true;
+            }
+        }
+
         false
     }
 
+    // Multitalent; login, submission
     fn check_11(&self) -> bool {
-        false
+        let total_points = crate::level::total_points();
+
+        for (key, value) in self.points.iter() {
+            if *value as f64 / (total_points[key] as f64) < 0.5 {
+                return false;
+            }
+        }
+
+        true
     }
 
+    // Maximiert; login, submission
     fn check_12(&self) -> bool {
-        false
+        let total_points = crate::level::total_points();
+        let mut count = 0;
+
+        for (key, value) in self.points.iter() {
+            if value == &total_points[key] {
+                count += 1;
+            }
+        }
+
+        count >= 3
     }
 
+    // Unentschlossen; login, char_changed TODO
     fn check_13(&self) -> bool {
         false
     }
 
+    // Von allem etwas; login, submission
     fn check_14(&self) -> bool {
-        false
+        for value in self.points.values() {
+            if value <= &0 {
+                return false;
+            }
+        }
+
+        true
     }
 
     // 404; 404
@@ -170,18 +243,24 @@ impl AchievementTrigger {
         true
     }
 
+    // Durchgespielt; login, ??? TODO
     fn check_16(&self) -> bool {
         false
     }
 
+    // Schnörkellos; login, submission TODO
     fn check_17(&self) -> bool {
         false
     }
 
+    // Auf dem Weg nach oben; login, submission
     fn check_18(&self) -> bool {
-        false
+        // Very slow function TODO
+        // std::thread::sleep(std::time::Duration::from_secs(10));
+        crate::level::points_to_level(crate::level::user_points(&self.token).unwrap()["total"]) >= 5
     }
 
+    // Etwas von allem; login, submission TODO
     fn check_19(&self) -> bool {
         false
     }

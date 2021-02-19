@@ -94,7 +94,6 @@ fn main() {
             routes::character::get_assets,
             routes::character::get_charname,
             routes::character::post_charname,
-            routes::user::message_test,
         ])
         .attach(cors)
         .attach(SlogFairing::new(logger))

@@ -107,21 +107,3 @@ pub fn system_messages(user: guards::User) -> Json<Value> {
 
     Json(serde_json::to_value(messages_json).unwrap())
 }
-
-// DEBUG TODO
-#[get("/message_test")]
-pub fn message_test(user: guards::User) -> Json<Value> {
-    let mut achievement = json!({});
-    achievement["id"] = Value::Number(Number::from(42));
-    achievement["name"] = Value::String("Test".to_string());
-    achievement["description"] = Value::String("Testen ist wichtig!".to_string());
-    achievement["completed"] = Value::Number(Number::from(234567));
-
-    crate::system_messages::send_message(
-        &user.name,
-        "achievement_unlocked",
-        &achievement.to_string()
-    );
-
-    system_messages(user)
-}
