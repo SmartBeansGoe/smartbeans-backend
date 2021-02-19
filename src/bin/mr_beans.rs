@@ -1,12 +1,22 @@
-use telegram_bot::prelude::*;
-use telegram_bot::{Api, Error, Message, MessageKind, ParseMode, UpdateKind};
+use telegram_bot::{Api, Error, Message, MessageKind, UpdateKind};
 use futures::StreamExt;
+use std::env;
+use smartbeans_backend::bot;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let token = "1600088858:AAGf2GCvTJb4KKx59cBDq1DrdY1ZrxeeT0c";
+    // Load environment variables from .env
+    dotenv::dotenv().ok();
 
-    let api = Api::new(token);
+    // Load default values from .env-default
+    if dotenv::from_filename(".env-default").is_err() {
+        println!("Error: .env-default not found. Exiting...");
+        std::process::exit(1);
+    }
+
+    let token = env::var("BOT_TOKEN").expect("Environment variable BOT_TOKEN not found!");
+
+    let api = Api::new(&token);
     let mut stream = api.stream();
 
     while let Some(update) = stream.next().await {
@@ -22,17 +32,12 @@ async fn main() -> Result<(), Error> {
 async fn read_message(api: Api, message: Message) -> Result<(), Error> {
     match message.kind {
         MessageKind::Text { ref data, .. } => match data.as_str() {
-            "/version" => version_message(api, message).await?,
+            "/version" => bot::version_message(api, message).await?,
+            "/chatid" => bot::chatid_message(api, message).await?,
             _ => (),
         },
         _ => (),
     };
-
-    Ok(())
-}
-
-async fn version_message(api: Api, message: Message) -> Result<(), Error> {
-    api.send(message.text_reply(env!("GIT_HASH"))).await?;
 
     Ok(())
 }

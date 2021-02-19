@@ -390,3 +390,11 @@ Output:
     'rand': '...'
 }
 ```
+### /report_error (POST)
+
+Stores an error report and sends it to Telegram via Mr Beans. Expects 'text/plain' as content type.
+
+Input:
+```
+<String>
+```

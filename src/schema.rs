@@ -26,6 +26,15 @@ table! {
 }
 
 table! {
+    error_reports (id) {
+        id -> Integer,
+        time -> Bigint,
+        username -> Varchar,
+        message -> Text,
+    }
+}
+
+table! {
     sessions (auth_token) {
         auth_token -> Varchar,
         expiration_time -> Bigint,
@@ -55,6 +64,7 @@ allow_tables_to_appear_in_same_query!(
     achievements,
     characters,
     charnames,
+    error_reports,
     sessions,
     system_messages,
     users,
