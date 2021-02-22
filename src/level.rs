@@ -3,6 +3,7 @@
 use cached::proc_macro::cached;
 use rocket::http::Status;
 use serde_json::Value;
+use diesel::prelude::*;
 use std::collections::HashMap;
 use crate::static_data::TASK_STATS;
 
@@ -24,15 +25,15 @@ pub fn total_points() -> HashMap<String, u64> {
     map
 }
 
-pub fn user_points(token: &str) -> Result<HashMap<String, u64>, Status> {
+pub fn user_points(user: &crate::guards::User) -> Result<HashMap<String, u64>, Status> {
     let mut map = HashMap::new();
 
     for key in total_points().keys() {
         map.insert(key.to_string(), 0);
     }
 
-    let progress = crate::smartape::progress(&token)?;
-    let tasks = crate::smartape::tasks(token.to_string())?
+    let progress = crate::smartape::progress(&user.token)?;
+    let tasks = crate::smartape::tasks(user.token.to_string())?
         .into_iter()
         .filter(|task| task["points"].as_u64().is_some())
         .filter(|task| progress.contains(&task["taskid"].as_i64().unwrap()))
@@ -45,6 +46,13 @@ pub fn user_points(token: &str) -> Result<HashMap<String, u64>, Status> {
             *map.entry(skill["name"].as_str().unwrap().to_string()).or_insert(0) += skill["points"].as_u64().unwrap();
         }
     }
+
+    // Store total score in database (for leaderboard)
+    use crate::schema::users::dsl::*;
+    diesel::update(users.filter(username.eq(&user.name)))
+        .set(total_score.eq(map["total"] as i64))
+        .execute(&crate::database::establish_connection())
+        .expect("Database error");
 
     Ok(map)
 }

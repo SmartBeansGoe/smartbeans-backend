@@ -83,6 +83,7 @@ fn main() {
             routes::misc::rand,
             routes::misc::error,
             routes::misc::report_error,
+            routes::misc::leaderboard,
             routes::tasks::get_tasks,
             routes::tasks::progress,
             routes::tasks::submit,

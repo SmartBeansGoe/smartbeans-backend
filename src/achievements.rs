@@ -36,7 +36,7 @@ impl AchievementTrigger {
             completed: completed_achievements(&user.name),
             solved_tasks: crate::smartape::progress(&user.token)?,
             submissions,
-            points: crate::level::user_points(&user.token)?
+            points: crate::level::user_points(&user)?
         })
     }
 
@@ -265,7 +265,7 @@ impl AchievementTrigger {
     fn check_18(&self) -> bool {
         // Very slow function TODO
         // std::thread::sleep(std::time::Duration::from_secs(10));
-        crate::level::points_to_level(crate::level::user_points(&self.token).unwrap()["total"]) >= 5
+        crate::level::points_to_level(crate::level::user_points(&crate::guards::User { name: self.username.clone(), token: self.token.clone() }).unwrap()["total"]) >= 5
     }
 
     // Etwas von allem; login, submission TODO

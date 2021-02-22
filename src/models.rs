@@ -17,7 +17,7 @@ pub struct NewSession {
     pub smartape_token: String,
 }
 
-#[derive(Queryable)]
+#[derive(Serialize, Queryable)]
 pub struct Character {
     pub username: String,
     pub body_color: Option<String>,

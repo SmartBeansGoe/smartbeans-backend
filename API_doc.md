@@ -390,6 +390,7 @@ Output:
     'rand': '...'
 }
 ```
+
 ### /report_error (POST)
 
 Stores an error report and sends it to Telegram via Mr Beans. Expects 'text/plain' as content type.
@@ -397,4 +398,21 @@ Stores an error report and sends it to Telegram via Mr Beans. Expects 'text/plai
 Input:
 ```
 <String>
+```
+
+### /leaderboard (GET)
+
+Returns leaderboard data (currently up to rank 30).
+
+Output:
+```
+[
+    {
+        'charname': <String>,
+        'rank': <Integer>,
+        'score': <Integer>,
+        'character': <see GET /character>
+    },
+    ...
+]
 ```

@@ -45,7 +45,7 @@ pub fn first_login_done(user: guards::User) -> Status {
 
 #[get("/level_data")]
 pub fn level_data(user: guards::User) -> Result<Json<Value>, Status> {
-    let userdata = level::user_points(&user.token)?;
+    let userdata = level::user_points(&user)?;
     let maxdata = level::total_points();
     let level = level::points_to_level(userdata["total"]);
 
