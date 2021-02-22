@@ -158,6 +158,10 @@ impl AchievementTrigger {
             })
             .collect::<Vec<_>>();
 
+        if wrong_submissions.is_empty() {
+            return false;
+        }
+
         wrong_submissions.sort_unstable_by(|a, b| {
             Value::as_str(&a["sourceCode"]).unwrap()
                 .cmp(&Value::as_str(&b["sourceCode"]).unwrap())
@@ -180,6 +184,10 @@ impl AchievementTrigger {
                 submission["result"]["type"] == Value::String("SUCCESS".to_string())
             })
             .collect::<Vec<_>>();
+
+        if correct_submissions.is_empty() {
+            return false;
+        }
 
         correct_submissions.sort_unstable_by(|a, b| {
             Value::as_i64(&a["taskid"]).unwrap()
