@@ -1,0 +1,2 @@
+ALTER TABLE users
+    ADD COLUMN char_changed BIGINT NOT NULL DEFAULT 0

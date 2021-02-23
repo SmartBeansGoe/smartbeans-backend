@@ -134,7 +134,7 @@
 
   {
     "id": 13,
-    "name": "Unentschlossen (WIP)",
+    "name": "Unentschlossen",
     "description": {
       "open": "So viel Auswahl...",
       "completed": "Du hast dich 7 Mal umgekleidet."
@@ -167,18 +167,18 @@
 
   {
     "id": 16,
-    "name": "Durchgespielt (WIP)",
+    "name": "Durchgespielt",
     "description": {
       "open": "Schalte alle (anderen) Errungenschaften frei.",
       "completed": "Du hast alle Errungenschaften freigeschaltet."
     },
     "hidden": false,
-    "triggers": ["login","???"]
+    "triggers": ["see AchievementTrigger::run"]
   },
 
   {
     "id": 17,
-    "name": "Schnörkellos (WIP)",
+    "name": "Schnörkellos",
     "description": {
       "open": "Löse E8, ohne eine Schleife zu verwenden.",
       "completed": "Du hast E8 gelöst, ohne eine Schleife zu verwenden."
@@ -200,7 +200,7 @@
 
   {
     "id": 19,
-    "name": "Etwas von allem (WIP)",
+    "name": "Etwas von allem",
     "description": {
       "open": "Erreiche 50% Flächenabdeckung im Fähigkeiten-Netzdiagramm.",
       "completed": "Du hast 50% Abdeckung im Fähigkeiten-Netzdiagramm erreicht."

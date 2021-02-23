@@ -58,6 +58,7 @@ table! {
         username -> Varchar,
         first_login -> Bool,
         total_score -> Bigint,
+        char_changed -> Bigint,
     }
 }
 

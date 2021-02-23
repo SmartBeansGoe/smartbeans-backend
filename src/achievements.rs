@@ -1,5 +1,5 @@
 use rocket::http::Status;
-use serde_json::Value;
+use serde_json::{Value, Number};
 use diesel::prelude::*;
 use diesel::insert_into;
 //use cached::proc_macro::cached;
@@ -7,6 +7,7 @@ use diesel::insert_into;
 use std::collections::HashMap;
 
 use crate::static_data::ACHIEVEMENTS;
+use std::f64::consts::PI;
 
 pub struct AchievementTrigger {
     /// User name
@@ -56,20 +57,15 @@ impl AchievementTrigger {
             })
             .collect::<Vec<_>>();
 
-        for id in ids {
-            if self.check(id) {
-                set_achievement_completed(&self.username, id);
-                let achievement_json = achievements(&self.username)
-                    .into_iter()
-                    .find(|a| a["id"] == id)
-                    .unwrap();
-
-                crate::system_messages::send_message(
-                    &self.username,
-                    "achievement_unlocked",
-                    &achievement_json.to_string()
-                )
+        for id in &ids {
+            if self.check(*id) {
+                set_achievement_completed(&self.username, *id);
             }
+        }
+
+        // Special case: Achievement for unlocking all other achievements
+        if ids.contains(&16) && completed_achievements(&self.username).len() == self.achievements.len() - 1 {
+            set_achievement_completed(&self.username, 16);
         }
     }
 
@@ -230,9 +226,15 @@ impl AchievementTrigger {
         count >= 3
     }
 
-    // Unentschlossen; login, char_changed TODO
+    // Unentschlossen; login, char_changed
     fn check_13(&self) -> bool {
-        false
+        use crate::schema::users::dsl::*;
+        let counter: i64 = users.filter(username.eq(&self.username))
+            .select(char_changed)
+            .first(&crate::database::establish_connection())
+            .expect("Database error");
+
+        counter >= 7
     }
 
     // Von allem etwas; login, submission
@@ -251,26 +253,77 @@ impl AchievementTrigger {
         true
     }
 
-    // Durchgespielt; login, ??? TODO
+    // Durchgespielt; see run function
     fn check_16(&self) -> bool {
         false
     }
 
-    // Schnörkellos; login, submission TODO
+    // Schnörkellos; login, submission
     fn check_17(&self) -> bool {
-        false
+        self.submissions.iter()
+            .filter(|submission| {
+                submission["taskid"] == Value::Number(Number::from(63))
+                && submission["result"]["type"] == Value::String("SUCCESS".to_string())
+            })
+            .any(|submission| {
+                !AchievementTrigger::check_for_loops(
+                    submission["sourceCode"].as_str().unwrap().to_string()
+                )
+            })
+    }
+
+    // Returns true if the code contains a loop
+    fn check_for_loops(mut code: String) -> bool {
+        use regex::Regex;
+
+        // Remove strings
+        code = Regex::new(r#""(\\.|[^"])*""#).unwrap()
+            .replace_all(&code, "").to_string();
+
+        // Remove block comments
+        code = Regex::new(r#"/\*(\\.|[^(\*/)])*\*/"#).unwrap()
+            .replace_all(&code, "").to_string();
+
+        // Remove line comments
+        code = Regex::new(r#"//(\\.|[^(//)])*(\n|$)"#).unwrap()
+            .replace_all(&code, "").to_string();
+
+        // Search for loops
+        Regex::new(r#"\b(for|while)\b"#).unwrap().is_match(&code)
     }
 
     // Auf dem Weg nach oben; login, submission
     fn check_18(&self) -> bool {
         // Very slow function TODO
         // std::thread::sleep(std::time::Duration::from_secs(10));
-        crate::level::points_to_level(crate::level::user_points(&crate::guards::User { name: self.username.clone(), token: self.token.clone() }).unwrap()["total"]) >= 5
+        crate::level::points_to_level(self.points["total"]) >= 5
     }
 
-    // Etwas von allem; login, submission TODO
+    // Etwas von allem; login, submission
     fn check_19(&self) -> bool {
-        false
+        let mut total_points = crate::level::total_points().into_iter()
+            .filter(|(skill, _)| skill != "total")
+            .map(|(skill, points)| (skill, points as f64))
+            .collect::<Vec<_>>();
+        total_points.sort_unstable_by(|a, b| a.0.cmp(&b.0));
+
+        let mut user_points = self.points.iter()
+            .filter(|(skill, _)| skill != &"total")
+            .map(|(skill, points)| (skill, *points as f64))
+            .collect::<Vec<_>>();
+        user_points.sort_unstable_by(|a, b| a.0.cmp(&b.0));
+
+        let mut user_sum = 0.0;
+        let mut total_sum = 0.0;
+
+        let sin = (360.0 / total_points.len() as f64 * PI  / 180.0).sin();
+
+        for i in 0..total_points.len() {
+            user_sum += 0.5 * user_points[i].1 * user_points[(i+1)%user_points.len()].1 * sin;
+            total_sum += 0.5 * total_points[i].1 * total_points[(i+1)%total_points.len()].1 * sin;
+        }
+
+        user_sum / total_sum >= 0.5
     }
 }
 
@@ -336,6 +389,17 @@ fn set_achievement_completed(uname: &str, achievement_id: i64) {
         ))
         .execute(&conn)
         .expect("Database error");
+
+    let achievement_json = crate::achievements::achievements(uname)
+        .into_iter()
+        .find(|a| a["id"] == achievement_id)
+        .unwrap();
+
+    crate::system_messages::send_message(
+        uname,
+        "achievement_unlocked",
+        &achievement_json.to_string()
+    )
 }
 
 // #[cached(time = 3600)] TODO: Activate

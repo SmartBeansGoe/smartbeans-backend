@@ -32,7 +32,6 @@ pub struct CharacterJson {
 
 #[post("/character", data = "<data>")]
 pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<Status, Status> {
-    use crate::schema::characters::dsl::*;
     let conn = crate::database::establish_connection();
 
     // If someone tries to write a locked asset, return 403
@@ -43,22 +42,41 @@ pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<S
         return Err(Status::Unauthorized);
     }
 
-    // Because we rewrite every value anyway, we can just delete and recreate the dataset
-    diesel::delete(characters.filter(username.eq(&user.name)))
-        .execute(&conn)
-        .expect("Database error");
+    // Update asset data in database
+    {
+        use crate::schema::characters::dsl::*;
 
-    diesel::insert_into(characters)
-        .values((
-            username.eq(&user.name),
-            body_color.eq(&data.body_color),
-            hat_id.eq(&data.hat_id),
-            face_id.eq(&data.face_id),
-            shirt_id.eq(&data.shirt_id),
-            pants_id.eq(&data.pants_id)
+        // Because we rewrite every value anyway, we can just delete and recreate the dataset
+        diesel::delete(characters.filter(username.eq(&user.name)))
+            .execute(&conn)
+            .expect("Database error");
+
+        diesel::insert_into(characters)
+            .values((
+                username.eq(&user.name),
+                body_color.eq(&data.body_color),
+                hat_id.eq(&data.hat_id),
+                face_id.eq(&data.face_id),
+                shirt_id.eq(&data.shirt_id),
+                pants_id.eq(&data.pants_id)
             ))
-        .execute(&conn)
-        .expect("Database error");
+            .execute(&conn)
+            .expect("Database error");
+    }
+
+    // Update counter in database (for achievement)
+    {
+        use crate::schema::users::dsl::*;
+        let counter: i64 = users.filter(username.eq(&user.name))
+            .select(char_changed)
+            .first(&conn)
+            .expect("Database error");
+
+        diesel::update(users.filter(username.eq(&user.name)))
+            .set(char_changed.eq(counter + 1))
+            .execute(&conn)
+            .expect("Database error");
+    }
 
     crate::achievements::AchievementTrigger::new(&user)?.run("char_changed");
 
