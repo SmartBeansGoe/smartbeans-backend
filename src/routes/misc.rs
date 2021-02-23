@@ -41,7 +41,7 @@ pub fn report_error(_user: guards::User, data: rocket::Data) -> Status {
 }
 
 #[get("/leaderboard")]
-pub fn leaderboard(_user: guards::User) -> Json<Value> {
+pub fn leaderboard(user: guards::User) -> Json<Value> {
     use crate::schema::users::dsl::*;
 
     let mut scores: Vec<(String, String, i64)> = users.select((username, total_score))
@@ -84,7 +84,12 @@ pub fn leaderboard(_user: guards::User) -> Json<Value> {
             v["character"] = serde_json::to_value(
                 crate::routes::character::character_information(&data.0)
             ).unwrap();
-            v["character"]["username"] = Value::String("redacted".to_string());
+            v["character"]["username"] = if data.0 == user.name {
+                Value::String(user.name.clone())
+            }
+            else {
+                Value::Null
+            };
 
             v
         })
