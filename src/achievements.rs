@@ -41,32 +41,33 @@ impl AchievementTrigger {
         })
     }
 
-    pub fn run(&self, trigger: &str) {
-        // TODO: Run in background thread
+    pub fn run(self, trigger: &str) {
         let trigger = Value::String(trigger.to_string());
 
-        let ids = self.achievements.iter()
-            .filter(|achievement| {
-                !self.completed.contains(&achievement["id"].as_i64().unwrap())
-            })
-            .filter(|achievement| {
-                achievement["triggers"].as_array().unwrap().contains(&trigger)
-            })
-            .map(|achievement| {
-                achievement["id"].as_i64().unwrap()
-            })
-            .collect::<Vec<_>>();
+        std::thread::spawn(move || {
+            let ids = self.achievements.iter()
+                .filter(|achievement| {
+                    !self.completed.contains(&achievement["id"].as_i64().unwrap())
+                })
+                .filter(|achievement| {
+                    achievement["triggers"].as_array().unwrap().contains(&trigger)
+                })
+                .map(|achievement| {
+                    achievement["id"].as_i64().unwrap()
+                })
+                .collect::<Vec<_>>();
 
-        for id in &ids {
-            if self.check(*id) {
-                set_achievement_completed(&self.username, *id);
+            for id in &ids {
+                if self.check(*id) {
+                    set_achievement_completed(&self.username, *id);
+                }
             }
-        }
 
-        // Special case: Achievement for unlocking all other achievements
-        if ids.contains(&16) && completed_achievements(&self.username).len() == self.achievements.len() - 1 {
-            set_achievement_completed(&self.username, 16);
-        }
+            // Special case: Achievement for unlocking all other achievements
+            if ids.contains(&16) && completed_achievements(&self.username).len() == self.achievements.len() - 1 {
+                set_achievement_completed(&self.username, 16);
+            }
+        });
     }
 
     fn check(&self, id: i64) -> bool {
@@ -294,8 +295,6 @@ impl AchievementTrigger {
 
     // Auf dem Weg nach oben; login, submission
     fn check_18(&self) -> bool {
-        // Very slow function TODO
-        // std::thread::sleep(std::time::Duration::from_secs(10));
         crate::level::points_to_level(self.points["total"]) >= 5
     }
 
