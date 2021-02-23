@@ -60,7 +60,7 @@ pub fn leaderboard(_user: guards::User) -> Json<Value> {
         })
         .collect::<Vec<_>>();
 
-    scores.sort_unstable_by(|a, b| b.1.cmp(&a.1));
+    scores.sort_unstable_by(|a, b| b.2.cmp(&a.2));
 
     let mut buckets: Vec<Vec<(String, String, i64, usize)>> = Vec::new();
     for (user, name, points) in scores {
