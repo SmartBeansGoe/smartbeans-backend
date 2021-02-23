@@ -78,6 +78,8 @@ pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<S
             .expect("Database error");
     }
 
+    crate::log_route(&user.name, "POST /character", Some(&format!("{:?}", data)));
+
     crate::achievements::AchievementTrigger::new(&user)?.run("char_changed");
 
     Ok(Status::Ok)
@@ -162,11 +164,13 @@ pub fn get_charname(user: guards::User) -> Json<Value> {
 pub fn post_charname(user: guards::User, data: rocket::Data) -> Status {
     use crate::schema::charnames::dsl::*;
 
+    let new_name = crate::data_to_string(data);
     diesel::update(charnames.find(&user.name))
-        .set(charname.eq(crate::data_to_string(data)))
+        .set(charname.eq(&new_name))
         .execute(&crate::database::establish_connection())
         .expect("Database error");
 
+    crate::log_route(&user.name, "POST /charname", Some(&new_name));
     crate::achievements::AchievementTrigger::new(&user).unwrap().run("nickname_changed");
 
     Status::Ok

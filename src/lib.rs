@@ -22,6 +22,7 @@ pub mod bot;
 
 use std::io::Read;
 use std::time::{SystemTime, UNIX_EPOCH};
+use diesel::prelude::*;
 
 /// Convert rocket::Data into String (because FromData for String is only available in debug mode).
 /// To be honest, I am not sure if this is more secure than implementing FromData for String, but at
@@ -38,4 +39,19 @@ pub fn epoch() -> i64 {
         .duration_since(UNIX_EPOCH)
         .unwrap()
         .as_secs() as i64
+}
+
+pub fn log_route(username_param: &str, route_param: &str, data_param: Option<&str>) {
+    use crate::schema::route_log::dsl::*;
+
+    diesel::insert_into(route_log)
+        .values((
+            username.eq(username_param),
+            time.eq(epoch()),
+            route.eq(route_param),
+            data.eq(data_param)
+        ))
+        .execute(&database::establish_connection())
+        .expect("Database error");
+
 }
