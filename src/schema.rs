@@ -69,6 +69,7 @@ table! {
         first_login -> Bool,
         total_score -> Bigint,
         char_changed -> Bigint,
+        studip_userid -> Text,
     }
 }
 

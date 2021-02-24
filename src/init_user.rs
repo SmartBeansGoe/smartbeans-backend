@@ -2,17 +2,17 @@ use diesel::prelude::*;
 
 /// Initializes user. Use this only on first login, as this will panic if the user is already initialized.
 /// (You can check this by looking up if there are already datasets for this user.)
-pub fn init(user: &str) {
-    init_user(user);
+pub fn init(user: &str, id: &str) {
+    init_user(user, id);
     init_char(user);
     init_charname(user);
 }
 
-pub fn init_user(user: &str) {
+pub fn init_user(user: &str, id: &str) {
     use crate::schema::users::dsl::*;
 
     diesel::insert_into(users)
-        .values(username.eq(user))
+        .values((username.eq(user), studip_userid.eq(id)))
         .execute(&crate::database::establish_connection())
         .expect("Database error");
 }

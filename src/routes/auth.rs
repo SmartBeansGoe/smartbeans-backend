@@ -13,6 +13,10 @@ use crate::models;
 #[cfg(debug_assertions)]
 #[get("/auth_debug/<username>")]
 pub fn auth_debug(username: String) -> Result<Json<Value>, Status> {
+    if crate::routes::character::character_information(&username).is_none() {
+        return Err(Status::BadRequest);
+    }
+
     Ok(Json(json!({
         "auth_token": create_session(username, None)?
     })))
@@ -26,6 +30,10 @@ pub fn auth_debug(_username: String) -> Status {
 
 #[get("/auth_debug/<username>/<key>")]
 pub fn auth_debug_production(username: String, key: String) -> Result<Json<Value>, Status> {
+    if crate::routes::character::character_information(&username).is_none() {
+        return Err(Status::BadRequest);
+    }
+
     if key != env::var("DEBUG_ACCESS_KEY").unwrap() || key == "changeme" {
         return Err(Status::Unauthorized);
     }
@@ -48,7 +56,10 @@ pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data) -> Result<Redirect,
         &env::var("LTI_SECRET").unwrap()
     )?;*/
 
-    let username = username_from_data(&data)?;
+    let (username, studip_id) = userdata_from_lti(&data)?;
+    if !init_or_validate(&username, &studip_id) {
+        return Err(Status::Unauthorized);
+    }
 
     let auth_token = create_session(username.clone(), Some(&data))?;
     cookies.add(
@@ -74,20 +85,45 @@ pub fn auth_token(data: rocket::Data) -> Result<Json<Value>, Status> {
         &env::var("LTI_SECRET").unwrap()
     )?;*/
 
-    let username = username_from_data(&data)?;
+    let (username, studip_id) = userdata_from_lti(&data)?;
+    if !init_or_validate(&username, &studip_id) {
+        return Err(Status::Unauthorized);
+    }
 
     Ok(Json(json!({
         "auth_token": create_session(username, Some(&data))?
     })))
 }
 
-fn username_from_data(ltidata: &str) -> Result<String, Status> {
-    Ok(serde_urlencoded::from_str::<Vec<(String, String)>>(&ltidata)
-        .unwrap()
-        .iter()
+fn userdata_from_lti(ltidata: &str) -> Result<(String, String), Status> {
+    let decoded = serde_urlencoded::from_str::<Vec<(String, String)>>(&ltidata)
+        .unwrap();
+
+    let username = decoded.iter()
         .find(|e| e.0 == "lis_person_sourcedid")
         .ok_or(Status::BadRequest)?
-        .clone().1)
+        .clone().1;
+
+    let id = decoded.iter()
+        .find(|e| e.0 == "user_id")
+        .ok_or(Status::BadRequest)?
+        .clone().1;
+
+    Ok((username, id))
+}
+
+fn init_or_validate(username_param: &str, userid: &str) -> bool {
+    if crate::routes::character::character_information(username_param).is_none() {
+        crate::init_user::init(username_param, userid);
+        return true;
+    }
+
+    use crate::schema::users::dsl::*;
+    users.filter(username.eq(username_param))
+        .filter(studip_userid.eq(userid))
+        .select(username)
+        .first::<String>(&crate::database::establish_connection())
+        .is_ok()
 }
 
 // Creates a session for a user and returns the auth token
@@ -108,11 +144,6 @@ fn create_session(username: String, ltidata: Option<&str>) -> Result<String, Sta
         .duration_since(UNIX_EPOCH)
         .unwrap()
         .as_secs();
-
-    // Create new character if necessary
-    if crate::routes::character::character_information(&username).is_none() {
-        crate::init_user::init(&username);
-    }
 
     // Write into session table
     diesel::insert_into(crate::schema::sessions::table)
