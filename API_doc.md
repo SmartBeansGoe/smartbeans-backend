@@ -339,25 +339,13 @@ Please note: A field that is not present in a JSON value is implicitly treated a
 
 ### /assets (GET)
 
-Returns all unlocked assets.
+Returns the ids of all unlocked assets.
 
 Output:
 ```
-{
-    'hats': [
-        {
-            'asset_id': <String>,
-            'category': <array name as string ('hats' in this case)>,
-            'name': <String>,
-            'precondition': <String or null>
-        },
-        ...
-    ],
-    'faces': [ ... ],
-    'shirts': [ ... ],
-    'pants': [ ... ]
-}
+["id1", "id2", ...]
 ```
+y
 ### /charname (GET)
 
 Returns the character name.

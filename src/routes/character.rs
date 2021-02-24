@@ -37,7 +37,7 @@ pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<S
     // If someone tries to write a locked asset, return 403
     let unlocked = unlocked_assets(&user)?;
     if [&data.hat_id, &data.face_id, &data.shirt_id, &data.pants_id].iter().any(
-        |id| id.is_some() && unlocked.contains(&id.as_ref().unwrap()
+        |id| id.is_some() && !unlocked.contains(&id.as_ref().unwrap()
         )) {
         return Err(Status::Unauthorized);
     }
@@ -113,7 +113,7 @@ pub fn unlocked_assets(user: &crate::guards::User) -> Result<Vec<String>, Status
                 (None, Some(id)) => achievements.contains(&id)
             }
         })
-        .map(|asset| serde_json::to_string(&asset["id"].clone()).unwrap())
+        .map(|asset| Value::as_str(&asset["id"]).unwrap().to_string())
         .collect())
 }
 
