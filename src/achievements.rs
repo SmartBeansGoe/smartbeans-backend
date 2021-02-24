@@ -2,7 +2,7 @@ use rocket::http::Status;
 use serde_json::{Value, Number};
 use diesel::prelude::*;
 use diesel::insert_into;
-//use cached::proc_macro::cached;
+use cached::proc_macro::cached;
 use lazy_static::lazy_static;
 use std::sync::Mutex;
 use std::collections::{HashMap, HashSet};
@@ -118,7 +118,7 @@ impl AchievementTrigger {
         *free = true;
 
         // If there is no check waiting, return None
-        if waiting.len() == 0 {
+        if waiting.is_empty() {
             return None;
         }
 
@@ -459,7 +459,7 @@ fn set_achievement_completed(uname: &str, achievement_id: i64) {
     )
 }
 
-// #[cached(time = 3600)] TODO: Activate
+#[cached(time = 600)]
 fn frequencies() -> HashMap<i64, f64> {
     let conn = crate::database::establish_connection();
     use crate::schema::achievements::dsl::*;

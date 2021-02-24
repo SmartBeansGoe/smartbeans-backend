@@ -30,7 +30,13 @@ use diesel::prelude::*;
 pub fn data_to_string(data: rocket::Data) -> String {
     let mut data_str = String::new();
     data.open().read_to_string(&mut data_str).unwrap();
-    data_str
+
+    if data_str.len() >= 30000 {
+        data_str[..30000].to_string()
+    }
+    else {
+        data_str
+    }
 }
 
 /// Returns the current time in seconds since 1970-01-01.
