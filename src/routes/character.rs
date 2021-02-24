@@ -95,54 +95,25 @@ pub fn character_information(user: &str) -> Option<Character> {
 
 #[get("/assets")]
 pub fn get_assets(user: guards::User) -> Result<Json<Value>, Status> {
-    let unlocked_assets = unlocked_assets(&user)?;
-    let assets = ASSETS.iter()
-        .filter(|asset| unlocked_assets.contains(&serde_json::to_string(&asset["asset_id"]).unwrap()));
-
-    let hats = assets.clone()
-        .filter(|asset| asset["category"] == Value::String("hats".to_string()))
-        .collect::<Vec<&Value>>();
-    let faces = assets.clone()
-        .filter(|asset| asset["category"] == Value::String("faces".to_string()))
-        .collect::<Vec<&Value>>();
-    let shirts = assets.clone()
-        .filter(|asset| asset["category"] == Value::String("shirts".to_string()))
-        .collect::<Vec<&Value>>();
-    let pants = assets.clone()
-        .filter(|asset| asset["category"] == Value::String("pants".to_string()))
-        .collect::<Vec<&Value>>();
-
-    let mut all = serde_json::map::Map::new();
-    all.insert("hats".to_string(), serde_json::to_value(hats).unwrap());
-    all.insert("faces".to_string(), serde_json::to_value(faces).unwrap());
-    all.insert("shirts".to_string(), serde_json::to_value(shirts).unwrap());
-    all.insert("pants".to_string(), serde_json::to_value(pants).unwrap());
-
-    Ok(Json(Value::Object(all)))
+    Ok(Json(serde_json::to_value(unlocked_assets(&user)?).unwrap()))
 }
 
 pub fn unlocked_assets(user: &crate::guards::User) -> Result<Vec<String>, Status> {
+    let progress = crate::smartape::progress(&user.token).unwrap();
+    let achievements = crate::achievements::completed_achievements(&user.name);
+
     Ok(ASSETS.iter()
         .filter(|asset| {
-            if asset["precondition"] == Value::Null {
-                return true;
-            }
+            let precond_task = Value::as_i64(&asset["precondition"]["task-id"]);
+            let precond_achievement = Value::as_i64(&asset["precondition"]["achievement-id"]);
 
-            let precondition = asset["precondition"].as_str().unwrap();
-            let split: Vec<&str> = precondition.split_whitespace().collect();
-            let id = split[1].parse::<i64>().unwrap();
-
-            match split[0] {
-                "achievement" => {
-                    crate::achievements::completed_achievements(&user.name).contains(&id)
-                }
-                "task" => {
-                    crate::smartape::progress(&user.token).unwrap().contains(&id)
-                }
-                _ => true
+            match (precond_task, precond_achievement) {
+                (None, None) => true,
+                (Some(id), _) => progress.contains(&id),
+                (None, Some(id)) => achievements.contains(&id)
             }
         })
-        .map(|asset| serde_json::to_string(&asset["asset_id"].clone()).unwrap())
+        .map(|asset| serde_json::to_string(&asset["id"].clone()).unwrap())
         .collect())
 }
 

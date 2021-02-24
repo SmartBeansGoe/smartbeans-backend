@@ -1,271 +1,370 @@
 [
-    {
-        "asset_id": "egirl_kitten_band",
-        "name": "egirl_kitten_band",
-        "category": "hats",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "french_hat",
-        "name": "french_hat",
-        "category": "hats",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "beanybuffer_hat",
-        "name": "beanybuffer_hat",
-        "category": "hats",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "granny_smith_hair",
-        "name": "granny_smith_hair",
-        "category": "hats",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "summer_feelings_w_hat",
-        "name": "summer_feelings_w_hat",
-        "category": "hats",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "debug_face",
-        "name": "debug_face",
-        "category": "faces",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "face001",
-        "name": "face001",
-        "category": "faces",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "french_pants",
-        "name": "french_pants",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "french_pants_light_blue",
-        "name": "french_pants_light_blue",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "granny_smith_skirt",
-        "name": "granny_smith_skirt",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "bikini_pants",
-        "name": "bikini_pants",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "Summer_feelings_m_pants",
-        "name": "Summer_feelings_m_pants",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "pants001",
-        "name": "pants001",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "Business_Bean_m_pants",
-        "name": "Business_Bean_m_pants",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "Business_Bean_m_pants_2",
-        "name": "Business_Bean_m_pants_2",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "egirl_skirt_rose",
-        "name": "egirl_skirt_rose",
-        "category": "pants",
-        "precondition": null,
-        "attributes": [
-            "on-top"
-        ]
-    },
-    {
-        "asset_id": "gardener_pants",
-        "name": "gardener_pants",
-        "category": "pants",
-        "precondition": null,
-        "attributes": [
-            "on-top"
-        ]
-    },
-    {
-        "asset_id": "surferbohne_pants",
-        "name": "surferbohne_pants",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "ballerina_legs",
-        "name": "ballerina_legs",
-        "category": "pants",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "egirl_skirt_blue",
-        "name": "egirl_skirt_blue",
-        "category": "pants",
-        "precondition": null,
-        "attributes": [
-            "on-top"
-        ]
-    },
-    {
-        "asset_id": "granny_smith_shirt",
-        "name": "granny_smith_shirt",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "beanybuffer_dress",
-        "name": "beanybuffer_dress",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": [
-            "no-pants"
-        ]
-    },
-    {
-        "asset_id": "gardener_shirts",
-        "name": "gardener_shirts",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "sweater_w_green",
-        "name": "sweater_w_green",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "french_shirt",
-        "name": "french_shirt",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "sweater_w_mustard",
-        "name": "sweater_w_mustard",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "summer_feelings_w_dress",
-        "name": "summer_feelings_w_dress",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": [
-            "no-pants"
-        ]
-    },
-    {
-        "asset_id": "Summer_feelings_m_shirt",
-        "name": "Summer_feelings_m_shirt",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "Business_Bean_m_shirt",
-        "name": "Business_Bean_m_shirt",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "french_shirt_red",
-        "name": "french_shirt_red",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "bicycle_shirt",
-        "name": "bicycle_shirt",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "shirt001",
-        "name": "shirt001",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "ballerina_dress",
-        "name": "ballerina_dress",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "surferbohne_shirt",
-        "name": "surferbohne_shirt",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "sweater_w_blue",
-        "name": "sweater_w_blue",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "bikini_shirt",
-        "name": "bikini_shirt",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    },
-    {
-        "asset_id": "Business_Bean_m_shirt_2",
-        "name": "Business_Bean_m_shirt_2",
-        "category": "shirts",
-        "precondition": null,
-        "attributes": []
-    }
+  {
+    "id": "beany-botter-shirts",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "beany-botter-hats",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "roller_blades-shirts",
+    "precondition": { "task-id": null, "achievement-id": 11 }
+  },
+  {
+    "id": "roller_blades-pants",
+    "precondition": { "task-id": null, "achievement-id": 11 }
+  },
+  {
+    "id": "roller_blades-hats",
+    "precondition": { "task-id": null, "achievement-id": 11 }
+  },
+  {
+    "id": "ballerina-shirts",
+    "precondition": { "task-id": 71, "achievement-id": null }
+  },
+  {
+    "id": "ballerina-pants",
+    "precondition": { "task-id": 71, "achievement-id": null }
+  },
+  {
+    "id": "new-york-city-coat-shirts",
+    "precondition": { "task-id": 60, "achievement-id": null }
+  },
+  {
+    "id": "new-york-city-coat-pants",
+    "precondition": { "task-id": 60, "achievement-id": null }
+  },
+  {
+    "id": "french-bean-shirts",
+    "precondition": { "task-id": 76, "achievement-id": null }
+  },
+  {
+    "id": "french-bean-pants",
+    "precondition": { "task-id": 76, "achievement-id": null }
+  },
+  {
+    "id": "french-bean-hats",
+    "precondition": { "task-id": 76, "achievement-id": null }
+  },
+  {
+    "id": "troll-shirts",
+    "precondition": { "task-id": null, "achievement-id": 7 }
+  },
+  {
+    "id": "troll-pants",
+    "precondition": { "task-id": null, "achievement-id": 7 }
+  },
+  {
+    "id": "troll-hats",
+    "precondition": { "task-id": null, "achievement-id": 7 }
+  },
+  {
+    "id": "kompilations_komplikationen-shirts",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "nico_beanz-shirts",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "nico_beanz-pants",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "nico_beanz-hats",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "bikini-shirts",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "bikini-pants",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "robot-shirts",
+    "precondition": { "task-id": null, "achievement-id": 3 }
+  },
+  {
+    "id": "robot-hats",
+    "precondition": { "task-id": null, "achievement-id": 3 }
+  },
+  {
+    "id": "officer-bean-shirts",
+    "precondition": { "task-id": 58, "achievement-id": null }
+  },
+  {
+    "id": "officer-bean-pants",
+    "precondition": { "task-id": 58, "achievement-id": null }
+  },
+  {
+    "id": "officer-bean-hats",
+    "precondition": { "task-id": 58, "achievement-id": null }
+  },
+  {
+    "id": "80ies-male-shirts",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "80ies-male-pants",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "80ies-male-hats",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "roller_blades_green-shirts",
+    "precondition": { "task-id": null, "achievement-id": 11 }
+  },
+  {
+    "id": "roller_blades_green-pants",
+    "precondition": { "task-id": null, "achievement-id": 11 }
+  },
+  {
+    "id": "roller_blades_green-hats",
+    "precondition": { "task-id": null, "achievement-id": 11 }
+  },
+  {
+    "id": "etwas_von_allem-shirts",
+    "precondition": { "task-id": null, "achievement-id": 19 }
+  },
+  {
+    "id": "knight-armor-shirts",
+    "precondition": { "task-id": 78, "achievement-id": null }
+  },
+  {
+    "id": "knight-armor-hats",
+    "precondition": { "task-id": 78, "achievement-id": null }
+  },
+  {
+    "id": "child-bean-blue-shirts",
+    "precondition": { "task-id": null, "achievement-id": 6 }
+  },
+  {
+    "id": "child-bean-blue-pants",
+    "precondition": { "task-id": null, "achievement-id": 6 }
+  },
+  {
+    "id": "child-bean-blue-hats",
+    "precondition": { "task-id": null, "achievement-id": 6 }
+  },
+  {
+    "id": "doppelt_haelt_besser-shirts",
+    "precondition": { "task-id": null, "achievement-id": 10 }
+  },
+  {
+    "id": "doppelt_haelt_besser-hats",
+    "precondition": { "task-id": null, "achievement-id": 10 }
+  },
+  {
+    "id": "girly_chillaxing-shirts",
+    "precondition": { "task-id": 69, "achievement-id": null }
+  },
+  {
+    "id": "girly_chillaxing-pants",
+    "precondition": { "task-id": 69, "achievement-id": null }
+  },
+  {
+    "id": "fabian_beanz-shirts",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "fabian_beanz-pants",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "fabian_beanz-hats",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "climber-shirts",
+    "precondition": { "task-id": null, "achievement-id": 1 }
+  },
+  {
+    "id": "climber-pants",
+    "precondition": { "task-id": null, "achievement-id": 1 }
+  },
+  {
+    "id": "debug-informatiker-shirts",
+    "precondition": { "task-id": 52, "achievement-id": null }
+  },
+  {
+    "id": "debug-informatiker-pants",
+    "precondition": { "task-id": 52, "achievement-id": null }
+  },
+  {
+    "id": "climber_pants_no_rope-pants",
+    "precondition": { "task-id": null, "achievement-id": 1 }
+  },
+  {
+    "id": "maximiert-pants",
+    "precondition": { "task-id": null, "achievement-id": 12 }
+  },
+  {
+    "id": "granny-smith-shirts",
+    "precondition": { "task-id": 50, "achievement-id": null }
+  },
+  {
+    "id": "granny-smith-pants",
+    "precondition": { "task-id": 50, "achievement-id": null }
+  },
+  {
+    "id": "granny-smith-hats",
+    "precondition": { "task-id": 50, "achievement-id": null }
+  },
+  {
+    "id": "business-male-shirts",
+    "precondition": { "task-id": null, "achievement-id": 14 }
+  },
+  {
+    "id": "business-male-pants",
+    "precondition": { "task-id": null, "achievement-id": 14 }
+  },
+  {
+    "id": "johanna_beanz-shirts",
+    "precondition": { "task-id": 79, "achievement-id": null }
+  },
+  {
+    "id": "johanna_beanz-pants",
+    "precondition": { "task-id": 79, "achievement-id": null }
+  },
+  {
+    "id": "johanna_beanz-hats",
+    "precondition": { "task-id": 79, "achievement-id": null }
+  },
+  {
+    "id": "unentschlossen-shirts",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "unentschlossen-pants",
+    "precondition": { "task-id": null, "achievement-id": null }
+  },
+  {
+    "id": "bride-shirts",
+    "precondition": { "task-id": 44, "achievement-id": null }
+  },
+  {
+    "id": "bride-hats",
+    "precondition": { "task-id": 44, "achievement-id": null }
+  },
+  {
+    "id": "e-girl-shirts",
+    "precondition": { "task-id": 80, "achievement-id": null }
+  },
+  {
+    "id": "e-girl-pants",
+    "precondition": { "task-id": 80, "achievement-id": null }
+  },
+  {
+    "id": "e-girl-hats",
+    "precondition": { "task-id": 80, "achievement-id": null }
+  },
+  {
+    "id": "girlie_shirt_brown-shirts",
+    "precondition": { "task-id": 69, "achievement-id": null }
+  },
+  {
+    "id": "new-york-city-basic-shirts",
+    "precondition": { "task-id": 60, "achievement-id": null }
+  },
+  {
+    "id": "new-york-city-basic-pants",
+    "precondition": { "task-id": 60, "achievement-id": null }
+  },
+  {
+    "id": "surfer-bean-shirts",
+    "precondition": { "task-id": 59, "achievement-id": null }
+  },
+  {
+    "id": "surfer-bean-pants",
+    "precondition": { "task-id": 59, "achievement-id": null }
+  },
+  {
+    "id": "ole_beanz-shirts",
+    "precondition": { "task-id": 82, "achievement-id": null }
+  },
+  {
+    "id": "ole_beanz-pants",
+    "precondition": { "task-id": 82, "achievement-id": null }
+  },
+  {
+    "id": "ole_beanz-hats",
+    "precondition": { "task-id": 82, "achievement-id": null }
+  },
+  {
+    "id": "niklas_beanz-shirts",
+    "precondition": { "task-id": 75, "achievement-id": null }
+  },
+  {
+    "id": "niklas_beanz-pants",
+    "precondition": { "task-id": 75, "achievement-id": null }
+  },
+  {
+    "id": "niklas_beanz-hats",
+    "precondition": { "task-id": 75, "achievement-id": null }
+  },
+  {
+    "id": "gardener-shirts",
+    "precondition": { "task-id": 55, "achievement-id": null }
+  },
+  {
+    "id": "gardener-pants",
+    "precondition": { "task-id": 55, "achievement-id": null }
+  },
+  {
+    "id": "schnoerkellos-shirts",
+    "precondition": { "task-id": null, "achievement-id": 17 }
+  },
+  {
+    "id": "schnoerkellos-hats",
+    "precondition": { "task-id": null, "achievement-id": 17 }
+  },
+  {
+    "id": "child-bean-pink-shirts",
+    "precondition": { "task-id": null, "achievement-id": 6 }
+  },
+  {
+    "id": "child-bean-pink-pants",
+    "precondition": { "task-id": null, "achievement-id": 6 }
+  },
+  {
+    "id": "child-bean-pink-hats",
+    "precondition": { "task-id": null, "achievement-id": 6 }
+  },
+  {
+    "id": "kitty-shirts",
+    "precondition": { "task-id": 83, "achievement-id": null }
+  },
+  {
+    "id": "summer-feelings-male-shirts",
+    "precondition": { "task-id": 57, "achievement-id": null }
+  },
+  {
+    "id": "summer-feelings-male-pants",
+    "precondition": { "task-id": 57, "achievement-id": null }
+  },
+  {
+    "id": "abstract-art-shirts",
+    "precondition": { "task-id": 61, "achievement-id": null }
+  },
+  {
+    "id": "abstract-art-pants",
+    "precondition": { "task-id": 61, "achievement-id": null }
+  },
+  {
+    "id": "summer-feelings-female-shirts",
+    "precondition": { "task-id": 46, "achievement-id": null }
+  },
+  {
+    "id": "summer-feelings-female-hats",
+    "precondition": { "task-id": 46, "achievement-id": null }
+  },
+  {
+    "id": "face001",
+    "precondition": { "task-id": null, "achievement-id": null }
+  }
 ]
