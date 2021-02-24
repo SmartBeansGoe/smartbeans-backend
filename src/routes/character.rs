@@ -80,7 +80,7 @@ pub fn post_character(user: guards::User, data: Json<CharacterJson>) -> Result<S
 
     crate::log_route(&user.name, "POST /character", Some(&format!("{:?}", data)));
 
-    crate::achievements::AchievementTrigger::new(&user)?.run("char_changed");
+    crate::achievements::AchievementTrigger::run(&user, "char_changed")?;
 
     Ok(Status::Ok)
 }
@@ -142,7 +142,7 @@ pub fn post_charname(user: guards::User, data: rocket::Data) -> Status {
         .expect("Database error");
 
     crate::log_route(&user.name, "POST /charname", Some(&new_name));
-    crate::achievements::AchievementTrigger::new(&user).unwrap().run("nickname_changed");
+    crate::achievements::AchievementTrigger::run(&user, "nickname_changed").unwrap();
 
     Status::Ok
 }

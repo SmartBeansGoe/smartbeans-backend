@@ -33,7 +33,7 @@ pub fn submit(user: guards::User, taskid: String, data: rocket::Data) -> Result<
     let data = crate::data_to_string(data);
     let result = smartape::submit(&user.token, &taskid, &data)?;
 
-    crate::achievements::AchievementTrigger::new(&user)?.run("submission");
+    crate::achievements::AchievementTrigger::run(&user, "submission")?;
 
     Ok(Json(result))
 }

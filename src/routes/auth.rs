@@ -59,7 +59,7 @@ pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data) -> Result<Redirect,
     );
 
     // Check for new achievements
-    crate::achievements::AchievementTrigger::new(&crate::guards::User{ name: username, token: auth_token })?.run("login");
+    crate::achievements::AchievementTrigger::run(&crate::guards::User{ name: username, token: auth_token }, "login")?;
 
     Ok(Redirect::to(env::var("FRONTEND_URL").unwrap()))
 }

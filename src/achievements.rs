@@ -32,28 +32,27 @@ pub struct AchievementTrigger {
 }
 
 impl AchievementTrigger {
-    pub fn new(user: &crate::guards::User) -> Result<AchievementTrigger, Status> {
-        let submissions = crate::smartape::all_submissions(&user.token)?;
+    pub fn run(user: &crate::guards::User, trigger: &str) -> Result<(), Status> {
+        if !AchievementTrigger::lock(&user.name, trigger) {
+            return Ok(());
+        }
 
-        Ok(AchievementTrigger {
+        AchievementTrigger {
             username: String::from(&user.name),
             token: String::from(&user.token),
             achievements: &ACHIEVEMENTS,
             completed: completed_achievements(&user.name),
             solved_tasks: crate::smartape::progress(&user.token)?,
-            submissions,
+            submissions: crate::smartape::all_submissions(&user.token)?,
             points: crate::level::user_points(&user)?
-        })
+        }.run_trigger(trigger.to_string());
+
+        Ok(())
     }
 
-    pub fn run(self, trigger: &str) {
-        let trigger_str = trigger.to_string();
-        let trigger = Value::String(trigger.to_string());
-
+    fn run_trigger(self, trigger: String) {
         std::thread::spawn(move || {
-            if !AchievementTrigger::lock(&self.username, &trigger_str) {
-                return;
-            }
+            let trigger = Value::String(trigger);
 
             let ids = self.achievements.iter()
                 .filter(|achievement| {
@@ -79,9 +78,10 @@ impl AchievementTrigger {
             }
 
             if let Some(next) = AchievementTrigger::free(&self.username) {
-                AchievementTrigger::new(
-                    &crate::guards::User { name: self.username, token: self.token }
-                ).unwrap().run(&next);
+                AchievementTrigger::run(
+                    &crate::guards::User { name: self.username, token: self.token },
+                    &next
+                ).unwrap();
             }
         });
     }

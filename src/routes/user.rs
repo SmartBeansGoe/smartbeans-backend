@@ -82,7 +82,7 @@ pub fn get_achievements(user: guards::User) -> Json<Value> {
 
 #[post("/achievements/404")]
 pub fn set_404(user: guards::User) -> Result<Status, Status> {
-    crate::achievements::AchievementTrigger::new(&user)?.run("404");
+    crate::achievements::AchievementTrigger::run(&user, "404")?;
 
     Ok(Status::Ok)
 }
