@@ -7,13 +7,10 @@ use rand::{thread_rng, Rng, distributions::Alphanumeric};
 use diesel::prelude::*;
 use rocket_contrib::json::Json;
 use serde_json::Value;
-use percent_encoding::{utf8_percent_encode, AsciiSet, NON_ALPHANUMERIC};
-use hmac::{Hmac, Mac, NewMac};
-use crypto_hashes::sha1::Sha1;
 
 use crate::models;
 
-//#[cfg(debug_assertions)] TODO: Reenable this before final
+#[cfg(debug_assertions)]
 #[get("/auth_debug/<username>")]
 pub fn auth_debug(username: String) -> Result<Json<Value>, Status> {
     Ok(Json(json!({
@@ -21,11 +18,11 @@ pub fn auth_debug(username: String) -> Result<Json<Value>, Status> {
     })))
 }
 
-/*#[cfg(not(debug_assertions))]
+#[cfg(not(debug_assertions))]
 #[get("/auth_debug/<_username>")]
 pub fn auth_debug(_username: String) -> Status {
     Status::NotFound
-}*/
+}
 
 #[get("/auth_debug/<username>/<key>")]
 pub fn auth_debug_production(username: String, key: String) -> Result<Json<Value>, Status> {
@@ -45,11 +42,13 @@ pub fn auth_debug_production(username: String, key: String) -> Result<Json<Value
 pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data) -> Result<Redirect, Status> {
     let data = crate::data_to_string(data);
 
-    let username = validate_lti(
+    /*let username = validate_lti(
         &format!("{}/auth_cookie", env::var("BACKEND_URL").unwrap()),
         &data,
         &env::var("LTI_SECRET").unwrap()
-    )?;
+    )?;*/
+
+    let username = username_from_data(&data)?;
 
     let auth_token = create_session(username.clone(), Some(&data))?;
     cookies.add(
@@ -69,78 +68,26 @@ pub fn auth_cookie(mut cookies: Cookies, data: rocket::Data) -> Result<Redirect,
 pub fn auth_token(data: rocket::Data) -> Result<Json<Value>, Status> {
     let data = crate::data_to_string(data);
 
-    let username = validate_lti(
+    /*let username = validate_lti(
         &format!("{}/auth_token", env::var("BACKEND_URL").unwrap()),
         &data,
         &env::var("LTI_SECRET").unwrap()
-    )?;
+    )?;*/
+
+    let username = username_from_data(&data)?;
 
     Ok(Json(json!({
         "auth_token": create_session(username, Some(&data))?
     })))
 }
 
-/// Validates an LTI post request. Returns the username if the validation was successful, 401 if the
-/// validation failed, 400 if the `lis_person_sourcedid` field is missing.
-/// Warning: This is custom-tailored for Stud.IP and might not work for other systems.
-///
-/// * `uri`: The URI the request was sent to.
-/// * `params`: The body of the POST request
-/// * `secret`: The LTI consumer secret
-///
-/// TODO: Use timestamp and nonce to prevent reuse of the same request.
-fn validate_lti(uri: &str, params: &str, secret: &str) -> Result<String, Status> {
-    let mut params = serde_urlencoded::from_str::<Vec<(String, String)>>(
-        // We need to do this, because Stud.IP calculates the signature using "\n" for line breaks,
-        // but sends "\r\n".
-        &params.replace("%0D%0A", "%0A")
-    ).unwrap();
-
-    // Get the oauth signature Stud,IP calculated
-    let signature_index = params.iter()
-        .position(|e| e.0 == "oauth_signature")
-        .ok_or(Status::Unauthorized)?;
-    let studip_signature = params.remove(signature_index).1;
-
-    params.sort_unstable();
-
-    let params_encoded = params.iter()
-        .map(|(k, v)| format!("{}={}", k, perc_encode(&v)))
-        .collect::<Vec<_>>()
-        .join("&");
-
-    let base_string = format!("POST&{}&{}", perc_encode(uri), perc_encode(&params_encoded));
-
-    // Calculate the signature of our request.
-    let secret = format!("{}&", perc_encode(secret));
-    let mut mac = Hmac::<Sha1>::new_varkey(secret.as_bytes()).unwrap();
-    mac.update(base_string.as_bytes());
-    let request_signature = base64::encode(mac.finalize().into_bytes());
-
-    // TODO: Reenable this once LTI is working again
-    //if request_signature != studip_signature {
-    //    return Err(Status::Unauthorized);
-    //}
-
-    Ok(
-        params.iter()
+fn username_from_data(ltidata: &str) -> Result<String, Status> {
+    Ok(serde_urlencoded::from_str::<Vec<(String, String)>>(&ltidata)
+        .unwrap()
+        .iter()
         .find(|e| e.0 == "lis_person_sourcedid")
         .ok_or(Status::BadRequest)?
-        .clone().1
-    )
-}
-
-/// Percent encodes a &str.
-fn perc_encode(input: &str) -> String {
-    // We want to percent encode all characters except 'A-Z', 'a-z', '0-9', '-', ',', '_', '~'
-    // (see RFC 3986)
-    const FRAGMENT: &AsciiSet = &NON_ALPHANUMERIC
-        .remove(b'-')
-        .remove(b'.')
-        .remove(b'_')
-        .remove(b'~');
-
-    utf8_percent_encode(input, FRAGMENT).to_string()
+        .clone().1)
 }
 
 // Creates a session for a user and returns the auth token
@@ -180,3 +127,72 @@ fn create_session(username: String, ltidata: Option<&str>) -> Result<String, Sta
 
     Ok(auth_token)
 }
+
+// === LTI stuff (currently not working) ===========================================================
+
+// use percent_encoding::{utf8_percent_encode, AsciiSet, NON_ALPHANUMERIC};
+// use hmac::{Hmac, Mac, NewMac};
+// use crypto_hashes::sha1::Sha1;
+
+/*
+/// Validates an LTI post request. Returns the username if the validation was successful, 401 if the
+/// validation failed, 400 if the `lis_person_sourcedid` field is missing.
+/// Warning: This is custom-tailored for Stud.IP and might not work for other systems.
+///
+/// * `uri`: The URI the request was sent to.
+/// * `params`: The body of the POST request
+/// * `secret`: The LTI consumer secret
+///
+/// T-O-D-O: Use timestamp and nonce to prevent reuse of the same request.
+fn validate_lti(uri: &str, params: &str, secret: &str) -> Result<String, Status> {
+    let mut params = serde_urlencoded::from_str::<Vec<(String, String)>>(
+        // We need to do this, because Stud.IP calculates the signature using "\n" for line breaks,
+        // but sends "\r\n".
+        &params.replace("%0D%0A", "%0A")
+    ).unwrap();
+
+    // Get the oauth signature Stud,IP calculated
+    let signature_index = params.iter()
+        .position(|e| e.0 == "oauth_signature")
+        .ok_or(Status::Unauthorized)?;
+    let studip_signature = params.remove(signature_index).1;
+
+    params.sort_unstable();
+
+    let params_encoded = params.iter()
+        .map(|(k, v)| format!("{}={}", k, perc_encode(&v)))
+        .collect::<Vec<_>>()
+        .join("&");
+
+    let base_string = format!("POST&{}&{}", perc_encode(uri), perc_encode(&params_encoded));
+
+    // Calculate the signature of our request.
+    let secret = format!("{}&", perc_encode(secret));
+    let mut mac = Hmac::<Sha1>::new_varkey(secret.as_bytes()).unwrap();
+    mac.update(base_string.as_bytes());
+    let request_signature = base64::encode(mac.finalize().into_bytes());
+
+    if request_signature != studip_signature {
+        return Err(Status::Unauthorized);
+    }
+
+    Ok(
+        params.iter()
+            .find(|e| e.0 == "lis_person_sourcedid")
+            .ok_or(Status::BadRequest)?
+            .clone().1
+    )
+}
+
+/// Percent encodes a &str.
+fn perc_encode(input: &str) -> String {
+    // We want to percent encode all characters except 'A-Z', 'a-z', '0-9', '-', ',', '_', '~'
+    // (see RFC 3986)
+    const FRAGMENT: &AsciiSet = &NON_ALPHANUMERIC
+        .remove(b'-')
+        .remove(b'.')
+        .remove(b'_')
+        .remove(b'~');
+
+    utf8_percent_encode(input, FRAGMENT).to_string()
+}*/
