@@ -3,11 +3,16 @@ use serde_json::{Value, Number};
 use diesel::prelude::*;
 use diesel::insert_into;
 //use cached::proc_macro::cached;
-
-use std::collections::HashMap;
+use lazy_static::lazy_static;
+use std::sync::Mutex;
+use std::collections::{HashMap, HashSet};
 
 use crate::static_data::ACHIEVEMENTS;
 use std::f64::consts::PI;
+
+lazy_static! {
+    static ref QUEUE: Mutex<HashMap<String, (bool, HashSet<String>)>> = Mutex::new(HashMap::new());
+}
 
 pub struct AchievementTrigger {
     /// User name
@@ -42,9 +47,14 @@ impl AchievementTrigger {
     }
 
     pub fn run(self, trigger: &str) {
+        let trigger_str = trigger.to_string();
         let trigger = Value::String(trigger.to_string());
 
         std::thread::spawn(move || {
+            if !AchievementTrigger::lock(&self.username, &trigger_str) {
+                return;
+            }
+
             let ids = self.achievements.iter()
                 .filter(|achievement| {
                     !self.completed.contains(&achievement["id"].as_i64().unwrap())
@@ -67,7 +77,55 @@ impl AchievementTrigger {
             if ids.contains(&16) && completed_achievements(&self.username).len() == self.achievements.len() - 1 {
                 set_achievement_completed(&self.username, 16);
             }
+
+            if let Some(next) = AchievementTrigger::free(&self.username) {
+                AchievementTrigger::new(
+                    &crate::guards::User { name: self.username, token: self.token }
+                ).unwrap().run(&next);
+            }
         });
+    }
+
+    // Returns true if the check can proceed, false otherwise
+    fn lock(user: &str, trigger: &str) -> bool {
+        let mut queue = QUEUE.lock().unwrap();
+
+        // If there is no queue for the user, create one
+        if !queue.contains_key(user) {
+            queue.insert(user.to_string(), (true, HashSet::new()));
+        }
+
+        let (free, waiting) = queue.get_mut(user).unwrap();
+
+        // If there is no other check running, allow this one
+        if *free {
+            *free = false;
+            return true;
+        }
+
+        // Otherwise insert it into the waiting queue
+        waiting.insert(trigger.to_string());
+
+        false
+    }
+
+    // Returns None if there is no other check waiting, a check trigger otherwise
+    fn free(user: &str) -> Option<String> {
+        let mut queue = QUEUE.lock().unwrap();
+        let (free, waiting) = queue.get_mut(user).unwrap();
+
+        // The current check has finished
+        *free = true;
+
+        // If there is no check waiting, return None
+        if waiting.len() == 0 {
+            return None;
+        }
+
+        // Otherwise take a trigger from the queue and return it
+        let next = waiting.iter().next().unwrap().to_string();
+        waiting.remove(&next);
+        Some(next)
     }
 
     fn check(&self, id: i64) -> bool {
