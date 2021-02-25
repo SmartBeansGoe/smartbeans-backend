@@ -19,4 +19,6 @@ lazy_static! {
                 map
             })
     };
+
+    pub static ref NAMES: Vec<&'static str> = include_str!("../data/names.txt").split('\n').collect();
 }

@@ -1,4 +1,6 @@
 use diesel::prelude::*;
+use rand::Rng;
+use crate::static_data::NAMES;
 
 /// Initializes user. Use this only on first login, as this will panic if the user is already initialized.
 /// (You can check this by looking up if there are already datasets for this user.)
@@ -32,7 +34,7 @@ pub fn init_charname(user: &str) {
     use crate::schema::charnames::dsl::*;
 
     diesel::insert_into(charnames)
-        .values((username.eq(user), charname.eq(user)))
+        .values((username.eq(user), charname.eq(NAMES[rand::thread_rng().gen_range(0, NAMES.len())])))
         .execute(&crate::database::establish_connection())
         .expect("Database error");
 }
