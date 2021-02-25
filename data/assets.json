@@ -49,15 +49,19 @@
   },
   {
     "id": "troll-shirts",
-    "precondition": { "task-id": null, "achievement-id": 7 }
+    "precondition": { "task-id": 48, "achievement-id": null }
   },
   {
     "id": "troll-pants",
-    "precondition": { "task-id": null, "achievement-id": 7 }
+    "precondition": { "task-id": 48, "achievement-id": null }
   },
   {
     "id": "troll-hats",
-    "precondition": { "task-id": null, "achievement-id": 7 }
+    "precondition": { "task-id": 48, "achievement-id": null }
+  },
+  {
+    "id": "das_doppelte_boehnchen-shirts",
+    "precondition": { "task-id": 51, "achievement-id": null }
   },
   {
     "id": "kompilations_komplikationen-shirts",
@@ -156,6 +160,10 @@
     "precondition": { "task-id": null, "achievement-id": 10 }
   },
   {
+    "id": "doppelt_haelt_besser-pants",
+    "precondition": { "task-id": null, "achievement-id": 10 }
+  },
+  {
     "id": "doppelt_haelt_besser-hats",
     "precondition": { "task-id": null, "achievement-id": 10 }
   },
@@ -198,6 +206,10 @@
   {
     "id": "climber_pants_no_rope-pants",
     "precondition": { "task-id": null, "achievement-id": 1 }
+  },
+  {
+    "id": "maximiert-shirts",
+    "precondition": { "task-id": null, "achievement-id": 12 }
   },
   {
     "id": "maximiert-pants",
@@ -269,11 +281,11 @@
   },
   {
     "id": "new-york-city-basic-shirts",
-    "precondition": { "task-id": 60, "achievement-id": null }
+    "precondition": { "task-id": 81, "achievement-id": null }
   },
   {
     "id": "new-york-city-basic-pants",
-    "precondition": { "task-id": 60, "achievement-id": null }
+    "precondition": { "task-id": 81, "achievement-id": null }
   },
   {
     "id": "surfer-bean-shirts",
@@ -337,6 +349,10 @@
   },
   {
     "id": "kitty-shirts",
+    "precondition": { "task-id": 83, "achievement-id": null }
+  },
+  {
+    "id": "kitty-hats",
     "precondition": { "task-id": 83, "achievement-id": null }
   },
   {
