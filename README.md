@@ -5,9 +5,9 @@
 - Rust nightly
     - Install rustup (see [here](https://www.rust-lang.org/learn/get-started) for installation instructions)
     - Download the nightly toolchain (`rustup toolchain install nightly`)
-    - Select the nightly toolchain
-        - either globally... (`rustup default nightly`)
-        - ...or locally in the project folder (`rustup override set nightly`)
+    - ~Select the nightly toolchain~ not necessary anymore, because of the rust-toolchain file
+        - ~either globally... (`rustup default nightly`)~
+        - ~...or locally in the project folder (`rustup override set nightly`)~
 - MySQL/MariaDB (on Ubuntu 'mysql-server'/'mariadb-server')
 - OpenSSL
     - If you run into problems, try to install `pkg-config` and `libssl-dev` (Ubuntu) and set the environment variable`OPENSSL_DIR`. If you are lucky, this solves your problem.
@@ -15,7 +15,7 @@
 ## Installation and Execution
 
 - Clone this repository.
-- `.env-default` provides default values for configuration variables. If you want to change them, you can just copy the file to `.env`. Variables set in `.env` will override the values from `.env-default`. You should at least change the databse credentials.
+- `.env-default` provides default values for configuration variables. If you want to change them, you can just copy the file to `.env`. Variables set in `.env` will override the values from `.env-default`. You should at least change the database credentials.
 - Execute `cargo run` or `cargo run --release` (for production).
     - Alternative option: Use a systemd-service (see below).
 - The server runs on localhost:4224 (dev) or 0.0.0.0:4224 (production).
@@ -51,7 +51,7 @@ WantedBy=multi-user.target
     
 ## Backup and Update
 
-- All relevant data is stored in db.sqlite and .env (and Rocket.toml if you modified it). It should be sufficient to backup these files. If you want to be extra sure, you can of course backup the whole folder.
+- All relevant data is stored in the database and .env (and Rocket.toml if you modified it). It should be sufficient to backup these files. If you want to be extra sure, you can of course backup the whole folder.
 - To update to a newer version, just pull the changes (or download the new version and copy db.sqlite, .env[, Rocket.toml])
 
 ## API Documentation
