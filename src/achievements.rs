@@ -193,7 +193,7 @@ impl AchievementTrigger {
 
     // Trollmathematik; login, submission
     fn check_7(&self) -> bool {
-        self.solved_tasks.len() >= 3 && self.solved_tasks.contains(&48)
+        self.solved_tasks.len() > 3 && self.solved_tasks.contains(&48)
     }
 
     // Kompilations-Komplikationen; login, submission

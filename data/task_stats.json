@@ -650,7 +650,7 @@
     "shortname": "z8",
     "difficulty": "schwierig",
     "points": 40,
-    "categories": "STRUCTS",
+    "categories": ["STRUCTS"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
