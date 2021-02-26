@@ -29,7 +29,7 @@
       "open": "Löse 42 Aufgaben.",
       "completed": "Du hast 42 Aufgaben gelöst."
     },
-    "hidden": false,
+    "hidden": true,
     "triggers": ["login","submission"]
   },
 
