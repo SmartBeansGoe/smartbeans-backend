@@ -93,6 +93,7 @@ pub fn tasks(token: String) -> Result<Vec<Value>, Status> {
                 task["categories"] = TASK_STATS[&taskid]["categories"].clone();
                 task["points"] = TASK_STATS[&taskid]["points"].clone();
                 task["skills"] = TASK_STATS[&taskid]["skills"].clone();
+                task["order"] = TASK_STATS[&taskid]["order"].clone();
             }
 
             task
