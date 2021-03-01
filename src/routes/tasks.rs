@@ -35,6 +35,8 @@ pub fn submit(user: guards::User, taskid: String, data: rocket::Data) -> Result<
 
     crate::achievements::AchievementTrigger::run(&user, "submission")?;
 
+    crate::log_route(&user.name, &format!("/submit/{}", taskid), Some(&result.to_string()));
+
     Ok(Json(result))
 }
 
