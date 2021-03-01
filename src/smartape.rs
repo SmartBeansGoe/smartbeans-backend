@@ -145,7 +145,7 @@ pub fn submit(token: &str, taskid: &str, submission: &str) -> Result<Value, Stat
         "POST",
         &format!("/course/{}/tasks/{}/submissions", courseid(&token)?, taskid),
         Some(token),
-        &serde_json::to_string(&json!({"sourceCode": submission, "frontend_id": 0})).unwrap(),
+        &serde_json::to_string(&json!({"sourceCode": submission, "frontend_id": 1})).unwrap(),
         true
     )?.text().unwrap();
 
