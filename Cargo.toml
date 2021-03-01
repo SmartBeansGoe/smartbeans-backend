@@ -1,6 +1,6 @@
 [package]
 name = "smartbeans-backend"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Niklas Birth <birth@posteo.de>"]
 edition = "2018"
 default-run = "backend"
