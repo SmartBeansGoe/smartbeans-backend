@@ -30,13 +30,15 @@ async fn main() -> Result<(), Error> {
 }
 
 async fn read_message(api: Api, message: Message) -> Result<(), Error> {
-    match message.kind {
-        MessageKind::Text { ref data, .. } => match data.as_str() {
-            "/version" => bot::version_message(api, message).await?,
-            "/chatid" => bot::chatid_message(api, message).await?,
+    if let MessageKind::Text { ref data, .. } = message.kind {
+        match data.split_whitespace().next() {
+            Some("/version") => bot::version_message(api, message).await?,
+            Some("/chatid") => bot::chatid_message(api, message).await?,
+            Some("/new_error") => bot::new_error_message(api, message).await?,
+            Some("/list_errors") => bot::list_error_messages(api, message).await?,
+            Some("/delete_error") => bot::delete_error_message(api, message).await?,
             _ => (),
-        },
-        _ => (),
+        }
     };
 
     Ok(())
