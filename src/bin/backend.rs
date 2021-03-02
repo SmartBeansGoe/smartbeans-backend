@@ -84,6 +84,7 @@ fn main() {
             routes::misc::error,
             routes::misc::report_error,
             routes::misc::leaderboard,
+            routes::misc::error_notifications,
             routes::tasks::get_tasks,
             routes::tasks::progress,
             routes::tasks::submit,

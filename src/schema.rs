@@ -26,6 +26,14 @@ table! {
 }
 
 table! {
+    error_messages (id) {
+        id -> Integer,
+        title -> Text,
+        content -> Text,
+    }
+}
+
+table! {
     error_reports (id) {
         id -> Integer,
         time -> Bigint,
@@ -77,6 +85,7 @@ allow_tables_to_appear_in_same_query!(
     achievements,
     characters,
     charnames,
+    error_messages,
     error_reports,
     route_log,
     sessions,
