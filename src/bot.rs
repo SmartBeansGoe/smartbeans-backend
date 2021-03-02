@@ -55,13 +55,17 @@ pub async fn new_error_message(api: Api, message: Message) -> Result<(), Error> 
 
 pub async fn list_error_messages(api: Api, message: Message) -> Result<(), Error> {
     use crate::schema::error_messages::dsl::*;
-    let messages = error_messages.select((id, title, content))
+    let mut messages = error_messages.select((id, title, content))
         .load::<(i32, String, String)>(&crate::database::establish_connection())
         .expect("Database error")
         .into_iter()
         .fold(String::new(), |acc, message| {
             format!("{}{}: {}\n{}\n\n", acc, message.0, message.1, message.2)
         });
+
+    if messages == "" {
+        messages = "Keine Fehlermeldungen.".to_string();
+    }
 
     api.send(message.text_reply(&messages)).await?;
     Ok(())
