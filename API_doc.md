@@ -388,6 +388,21 @@ Input:
 <String>
 ```
 
+### /error_notifications (GET)
+
+Alerts that can be used to notify users if something is broken. Does not require Authorization header.
+
+Output:
+```
+[
+    {
+        'title': <String>,
+        'content': <String>
+    },
+    ...
+]
+```
+
 ### /leaderboard (GET)
 
 Returns leaderboard data (currently up to rank 30).
