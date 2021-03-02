@@ -48,6 +48,9 @@ pub fn leaderboard(user: guards::User) -> Json<Value> {
         .load::<(String, i64)>(&crate::database::establish_connection())
         .expect("Database error")
         .into_iter()
+        .filter(|(user, _)| {
+            !crate::static_data::HIDDEN_USERS.contains(&&user[..])
+        })
         .map(|(user, score)| {
             use crate::schema::charnames::dsl::*;
 
