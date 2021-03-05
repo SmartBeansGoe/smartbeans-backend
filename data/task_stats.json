@@ -383,7 +383,7 @@
     "taskid": 50,
     "shortname": "s9",
     "order": 200,
-    "difficulty": "mittel (schwer?)",
+    "difficulty": "mittel",
     "points": 20,
     "categories": ["IO", "DATA", "CONTROL", "ARRAYS"],
     "skills": [
