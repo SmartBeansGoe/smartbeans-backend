@@ -209,7 +209,7 @@ impl AchievementTrigger {
     fn check_9(&self) -> bool {
         let mut wrong_submissions = self.submissions.iter()
             .filter(|submission| {
-                submission["result"]["type"] != Value::String("SUCCESS".to_string())
+                submission["result"]["score"] != Value::Number(Number::from(1))
             })
             .collect::<Vec<_>>();
 
@@ -236,7 +236,7 @@ impl AchievementTrigger {
     fn check_10(&self) -> bool {
         let mut correct_submissions = self.submissions.iter()
             .filter(|submission| {
-                submission["result"]["type"] == Value::String("SUCCESS".to_string())
+                submission["result"]["score"] == Value::Number(Number::from(1))
             })
             .collect::<Vec<_>>();
 
