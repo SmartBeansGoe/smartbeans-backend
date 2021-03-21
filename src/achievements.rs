@@ -74,7 +74,7 @@ impl AchievementTrigger {
 
             // Special case: Achievement for unlocking all other achievements
             // TODO: Replace len-2 by a proper implementation
-            if ids.contains(&16) && completed_achievements(&self.username).len() == self.achievements.len() - 2 {
+            if !completed_achievements(&self.username).contains(&16) && completed_achievements(&self.username).len() == self.achievements.len() - 2 {
                 set_achievement_completed(&self.username, 16);
             }
 
