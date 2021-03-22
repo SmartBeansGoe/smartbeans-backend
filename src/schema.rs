@@ -78,6 +78,7 @@ table! {
         total_score -> Bigint,
         char_changed -> Bigint,
         studip_userid -> Text,
+        survey -> Nullable<Text>,
     }
 }
 

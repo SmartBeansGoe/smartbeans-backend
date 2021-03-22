@@ -8,7 +8,7 @@ use std::collections::HashMap;
 use crate::static_data::TASK_STATS;
 
 // based on (x-1)^1.75 * 15
-pub static LEVELS: [u64; 13] = [100000000, 0, 15, 50, 100, 170, 250, 340, 450, 570, 700, 840, 1055];
+pub static LEVELS: [u64; 13] = [100000000, 0, 15, 50, 100, 170, 250, 340, 450, 570, 700, 840, 1080];
 
 #[cached(time = 3600)]
 pub fn total_points() -> HashMap<String, u64> {

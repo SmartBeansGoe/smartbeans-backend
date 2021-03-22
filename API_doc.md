@@ -219,7 +219,8 @@ Output:
 ```
 {
     'username': <string>,
-    'first_login': <bool>
+    'first_login': <bool>,
+    'survey_completed': <bool>
 }
 ```
 
@@ -227,6 +228,14 @@ Output:
 
 Sets the first_login variable to false.
 
+### /user/submit_survey (POST)
+
+Save survey data for this user. Expects `Content-Type: text/plain`. Returns Status Ok on success. After calling this route, survey_completed in /user/data will return true.
+
+Input:
+```
+<String that should be stored in database>
+```
 ### /level_data (GET)
 
 Output:
