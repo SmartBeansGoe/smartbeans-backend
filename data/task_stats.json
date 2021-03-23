@@ -798,5 +798,165 @@
       { "name": "MODULE", "points": 0 },
       { "name": "STRUCTS", "points": 0 }
     ]
+  },
+  {
+    "taskid": 201,
+    "shortname": "j1",
+    "order": 410,
+    "difficulty": "gold",
+    "points": 40,
+    "categories": [],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 202,
+    "shortname": "j2",
+    "order": 420,
+    "difficulty": "gold",
+    "points": 40,
+    "categories": [],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 203,
+    "shortname": "j3",
+    "order": 430,
+    "difficulty": "gold",
+    "points": 40,
+    "categories": [],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 204,
+    "shortname": "j4",
+    "order": 440,
+    "difficulty": "gold",
+    "points": 40,
+    "categories": [],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 206,
+    "shortname": "j6",
+    "order": 460,
+    "difficulty": "gold",
+    "points": 40,
+    "categories": [],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 207,
+    "shortname": "j7",
+    "order": 470,
+    "difficulty": "gold",
+    "points": 40,
+    "categories": [],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 208,
+    "shortname": "j8",
+    "order": 480,
+    "difficulty": "gold",
+    "points": 40,
+    "categories": [],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 210,
+    "shortname": "j10",
+    "order": 500,
+    "difficulty": "gold",
+    "points": 40,
+    "categories": [],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
   }
 ]
