@@ -74,6 +74,8 @@ pub fn submit_survey(user: guards::User, data: rocket::Data) -> Status {
 
 fn survey_completed(uname: &str) -> bool {
     use crate::schema::users::dsl::*;
+
+    crate::static_data::HIDDEN_USERS.contains(&uname) ||
     users.filter(username.eq(uname))
         .select(survey)
         .first::<Option<String>>(&crate::database::establish_connection())
