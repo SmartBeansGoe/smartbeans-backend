@@ -62,6 +62,13 @@ table! {
 }
 
 table! {
+    survey (id) {
+        id -> Integer,
+        val -> Text,
+    }
+}
+
+table! {
     system_messages (id) {
         id -> Integer,
         user -> Text,
@@ -90,6 +97,7 @@ allow_tables_to_appear_in_same_query!(
     error_reports,
     route_log,
     sessions,
+    survey,
     system_messages,
     users,
 );
