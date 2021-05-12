@@ -73,9 +73,9 @@ impl AchievementTrigger {
             }
 
             // Special case: Achievement for unlocking all other achievements
-            if ids.contains(&16) && completed_achievements(&self.username).len() == self.achievements.len() - 1 {
-                set_achievement_completed(&self.username, 16);
-            }
+            // if ids.contains(&16) && completed_achievements(&self.username).len() == self.achievements.len() - 1 {
+            //     set_achievement_completed(&self.username, 16);
+            // }
 
             if let Some(next) = AchievementTrigger::free(&self.username) {
                 AchievementTrigger::run(

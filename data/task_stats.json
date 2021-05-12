@@ -1,12 +1,13 @@
 [
   {
-    "taskid": 43,
-    "shortname": "s3",
-    "difficulty": "einfach",
-    "points": 10,
+    "taskid": 0,
+    "shortname": "A001",
+    "order": 5,
+    "difficulty": "sehr einfach",
+    "points": 5,
     "categories": ["IO"],
     "skills": [
-      { "name": "IO", "points": 10 },
+      { "name": "IO", "points": 5 },
       { "name": "STRING", "points": 0 },
       { "name": "DATA", "points": 0 },
       { "name": "CONTROL", "points": 0 },
@@ -19,13 +20,14 @@
     ]
   },
   {
-    "taskid": 44,
-    "shortname": "s4",
-    "difficulty": "einfach",
-    "points": 10,
+    "taskid": 1,
+    "shortname": "A002",
+    "order": 10,
+    "difficulty": "sehr einfach",
+    "points": 5,
     "categories": ["IO"],
     "skills": [
-      { "name": "IO", "points": 10 },
+      { "name": "IO", "points": 5 },
       { "name": "STRING", "points": 0 },
       { "name": "DATA", "points": 0 },
       { "name": "CONTROL", "points": 0 },

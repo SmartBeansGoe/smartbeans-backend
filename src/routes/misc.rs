@@ -74,7 +74,7 @@ pub fn leaderboard(user: guards::User) -> Json<Value> {
         buckets[rank-1].push((user, name, points, rank));
     }
 
-    let values: Vec<Value> = buckets[..std::cmp::min(30, buckets.len())].concat()
+    let values: Vec<Value> = buckets.concat()
         .iter()
         .map(|data| {
             let mut v = json!({});

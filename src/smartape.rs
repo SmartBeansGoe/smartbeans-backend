@@ -75,7 +75,7 @@ pub fn progress(token: &str) -> Result<Vec<i64>, Status> {
 pub fn tasks(token: String) -> Result<Vec<Value>, Status> {
     let tasks_str = call_smartape_api(
         "GET",
-        &format!("/course/{}/tasks", courseid(&token)?),
+        &format!("/course/2ff349483757a2ad1d44b02d0edef3af/tasks"), //, courseid(&token)?),
         Some(&token),
         "",
         false
@@ -91,8 +91,10 @@ pub fn tasks(token: String) -> Result<Vec<Value>, Status> {
             if TASK_STATS.contains_key(&taskid) {
                 task["difficulty"] = TASK_STATS[&taskid]["difficulty"].clone();
                 task["categories"] = TASK_STATS[&taskid]["categories"].clone();
+                task["order"] = TASK_STATS[&taskid]["order"].clone();
                 task["points"] = TASK_STATS[&taskid]["points"].clone();
                 task["skills"] = TASK_STATS[&taskid]["skills"].clone();
+                task["tips"] = TASK_STATS[&taskid]["tips"].clone();
             }
 
             task

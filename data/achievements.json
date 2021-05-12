@@ -18,8 +18,8 @@
       "open": "Löse 10000 Aufgaben.",
       "completed": "Du hast 0b10000 Aufgaben gelöst."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   },
 
   {
@@ -40,8 +40,8 @@
       "open": "Löse alle Aufgaben.",
       "completed": "Du hast alle Aufgaben gelöst."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   },
 
   {
@@ -73,8 +73,8 @@
       "open": "Löse viele Aufgaben.",
       "completed": "Du hast 1, 2, 3, viele Aufgaben gelöst."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   },
 
   {
@@ -84,8 +84,8 @@
       "open": "\"But it worked on my machine.\"",
       "completed": "Du hast 3 Compilerfehler verursacht."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   },
 
   {
@@ -117,8 +117,8 @@
       "open": "Erreiche in jeder Fähigkeit mindestens 50%.",
       "completed": "Du hast in jeder Fähigkeit mindestens 50% erreicht.."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   },
 
   {
@@ -128,8 +128,8 @@
       "open": "Erreiche in drei Fähigkeiten 100%.",
       "completed": "Du hast in drei Fähigkeiten 100% erreicht."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   },
 
   {
@@ -150,8 +150,8 @@
       "open": "Löse zu jeder Fähigkeit eine Aufgabe.",
       "completed": "Du hast zu jeder Fähigkeit eine Aufgabe gelöst."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   },
 
   {
@@ -161,7 +161,7 @@
       "open": "Achievement not found",
       "completed": "Achievement found!"
     },
-    "hidden": false,
+    "hidden": true,
     "triggers": ["404"]
   },
 
@@ -172,7 +172,7 @@
       "open": "Schalte alle (anderen) Errungenschaften frei.",
       "completed": "Du hast alle Errungenschaften freigeschaltet."
     },
-    "hidden": false,
+    "hidden": true,
     "triggers": ["see AchievementTrigger::run"]
   },
 
@@ -183,8 +183,8 @@
       "open": "Löse E8, ohne eine Schleife zu verwenden.",
       "completed": "Du hast E8 gelöst, ohne eine Schleife zu verwenden."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   },
 
   {
@@ -194,8 +194,8 @@
       "open": "Erreiche Stufe 5.",
       "completed": "Du hast Stufe 5 erreicht."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   },
 
   {
@@ -205,7 +205,7 @@
       "open": "Erreiche 50% Flächenabdeckung im Fähigkeiten-Netzdiagramm.",
       "completed": "Du hast 50% Abdeckung im Fähigkeiten-Netzdiagramm erreicht."
     },
-    "hidden": false,
-    "triggers": ["login","submission"]
+    "hidden": true,
+    "triggers": []
   }
 ]
