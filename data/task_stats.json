@@ -1,6 +1,6 @@
 [
   {
-    "taskid": 0,
+    "taskid": 1,
     "shortname": "A001",
     "order": 5,
     "difficulty": "sehr einfach",
@@ -23,7 +23,7 @@
     ]
   },
   {
-    "taskid": 1,
+    "taskid": 2,
     "shortname": "A002",
     "order": 10,
     "difficulty": "sehr einfach",
