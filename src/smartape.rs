@@ -75,7 +75,7 @@ pub fn progress(token: &str) -> Result<Vec<i64>, Status> {
 pub fn tasks(token: String) -> Result<Vec<Value>, Status> {
     let tasks_str = call_smartape_api(
         "GET",
-        &format!("/course/2ff349483757a2ad1d44b02d0edef3af/tasks"), //, courseid(&token)?),
+        &format!("/course/{}/tasks", courseid(&token)?),
         Some(&token),
         "",
         false
