@@ -40,6 +40,7 @@
       { "name": "MEMORY", "points": 0 },
       { "name": "MODULE", "points": 0 },
       { "name": "STRUCTS", "points": 0 }
-    ]
+    ],
+    "tips": []
   }
 ]
