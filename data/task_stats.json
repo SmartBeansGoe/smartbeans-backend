@@ -42,5 +42,26 @@
       { "name": "STRUCTS", "points": 0 }
     ],
     "tips": []
+  },
+  {
+    "taskid": 3,
+    "shortname": "A003",
+    "order": 15,
+    "difficulty": "sehr einfach",
+    "points": 5,
+    "categories": ["CONTROL"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 5 },
+      { "name": "MATH", "points": 0 },
+      { "name": "NUMPY", "points": 0 },
+      { "name": "LISTS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ],
+    "tips": []
   }
 ]
