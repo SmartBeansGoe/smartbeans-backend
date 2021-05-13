@@ -14,9 +14,7 @@
       { "name": "MATH", "points": 0 },
       { "name": "NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
-      { "name": "MEMORY", "points": 0 },
-      { "name": "MODULE", "points": 0 },
-      { "name": "STRUCTS", "points": 0 }
+      { "name": "MODULE", "points": 0 }
     ],
     "tips": [
       "Nutze die `print`-Funktion, um Strings (Zeichenketten) auf die Standardeingabe zu schreiben."
@@ -37,9 +35,7 @@
       { "name": "MATH", "points": 0 },
       { "name": "NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
-      { "name": "MEMORY", "points": 0 },
-      { "name": "MODULE", "points": 0 },
-      { "name": "STRUCTS", "points": 0 }
+      { "name": "MODULE", "points": 0 }
     ],
     "tips": []
   },
@@ -58,9 +54,26 @@
       { "name": "MATH", "points": 0 },
       { "name": "NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
-      { "name": "MEMORY", "points": 0 },
-      { "name": "MODULE", "points": 0 },
-      { "name": "STRUCTS", "points": 0 }
+      { "name": "MODULE", "points": 0 }
+    ],
+    "tips": []
+  },
+  {
+    "taskid": 4,
+    "shortname": "A004",
+    "order": 20,
+    "difficulty": "sehr einfach",
+    "points": 5,
+    "categories": ["CONTROL"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 5 },
+      { "name": "MATH", "points": 0 },
+      { "name": "NUMPY", "points": 0 },
+      { "name": "LISTS", "points": 0 },
+      { "name": "MODULE", "points": 0 }
     ],
     "tips": []
   }
