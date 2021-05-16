@@ -13,7 +13,7 @@
       { "name": "CONTROL", "points": 0 },
       { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
-      { "name": "MODULE", "points": 0 }
+      { "name": "FUNCTION", "points": 0 }
     ],
     "tips": [
       "Nutze die `print`-Funktion, um Strings (Zeichenketten) auf die Standardeingabe zu schreiben."
@@ -33,7 +33,7 @@
       { "name": "CONTROL", "points": 0 },
       { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
-      { "name": "MODULE", "points": 0 }
+      { "name": "FUNCTION", "points": 0 }
     ],
     "tips": []
   },
@@ -51,7 +51,7 @@
       { "name": "CONTROL", "points": 5 },
       { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
-      { "name": "MODULE", "points": 0 }
+      { "name": "FUNCTION", "points": 0 }
     ],
     "tips": []
   },
@@ -69,7 +69,25 @@
       { "name": "CONTROL", "points": 5 },
       { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
-      { "name": "MODULE", "points": 0 }
+      { "name": "FUNCTION", "points": 0 }
+    ],
+    "tips": []
+  },
+  {
+    "taskid": 5,
+    "shortname": "A005",
+    "order": 25,
+    "difficulty": "sehr einfach",
+    "points": 5,
+    "categories": ["STRING", "FUNCTION"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 5 },
+      { "name": "DATA/PANDAS", "points": 0 },
+      { "name": "CONTROL", "points": 5 },
+      { "name": "MATH/NUMPY", "points": 0 },
+      { "name": "LISTS", "points": 0 },
+      { "name": "FUNCTION", "points": 5 }
     ],
     "tips": []
   },
@@ -79,15 +97,15 @@
     "order": 10000,
     "difficulty": "sehr einfach",
     "points": 5,
-    "categories": ["IO", "CONTROL", "STRING", "DATA/PANDAS", "MATH/NUMPY", "LISTS", "MODULE"],
+    "categories": ["IO", "CONTROL", "STRING", "DATA/PANDAS", "MATH/NUMPY", "LISTS", "FUNCTION"],
     "skills": [
       { "name": "IO", "points": 190 },
-      { "name": "STRING", "points": 200 },
+      { "name": "STRING", "points": 195 },
       { "name": "DATA/PANDAS", "points": 200 },
       { "name": "CONTROL", "points": 190 },
       { "name": "MATH/NUMPY", "points": 200 },
       { "name": "LISTS", "points": 200 },
-      { "name": "MODULE", "points": 200 }
+      { "name": "FUNCTION", "points": 195 }
     ],
     "tips": []
   }
