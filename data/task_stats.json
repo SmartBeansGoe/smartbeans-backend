@@ -9,10 +9,9 @@
     "skills": [
       { "name": "IO", "points": 5 },
       { "name": "STRING", "points": 0 },
-      { "name": "DATA", "points": 0 },
+      { "name": "DATA/PANDAS", "points": 0 },
       { "name": "CONTROL", "points": 0 },
-      { "name": "MATH", "points": 0 },
-      { "name": "NUMPY", "points": 0 },
+      { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
       { "name": "MODULE", "points": 0 }
     ],
@@ -30,10 +29,9 @@
     "skills": [
       { "name": "IO", "points": 5 },
       { "name": "STRING", "points": 0 },
-      { "name": "DATA", "points": 0 },
+      { "name": "DATA/PANDAS", "points": 0 },
       { "name": "CONTROL", "points": 0 },
-      { "name": "MATH", "points": 0 },
-      { "name": "NUMPY", "points": 0 },
+      { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
       { "name": "MODULE", "points": 0 }
     ],
@@ -49,10 +47,9 @@
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
-      { "name": "DATA", "points": 0 },
+      { "name": "DATA/PANDAS", "points": 0 },
       { "name": "CONTROL", "points": 5 },
-      { "name": "MATH", "points": 0 },
-      { "name": "NUMPY", "points": 0 },
+      { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
       { "name": "MODULE", "points": 0 }
     ],
@@ -68,12 +65,29 @@
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
-      { "name": "DATA", "points": 0 },
+      { "name": "DATA/PANDAS", "points": 0 },
       { "name": "CONTROL", "points": 5 },
-      { "name": "MATH", "points": 0 },
-      { "name": "NUMPY", "points": 0 },
+      { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
       { "name": "MODULE", "points": 0 }
+    ],
+    "tips": []
+  },
+  {
+    "taskid": -1,
+    "shortname": "Dummy",
+    "order": 10000,
+    "difficulty": "sehr einfach",
+    "points": 5,
+    "categories": ["IO", "CONTROL", "STRING", "DATA/PANDAS", "MATH/NUMPY", "LISTS", "MODULE"],
+    "skills": [
+      { "name": "IO", "points": 190 },
+      { "name": "STRING", "points": 200 },
+      { "name": "DATA/PANDAS", "points": 200 },
+      { "name": "CONTROL", "points": 190 },
+      { "name": "MATH/NUMPY", "points": 200 },
+      { "name": "LISTS", "points": 200 },
+      { "name": "MODULE", "points": 200 }
     ],
     "tips": []
   }
