@@ -84,7 +84,7 @@
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 5 },
       { "name": "DATA/PANDAS", "points": 0 },
-      { "name": "CONTROL", "points": 5 },
+      { "name": "CONTROL", "points": 0 },
       { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 0 },
       { "name": "FUNCTION", "points": 5 }
