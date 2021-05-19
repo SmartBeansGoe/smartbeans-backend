@@ -128,6 +128,24 @@
     "tips": []
   },
   {
+    "taskid": 9,
+    "shortname": "A009",
+    "order": 45,
+    "difficulty": "sehr einfach",
+    "points": 5,
+    "categories": ["IO", "LISTS"],
+    "skills": [
+      { "name": "IO", "points": 5 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA/PANDAS", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH/NUMPY", "points": 0 },
+      { "name": "LISTS", "points": 5 },
+      { "name": "FUNCTION", "points": 0 }
+    ],
+    "tips": []
+  },
+  {
     "taskid": -1,
     "shortname": "Dummy",
     "order": 10000,
