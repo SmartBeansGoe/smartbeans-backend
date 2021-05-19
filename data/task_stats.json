@@ -110,6 +110,24 @@
     "tips": []
   },
   {
+    "taskid": 7,
+    "shortname": "A007",
+    "order": 35,
+    "difficulty": "sehr einfach",
+    "points": 5,
+    "categories": ["CONTROL", "LISTS"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA/PANDAS", "points": 0 },
+      { "name": "CONTROL", "points": 5 },
+      { "name": "MATH/NUMPY", "points": 0 },
+      { "name": "LISTS", "points": 5 },
+      { "name": "FUNCTION", "points": 0 }
+    ],
+    "tips": []
+  },
+  {
     "taskid": -1,
     "shortname": "Dummy",
     "order": 10000,
@@ -117,12 +135,12 @@
     "points": 5,
     "categories": ["IO", "CONTROL", "STRING", "DATA/PANDAS", "MATH/NUMPY", "LISTS", "FUNCTION"],
     "skills": [
-      { "name": "IO", "points": 190 },
+      { "name": "IO", "points": 185 },
       { "name": "STRING", "points": 195 },
       { "name": "DATA/PANDAS", "points": 200 },
-      { "name": "CONTROL", "points": 190 },
+      { "name": "CONTROL", "points": 185 },
       { "name": "MATH/NUMPY", "points": 200 },
-      { "name": "LISTS", "points": 200 },
+      { "name": "LISTS", "points": 190 },
       { "name": "FUNCTION", "points": 195 }
     ],
     "tips": []
