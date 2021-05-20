@@ -9,6 +9,7 @@
         - ~either globally... (`rustup default nightly`)~
         - ~...or locally in the project folder (`rustup override set nightly`)~
 - MySQL/MariaDB (on Ubuntu 'mysql-server'/'mariadb-server')
+    - You need a database and a user who can read and write it
 - OpenSSL
     - If you run into problems, try to install `pkg-config` and `libssl-dev` (Ubuntu) and set the environment variable`OPENSSL_DIR`. If you are lucky, this solves your problem.
 
@@ -16,6 +17,7 @@
 
 - Clone this repository.
 - `.env-default` provides default values for configuration variables. If you want to change them, you can just copy the file to `.env`. Variables set in `.env` will override the values from `.env-default`. You should at least change the database credentials.
+- You need to create a file `hidden_users.txt`, otherwise the compilation will fail.
 - Execute `cargo run` or `cargo run --release` (for production).
     - Alternative option: Use a systemd-service (see below).
 - The server runs on localhost:4224 (dev) or 0.0.0.0:4224 (production).

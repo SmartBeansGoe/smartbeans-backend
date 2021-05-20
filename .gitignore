@@ -1,3 +1,4 @@
 /target
 /log
 .env
+hidden_users.txt

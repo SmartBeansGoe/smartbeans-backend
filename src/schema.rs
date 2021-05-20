@@ -26,6 +26,14 @@ table! {
 }
 
 table! {
+    error_messages (id) {
+        id -> Integer,
+        title -> Text,
+        content -> Text,
+    }
+}
+
+table! {
     error_reports (id) {
         id -> Integer,
         time -> Bigint,
@@ -54,6 +62,13 @@ table! {
 }
 
 table! {
+    survey (id) {
+        id -> Integer,
+        val -> Text,
+    }
+}
+
+table! {
     system_messages (id) {
         id -> Integer,
         user -> Text,
@@ -70,6 +85,7 @@ table! {
         total_score -> Bigint,
         char_changed -> Bigint,
         studip_userid -> Text,
+        survey -> Nullable<Text>,
     }
 }
 
@@ -77,9 +93,11 @@ allow_tables_to_appear_in_same_query!(
     achievements,
     characters,
     charnames,
+    error_messages,
     error_reports,
     route_log,
     sessions,
+    survey,
     system_messages,
     users,
 );

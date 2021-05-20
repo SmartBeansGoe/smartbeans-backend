@@ -17,16 +17,18 @@ pub fn get_username(user: guards::User) -> Json<Value> {
 #[get("/user/data")]
 pub fn get_userdata(user: guards::User) -> Json<Value> {
     use crate::schema::users::dsl::*;
+    let conn = crate::database::establish_connection();
 
     let the_first_login_that_is_not_the_table_column: bool = users
         .filter(username.eq(&user.name))
         .select(first_login)
-        .first(&crate::database::establish_connection())
+        .first(&conn)
         .expect("Database error");
 
     Json(json!({
         "username": user.name,
-        "first_login": the_first_login_that_is_not_the_table_column
+        "first_login": the_first_login_that_is_not_the_table_column,
+        "survey_completed": survey_completed(&user.name)
     }))
 }
 
@@ -41,6 +43,44 @@ pub fn first_login_done(user: guards::User) -> Status {
         .expect("Database error");
 
     Status::Ok
+}
+
+#[post("/user/submit_survey", format = "text/plain", data = "<data>")]
+pub fn submit_survey(user: guards::User, data: rocket::Data) -> Status {
+    if survey_completed(&user.name) {
+        return Status::Forbidden;
+    }
+
+    let conn = crate::database::establish_connection();
+
+    {
+        use crate::schema::users::dsl::*;
+        diesel::update(users.filter(username.eq(&user.name)))
+            .set(survey.eq("1"))
+            .execute(&conn)
+            .expect("Database error");
+    }
+
+    {
+        use crate::schema::survey::dsl::*;
+        diesel::insert_into(survey)
+            .values(val.eq(crate::data_to_string(data)))
+            .execute(&conn)
+            .expect("Database error");
+    }
+
+    Status::Ok
+}
+
+fn survey_completed(uname: &str) -> bool {
+    use crate::schema::users::dsl::*;
+
+    crate::static_data::HIDDEN_USERS.contains(&uname) ||
+    users.filter(username.eq(uname))
+        .select(survey)
+        .first::<Option<String>>(&crate::database::establish_connection())
+        .expect("Database error")
+        .is_some()
 }
 
 #[get("/level_data")]

@@ -21,4 +21,5 @@ lazy_static! {
     };
 
     pub static ref NAMES: Vec<&'static str> = include_str!("../data/names.txt").split('\n').collect();
+    pub static ref HIDDEN_USERS: Vec<&'static str> = include_str!("../hidden_users.txt").split('\n').collect();
 }

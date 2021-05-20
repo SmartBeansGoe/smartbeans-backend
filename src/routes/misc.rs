@@ -48,6 +48,9 @@ pub fn leaderboard(user: guards::User) -> Json<Value> {
         .load::<(String, i64)>(&crate::database::establish_connection())
         .expect("Database error")
         .into_iter()
+        .filter(|(user, _)| {
+            !crate::static_data::HIDDEN_USERS.contains(&&user[..])
+        })
         .map(|(user, score)| {
             use crate::schema::charnames::dsl::*;
 
@@ -96,4 +99,23 @@ pub fn leaderboard(user: guards::User) -> Json<Value> {
         .collect();
 
     Json(serde_json::to_value(values).unwrap())
+}
+
+#[get("/error_notifications")]
+pub fn error_notifications() -> Json<Value> {
+    use crate::schema::error_messages::dsl::*;
+
+    let messages = error_messages.select((title, content))
+        .load::<(String, String)>(&crate::database::establish_connection())
+        .expect("Database error")
+        .into_iter()
+        .map(|message| {
+            let mut val = json!({});
+            val["title"] = Value::String(message.0);
+            val["content"] = Value::String(message.1);
+            val
+        })
+        .collect::<Vec<_>>();
+
+    Json(serde_json::to_value(messages).unwrap())
 }
