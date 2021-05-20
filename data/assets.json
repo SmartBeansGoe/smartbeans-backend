@@ -21,11 +21,11 @@
   },
   {
     "id": "ballerina-shirts",
-    "precondition": { "task-id": 71, "achievement-id": null }
+    "precondition": { "task-id": 6, "achievement-id": null }
   },
   {
     "id": "ballerina-pants",
-    "precondition": { "task-id": 71, "achievement-id": null }
+    "precondition": { "task-id": 6, "achievement-id": null }
   },
   {
     "id": "new-york-city-coat-shirts",
@@ -37,15 +37,15 @@
   },
   {
     "id": "french-bean-shirts",
-    "precondition": { "task-id": 76, "achievement-id": null }
+    "precondition": { "task-id": 8, "achievement-id": null }
   },
   {
     "id": "french-bean-pants",
-    "precondition": { "task-id": 76, "achievement-id": null }
+    "precondition": { "task-id": 8, "achievement-id": null }
   },
   {
     "id": "french-bean-hats",
-    "precondition": { "task-id": 76, "achievement-id": null }
+    "precondition": { "task-id": 8, "achievement-id": null }
   },
   {
     "id": "troll-shirts",
