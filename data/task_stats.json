@@ -115,15 +115,15 @@
     "order": 35,
     "difficulty": "sehr einfach",
     "points": 5,
-    "categories": ["CONTROL", "LISTS"],
+    "categories": ["FUNCTION", "LISTS"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
       { "name": "DATA/PANDAS", "points": 0 },
-      { "name": "CONTROL", "points": 5 },
+      { "name": "CONTROL", "points": 0 },
       { "name": "MATH/NUMPY", "points": 0 },
       { "name": "LISTS", "points": 5 },
-      { "name": "FUNCTION", "points": 0 }
+      { "name": "FUNCTION", "points": 5 }
     ],
     "tips": []
   },
@@ -174,10 +174,10 @@
       { "name": "IO", "points": 175 },
       { "name": "STRING", "points": 190 },
       { "name": "DATA/PANDAS", "points": 200 },
-      { "name": "CONTROL", "points": 185 },
+      { "name": "CONTROL", "points": 190 },
       { "name": "MATH/NUMPY", "points": 200 },
       { "name": "LISTS", "points": 180 },
-      { "name": "FUNCTION", "points": 195 }
+      { "name": "FUNCTION", "points": 190 }
     ],
     "tips": []
   }
