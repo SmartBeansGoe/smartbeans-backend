@@ -133,14 +133,14 @@
     "order": 40,
     "difficulty": "sehr einfach",
     "points": 5,
-    "categories": [],
+    "categories": ["IO", "STRING", "LISTS"],
     "skills": [
-      { "name": "IO", "points": 0 },
-      { "name": "STRING", "points": 0 },
+      { "name": "IO", "points": 5 },
+      { "name": "STRING", "points": 5 },
       { "name": "DATA/PANDAS", "points": 0 },
       { "name": "CONTROL", "points": 0 },
       { "name": "MATH/NUMPY", "points": 0 },
-      { "name": "LISTS", "points": 0 },
+      { "name": "LISTS", "points": 5 },
       { "name": "FUNCTION", "points": 0 }
     ],
     "tips": []
@@ -171,12 +171,12 @@
     "points": 5,
     "categories": ["IO", "CONTROL", "STRING", "DATA/PANDAS", "MATH/NUMPY", "LISTS", "FUNCTION"],
     "skills": [
-      { "name": "IO", "points": 180 },
-      { "name": "STRING", "points": 195 },
+      { "name": "IO", "points": 175 },
+      { "name": "STRING", "points": 190 },
       { "name": "DATA/PANDAS", "points": 200 },
       { "name": "CONTROL", "points": 185 },
       { "name": "MATH/NUMPY", "points": 200 },
-      { "name": "LISTS", "points": 185 },
+      { "name": "LISTS", "points": 180 },
       { "name": "FUNCTION", "points": 195 }
     ],
     "tips": []
