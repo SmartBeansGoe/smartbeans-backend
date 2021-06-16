@@ -958,5 +958,145 @@
       { "name": "MODULE", "points": 0 },
       { "name": "STRUCTS", "points": 0 }
     ]
+  },
+  {
+    "taskid": 401,
+    "shortname": "D1",
+    "order": 510,
+    "difficulty": "mittel",
+    "points": 20,
+    "categories": ["STRING", "MEMORY", "MODULE"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 10 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 5 },
+      { "name": "MODULE", "points": 5 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 402,
+    "shortname": "D2",
+    "order": 520,
+    "difficulty": "mittel",
+    "points": 20,
+    "categories": ["STRING", "MEMORY", "MODULE"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 10 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 5 },
+      { "name": "MODULE", "points": 5 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 403,
+    "shortname": "D3",
+    "order": 530,
+    "difficulty": "mittel",
+    "points": 20,
+    "categories": ["STRING", "MEMORY", "MODULE"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 10 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 5 },
+      { "name": "MODULE", "points": 5 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 404,
+    "shortname": "D4",
+    "order": 540,
+    "difficulty": "schwierig",
+    "points": 40,
+    "categories": ["DATA", "ARRAYS", "POINTER"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 10 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 20 },
+      { "name": "ARRAYS", "points": 10 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 405,
+    "shortname": "D5",
+    "order": 550,
+    "difficulty": "mittel",
+    "points": 20,
+    "categories": ["STRING", "IO", "MATH"],
+    "skills": [
+      { "name": "IO", "points": 5 },
+      { "name": "STRING", "points": 10 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 5 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 406,
+    "shortname": "D6",
+    "order": 560,
+    "difficulty": "schwierig",
+    "points": 40,
+    "categories": ["ARRAYS", "MEMORY"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 30 },
+      { "name": "MEMORY", "points": 10 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 407,
+    "shortname": "D7",
+    "order": 570,
+    "difficulty": "schwierig",
+    "points": 40,
+    "categories": ["STRING", "MODULE", "CONTROL"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 20 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 15 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 5 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
   }
 ]
