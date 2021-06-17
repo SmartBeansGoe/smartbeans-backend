@@ -1203,7 +1203,7 @@
     "taskid": 506,
     "shortname": "n6",
     "order": 630,
-    "difficulty": "leicht",
+    "difficulty": "einfach",
     "points": 10,
     "categories": ["Math"],
     "skills": [
@@ -1223,7 +1223,7 @@
     "taskid": 507,
     "shortname": "n7",
     "order": 640,
-    "difficulty": "leicht",
+    "difficulty": "einfach",
     "points": 10,
     "categories": ["Math"],
     "skills": [
@@ -1243,7 +1243,7 @@
     "taskid": 508,
     "shortname": "n8",
     "order": 650,
-    "difficulty": "leicht",
+    "difficulty": "einfach",
     "points": 10,
     "categories": ["Math"],
     "skills": [
@@ -1263,7 +1263,7 @@
     "taskid": 509,
     "shortname": "n9",
     "order": 660,
-    "difficulty": "leicht",
+    "difficulty": "einfach",
     "points": 10,
     "categories": ["Math"],
     "skills": [
