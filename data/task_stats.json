@@ -1125,7 +1125,7 @@
     "order": 590,
     "difficulty": "schwierig",
     "points": 40,
-    "categories": ["MATH","CONTROL"],
+    "categories": ["MATH", "CONTROL"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
@@ -1145,7 +1145,7 @@
     "order": 600,
     "difficulty": "schwierig",
     "points": 40,
-    "categories": ["MATH","CONTROL","ARRAYS"],
+    "categories": ["MATH", "CONTROL", "ARRAYS"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
@@ -1185,7 +1185,7 @@
     "order": 620,
     "difficulty": "klausur",
     "points": 80,
-    "categories": ["POINTER","ARRAYS","STRING","MEMORY"],
+    "categories": ["POINTER", "ARRAYS", "STRING", "MEMORY"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 80 },
@@ -1205,7 +1205,7 @@
     "order": 630,
     "difficulty": "einfach",
     "points": 10,
-    "categories": ["Math"],
+    "categories": ["MATH"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
@@ -1225,7 +1225,7 @@
     "order": 640,
     "difficulty": "einfach",
     "points": 10,
-    "categories": ["Math"],
+    "categories": ["MATH"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
@@ -1245,7 +1245,7 @@
     "order": 650,
     "difficulty": "einfach",
     "points": 10,
-    "categories": ["Math"],
+    "categories": ["MATH"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
@@ -1265,7 +1265,7 @@
     "order": 660,
     "difficulty": "einfach",
     "points": 10,
-    "categories": ["Math"],
+    "categories": ["MATH"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
@@ -1285,7 +1285,7 @@
     "order": 670,
     "difficulty": "mittel",
     "points": 20,
-    "categories": ["Math", "POINTER"],
+    "categories": ["MATH", "POINTER"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
@@ -1305,7 +1305,7 @@
     "order": 680,
     "difficulty": "schwierig",
     "points": 40,
-    "categories": ["Math", "ARRAYS"],
+    "categories": ["MATH", "ARRAYS"],
     "skills": [
       { "name": "IO", "points": 0 },
       { "name": "STRING", "points": 0 },
@@ -1314,6 +1314,186 @@
       { "name": "MATH", "points": 40 },
       { "name": "POINTER", "points": 0 },
       { "name": "ARRAYS", "points": 40 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 512,
+    "shortname": "n12",
+    "order": 690,
+    "difficulty": "klausur",
+    "points": 80,
+    "categories": ["POINTER", "STRING", "IO"],
+    "skills": [
+      { "name": "IO", "points": 80 },
+      { "name": "STRING", "points": 80 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 80 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 513,
+    "shortname": "n13",
+    "order": 700,
+    "difficulty": "klausur",
+    "points": 80,
+    "categories": ["ARRAYS", "STRING"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 80 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 80 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 514,
+    "shortname": "n14",
+    "order": 710,
+    "difficulty": "klausur",
+    "points": 80,
+    "categories": ["ARRAYS", "MEMORY", "POINTER"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 80 },
+      { "name": "ARRAYS", "points": 80 },
+      { "name": "MEMORY", "points": 80 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 515,
+    "shortname": "n15",
+    "order": 720,
+    "difficulty": "klausur",
+    "points": 80,
+    "categories": ["DATA", "MATH", "CONTROL"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 80 },
+      { "name": "CONTROL", "points": 80 },
+      { "name": "MATH", "points": 80 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 516,
+    "shortname": "n16",
+    "order": 730,
+    "difficulty": "klausur",
+    "points": 80,
+    "categories": ["DATA", "MATH", "CONTROL"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 80 },
+      { "name": "CONTROL", "points": 80 },
+      { "name": "MATH", "points": 80 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 517,
+    "shortname": "n17",
+    "order": 740,
+    "difficulty": "klausur",
+    "points": 80,
+    "categories": ["POINTER", "ARRAYS", "MEMORY"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 80 },
+      { "name": "ARRAYS", "points": 80 },
+      { "name": "MEMORY", "points": 80 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 408,
+    "shortname": "D8",
+    "order": 750,
+    "difficulty": "schwierig",
+    "points": 40,
+    "categories": ["STRING", "ARRAYS", "MEMORY"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 40 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 40 },
+      { "name": "MEMORY", "points": 40 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 0 }
+    ]
+  },
+  {
+    "taskid": 409,
+    "shortname": "D9",
+    "order": 760,
+    "difficulty": "klausur",
+    "points": 80,
+    "categories": ["STRING", "STRUCTS", "MEMORY"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 80 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 80 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 80 }
+    ]
+  },
+  {
+    "taskid": 410,
+    "shortname": "D10",
+    "order": 770,
+    "difficulty": "einfach",
+    "points": 10,
+    "categories": ["STRING"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 10 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 0 },
+      { "name": "ARRAYS", "points": 0 },
       { "name": "MEMORY", "points": 0 },
       { "name": "MODULE", "points": 0 },
       { "name": "STRUCTS", "points": 0 }
