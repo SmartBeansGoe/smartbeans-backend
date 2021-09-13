@@ -14,3 +14,5 @@ hmac = "0.10.1"
 crypto-hashes = "0.9.0"
 percent-encoding = "2.1.0"
 base64 = "0.13.0"
+diesel = { version = "1.4.7", features = ["mysql"] }
+diesel_migrations = "1.4.0"

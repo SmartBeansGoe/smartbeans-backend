@@ -1,6 +1,7 @@
 #[macro_use] extern crate lazy_static;
 
 use config::Config;
+use diesel::prelude::*;
 
 pub mod auth;
 pub mod tools;
@@ -15,4 +16,20 @@ lazy_static! {
         config.merge(config::File::with_name("Settings.toml")).ok();
         config
     };
+}
+
+pub fn database_connection() -> MysqlConnection {
+    let host: String = SETTINGS.get("database.host")
+        .expect("Missing database host in settings file");
+    let port: u32 = SETTINGS.get("database.port")
+        .expect("Missing database port in settings file");
+    let user: String = SETTINGS.get("database.user")
+        .expect("Missing database user in settings file");
+    let password: String = SETTINGS.get("database.password")
+        .expect("Missing database password in settings file");
+    let database: String = SETTINGS.get("database.database")
+        .expect("Missing database name in settings file");
+
+    MysqlConnection::establish(&format!("mysql://{}:{}@{}:{}/{}", user, password, host, port, database))
+        .expect("Failed to open database connection")
 }

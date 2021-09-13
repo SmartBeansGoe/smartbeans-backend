@@ -1,5 +1,6 @@
-debug = false
-priority = 32
-
-[somekeys]
-key = "189rjfadoisfj8923fjio"
+[database]
+host = "localhost"
+port = 3306 # not sure if changing this actually has any effect
+user = "smartbeans"
+password = "smartbeans"
+database = "smartbeans"
