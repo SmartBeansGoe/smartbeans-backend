@@ -2,6 +2,9 @@
 
 use config::Config;
 
+pub mod auth;
+pub mod tools;
+
 lazy_static! {
     pub static ref SETTINGS: Config = {
         let mut config = Config::default();
