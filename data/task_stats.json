@@ -1498,5 +1498,25 @@
       { "name": "MODULE", "points": 0 },
       { "name": "STRUCTS", "points": 0 }
     ]
+  },
+  {
+    "taskid": 518,
+    "shortname": "n18",
+    "order": 780,
+    "difficulty": "klausur",
+    "points": 80,
+    "categories": ["POINTER", "STRUCTS"],
+    "skills": [
+      { "name": "IO", "points": 0 },
+      { "name": "STRING", "points": 0 },
+      { "name": "DATA", "points": 0 },
+      { "name": "CONTROL", "points": 0 },
+      { "name": "MATH", "points": 0 },
+      { "name": "POINTER", "points": 80 },
+      { "name": "ARRAYS", "points": 0 },
+      { "name": "MEMORY", "points": 0 },
+      { "name": "MODULE", "points": 0 },
+      { "name": "STRUCTS", "points": 80 }
+    ]
   }
 ]
