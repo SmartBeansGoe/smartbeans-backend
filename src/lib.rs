@@ -7,9 +7,11 @@
 use config::Config;
 use diesel::prelude::*;
 
+#[allow(non_snake_case)]
 pub mod schema;
 
 pub mod auth;
+pub mod course;
 pub mod tools;
 
 lazy_static! {

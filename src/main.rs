@@ -17,6 +17,8 @@ async fn main() {
             smartbeans_backend::auth::api_token::delete_api_token,
             smartbeans_backend::auth::password::post_register,
             smartbeans_backend::auth::password::post_login_password,
+            smartbeans_backend::course::tasks::route_get_tasks,
+            smartbeans_backend::course::tasks::route_get_single_task,
             smartbeans_backend::logged_in
         ])
         .launch()

@@ -33,11 +33,9 @@ pub fn post_login_password(data: Json<Value>) -> Result <Json<Value>, Status> {
     let course = data["course"].as_str()
         .ok_or(Status::BadRequest)?;
 
-    use crate::schema::courses;
-    courses::table.filter(courses::name.eq(&course))
-        .select(courses::name)
-        .first::<String>(&crate::database_connection())
-        .or(Err(Status::NotFound))?;
+    if !crate::course::exists(&course) {
+        return Err(Status::NotFound);
+    }
 
     use crate::schema::users;
     let hash = users::table.filter(users::username.eq(username))

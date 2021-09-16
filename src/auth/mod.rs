@@ -17,11 +17,9 @@ pub fn auth_debug(username: String, course: String, _key: guards::DebugKey) -> R
         .first::<String>(&crate::database_connection())
         .or(Err(Status::NotFound))?;
 
-    use crate::schema::courses;
-    courses::table.filter(courses::name.eq(&course))
-        .select(courses::name)
-        .first::<String>(&crate::database_connection())
-        .or(Err(Status::NotFound))?;
+    if !crate::course::exists(&course) {
+        return Err(Status::NotFound);
+    }
 
     Ok(create_session(&username, &course, &None))
 }
