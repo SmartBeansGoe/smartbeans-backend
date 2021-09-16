@@ -4,3 +4,23 @@ port = 3306 # not sure if changing this actually has any effect
 user = "smartbeans"
 password = "smartbeans"
 database = "smartbeans"
+
+[auth]
+# Seconds until a session expires, if not refreshed by a route call
+session_duration = 3600
+# Enable debug authentication route (/auth/login/debug)
+debug_route_enabled = false
+# Key that can be used for debug authentication route
+debug_key = "changeme"
+
+[auth.lti]
+# LTI consumer secret
+secret = "secret"
+# In general, this should be http(s)://<backend-URL>/auth/login/lti
+url = "https://smartbeans.example.com/api/auth/login/lti"
+# URL for redirect after LTI validation
+redirect = "https://smartbeans.example.com/lti"
+
+[auth.password]
+registration_keys = ["some_key", "another_one"]
+key_required = true

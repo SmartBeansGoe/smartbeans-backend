@@ -1,7 +1,13 @@
+#[macro_use] extern crate rocket;
+#[macro_use] extern crate diesel;
 #[macro_use] extern crate lazy_static;
+#[macro_use] extern crate serde;
+#[macro_use] extern crate serde_json;
 
 use config::Config;
 use diesel::prelude::*;
+
+pub mod schema;
 
 pub mod auth;
 pub mod tools;
@@ -32,4 +38,9 @@ pub fn database_connection() -> MysqlConnection {
 
     MysqlConnection::establish(&format!("mysql://{}:{}@{}:{}/{}", user, password, host, port, database))
         .expect("Failed to open database connection")
+}
+
+#[get("/logged_in")]
+pub fn logged_in(user: auth::guards::User) -> String {
+    format!("Logged in as <b>{}</b> in course <b>{}</b>", user.name, user.course)
 }
