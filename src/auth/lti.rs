@@ -2,11 +2,14 @@ use percent_encoding::{utf8_percent_encode as perc_encode, AsciiSet, NON_ALPHANU
 use hmac::{Hmac, Mac, NewMac};
 use crypto_hashes::sha2::Sha256;
 use rocket::response::Redirect;
+use rocket::serde::json::Json;
+use serde_json::Value;
 use rocket::http::Status;
 use diesel::prelude::*;
 use std::collections::BTreeMap;
 use crate::tools::{epoch, data_to_string};
 use crate::SETTINGS;
+use crate::auth::guards;
 
 #[post("/auth/login/lti", data = "<data>")]
 pub async fn auth_lti(data: rocket::Data<'_>) -> Result<Redirect, Status> {
@@ -50,6 +53,20 @@ pub async fn auth_lti(data: rocket::Data<'_>) -> Result<Redirect, Status> {
         .expect("auth.lti.redirect not found in settings");
 
     Ok(Redirect::to(format!("{}#{}", redirect_url, token)))
+}
+
+#[put("/auth/ltiEnabled", data = "<data>")]
+pub fn put_lti_status(user: guards::User, data: Json<Value>) -> Result<Status, Status> {
+    let new_status = data["ltiEnabled"].as_bool()
+        .ok_or(Status::BadRequest)?;
+
+    use crate::schema::users;
+    diesel::update(users::table.filter(users::username.eq(user.name)))
+        .set(users::ltiEnabled.eq(new_status))
+        .execute(&crate::database_connection())
+        .expect("Database error");
+
+    Ok(Status::Ok)
 }
 
 fn validate_lti(uri: &str, mut params: BTreeMap<String, String>, secret: &str) -> bool {

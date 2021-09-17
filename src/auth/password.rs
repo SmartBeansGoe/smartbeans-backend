@@ -53,6 +53,20 @@ pub fn post_login_password(data: Json<Value>) -> Result <Json<Value>, Status> {
     })))
 }
 
+#[put("/auth/password", data = "<data>")]
+pub fn put_password(user: guards::User, data: Json<Value>) -> Result<Status, Status> {
+    let new_password = data["newPassword"].as_str()
+        .ok_or(Status::BadRequest)?;
+
+    use crate::schema::users;
+    diesel::update(users::table.filter(users::username.eq(user.name)))
+        .set(users::password.eq(password_hash(new_password)))
+        .execute(&crate::database_connection())
+        .expect("Database error");
+
+    Ok(Status::Ok)
+}
+
 fn password_hash(password: &str) -> String {
     let salt = rand::thread_rng().gen::<[u8; 32]>();
     let password = password.as_bytes();
