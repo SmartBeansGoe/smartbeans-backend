@@ -11,6 +11,7 @@ use diesel::prelude::*;
 pub mod schema;
 
 pub mod auth;
+pub mod user;
 pub mod course;
 pub mod tools;
 

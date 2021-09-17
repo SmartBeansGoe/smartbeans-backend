@@ -118,7 +118,7 @@ fn try_init_user(username: &str, display_name: &str, password_hash: &Option<Stri
             users::displayName.eq(display_name),
             users::password.eq(password_hash),
             users::ltiEnabled.eq(password_hash.is_none()),
-            users::charData.eq(char_data.to_string())
+            users::charData.eq(serde_json::to_string(&char_data).unwrap())
         ))
         .execute(&crate::database_connection())
         .expect("Database error");
