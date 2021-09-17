@@ -2,11 +2,11 @@ use diesel::prelude::*;
 use std::collections::HashMap;
 use rocket::serde::json::Json;
 use rocket::http::Status;
-use crate::course::exists;
+use crate::course::name_to_title;
 
 #[get("/courses/<course>/tasks")]
 pub fn route_get_tasks(course: String) -> Result<Json<Vec<PublicTask>>, Status> {
-    if !exists(&course) {
+    if name_to_title(&course).is_none() {
         return Err(Status::NotFound);
     }
 
@@ -15,7 +15,7 @@ pub fn route_get_tasks(course: String) -> Result<Json<Vec<PublicTask>>, Status> 
 
 #[get("/courses/<course>/tasks/<taskid>")]
 pub fn route_get_single_task(course: String, taskid: i32) -> Result<Json<PublicTask>, Status> {
-    if !exists(&course) {
+    if name_to_title(&course).is_none() {
         return Err(Status::NotFound);
     }
 

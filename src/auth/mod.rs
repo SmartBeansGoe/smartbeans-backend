@@ -17,7 +17,7 @@ pub fn auth_debug(username: String, course: String, _key: guards::DebugKey) -> R
         .first::<String>(&crate::database_connection())
         .or(Err(Status::NotFound))?;
 
-    if !crate::course::exists(&course) {
+    if crate::course::name_to_title(&course).is_none() {
         return Err(Status::NotFound);
     }
 

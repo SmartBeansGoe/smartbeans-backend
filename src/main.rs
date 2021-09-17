@@ -21,6 +21,8 @@ async fn main() {
             smartbeans_backend::auth::password::put_password,
             smartbeans_backend::course::tasks::route_get_tasks,
             smartbeans_backend::course::tasks::route_get_single_task,
+            smartbeans_backend::user::route_get_meta,
+            smartbeans_backend::user::put_display_name,
             smartbeans_backend::user::character::route_get_character,
             smartbeans_backend::user::character::route_patch_character,
             smartbeans_backend::logged_in

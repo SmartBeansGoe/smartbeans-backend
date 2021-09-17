@@ -2,9 +2,10 @@ use diesel::prelude::*;
 
 pub mod tasks;
 
-pub fn exists(course: &str) -> bool {
+pub fn name_to_title(course: &str) -> Option<String> {
     use crate::schema::courses;
     courses::table.filter(courses::name.eq(&course))
-        .first::<(String, String)>(&crate::database_connection())
-        .is_ok()
+        .select(courses::title)
+        .first::<String>(&crate::database_connection())
+        .ok()
 }

@@ -33,7 +33,7 @@ pub fn post_login_password(data: Json<Value>) -> Result <Json<Value>, Status> {
     let course = data["course"].as_str()
         .ok_or(Status::BadRequest)?;
 
-    if !crate::course::exists(&course) {
+    if crate::course::name_to_title(&course).is_none() {
         return Err(Status::NotFound);
     }
 
