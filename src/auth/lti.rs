@@ -52,7 +52,7 @@ pub async fn auth_lti(data: rocket::Data<'_>) -> Result<Redirect, Status> {
     let redirect_url = SETTINGS.get::<String>("auth.lti.redirect")
         .expect("auth.lti.redirect not found in settings");
 
-    Ok(Redirect::to(format!("{}#{}", redirect_url, token)))
+    Ok(Redirect::to(format!("{}?token={}", redirect_url, token)))
 }
 
 #[put("/auth/ltiEnabled", data = "<data>")]
