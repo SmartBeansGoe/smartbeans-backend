@@ -9,12 +9,13 @@ pub mod character;
 #[get("/user/meta")]
 pub fn route_get_meta(user: guards::User) -> Result<Json<Value>, Status> {
     use crate::schema::users;
-    let (display_name, password, lti_enabled) = users::table.filter(users::username.eq(user.name))
+    let (display_name, password, lti_enabled) = users::table.filter(users::username.eq(&user.name))
         .select((users::displayName, users::password, users::ltiEnabled))
         .first::<(String, Option<String>, bool)>(&crate::database_connection())
         .expect("Database error");
 
     Ok(Json(json!({
+        "username": user.name,
         "displayName": display_name,
         "passwordSet": password.is_some(),
         "ltiEnabled": lti_enabled,

@@ -1,6 +1,7 @@
 use diesel::prelude::*;
 use std::collections::HashMap;
 use rocket::serde::json::Json;
+use serde_json::Value;
 use rocket::http::Status;
 use crate::course::name_to_title;
 
@@ -39,11 +40,11 @@ struct Task {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct PublicTask {
     taskid: i32,
-    task_description: String,
+    task_description: Value,
     lang: String,
-    tags: String,
+    tags: Value,
     order_by: i32,
-    prerequisites: String
+    prerequisites: Value
 }
 
 fn get_all_tasks() -> Vec<Task> {
@@ -80,11 +81,11 @@ fn get_course_tasks(course: &str) -> Vec<PublicTask> {
 
             PublicTask {
                 taskid: task.taskid,
-                task_description: task.task_description,
+                task_description: serde_json::to_value(task.task_description).unwrap(),
                 lang: task.lang,
-                tags: map.tags,
+                tags: serde_json::to_value(map.tags).unwrap(),
                 order_by: map.order_by,
-                prerequisites: map.prerequisites
+                prerequisites: serde_json::to_value(map.prerequisites).unwrap()
             }
         })
         .collect::<Vec<_>>()
