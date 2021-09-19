@@ -81,11 +81,11 @@ fn get_course_tasks(course: &str) -> Vec<PublicTask> {
 
             PublicTask {
                 taskid: task.taskid,
-                task_description: serde_json::to_value(task.task_description).unwrap(),
+                task_description: serde_json::from_str(&task.task_description).unwrap(),
                 lang: task.lang,
-                tags: serde_json::to_value(map.tags).unwrap(),
+                tags: serde_json::from_str(&map.tags).unwrap(),
                 order_by: map.order_by,
-                prerequisites: serde_json::to_value(map.prerequisites).unwrap()
+                prerequisites: serde_json::from_str(&map.prerequisites).unwrap()
             }
         })
         .collect::<Vec<_>>()
