@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <style>
+            #error {
+                margin: 0;
+                position: absolute;
+                top: 30%;
+                left: 50%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                border: 3px red solid;
+                padding: 10px;
+                text-align: center;
+                max-width: 500px;
+            }
+        </style>
+        <title>Fehler</title>
+    </head>
+    <body>
+        <div id="error">
+            <h1 style="margin-top: 0px">Fehler</h1>
+            <div style="text-align: left">
+            {% block message %}{% endblock message %}
+            </div>
+        </div>
+    </body>
+</html>

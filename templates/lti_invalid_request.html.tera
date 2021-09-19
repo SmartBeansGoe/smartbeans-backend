@@ -1,0 +1,3 @@
+{% extends "error" %}
+{% block message %}Der LTI-Request ist ungültig. Bitte lade die SmartBeans-Zugangsseite im Stud.IP neu und versuche es dann erneut.
+Wende dich an einen Administrator, sollte das Problem weiterhin bestehen.{% endblock message %}

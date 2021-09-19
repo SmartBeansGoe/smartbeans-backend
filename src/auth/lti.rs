@@ -5,14 +5,17 @@ use rocket::response::Redirect;
 use rocket::serde::json::Json;
 use serde_json::Value;
 use rocket::http::Status;
+use rocket_dyn_templates::Template;
+use rocket::response::status;
 use diesel::prelude::*;
-use std::collections::BTreeMap;
+use std::collections::{HashMap, BTreeMap};
 use crate::tools::{epoch, data_to_string};
 use crate::SETTINGS;
 use crate::auth::guards;
 
 #[post("/auth/login/lti", data = "<data>")]
-pub async fn auth_lti(data: rocket::Data<'_>) -> Result<Redirect, Status> {
+pub async fn auth_lti(data: rocket::Data<'_>) -> Result<Redirect, status::Custom<Template>> {
+    let empty_context: HashMap<String, String> = HashMap::new();
     let data = data_to_string(data).await;
     let lti_params: BTreeMap<String, String> = serde_urlencoded::from_str(&data).unwrap();
     let lti_url: String = SETTINGS.get("auth.lti.url")
@@ -21,7 +24,7 @@ pub async fn auth_lti(data: rocket::Data<'_>) -> Result<Redirect, Status> {
         .expect("auth.lti.secret not found in settings");
 
     if !validate_lti(&lti_url, lti_params.clone(), &lti_secret) {
-        return Err(Status::Unauthorized);
+        return Err(status::Custom(Status::Unauthorized, Template::render("lti_invalid_request", empty_context)));
     }
 
     let username = &lti_params["lis_person_sourcedid"];
@@ -39,7 +42,7 @@ pub async fn auth_lti(data: rocket::Data<'_>) -> Result<Redirect, Status> {
         .expect("Database error");
 
     if !lti_enabled {
-        return Err(Status::Forbidden);
+        return Err(status::Custom(Status::Forbidden, Template::render("lti_disabled", empty_context)));
     }
 
     use crate::schema::courseMapping;

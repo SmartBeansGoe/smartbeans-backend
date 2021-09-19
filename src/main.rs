@@ -27,6 +27,7 @@ async fn main() {
             smartbeans_backend::user::character::route_patch_character,
             smartbeans_backend::logged_in
         ])
+        .attach(rocket_dyn_templates::Template::fairing())
         .launch()
         .await
         .unwrap();

@@ -1,0 +1,4 @@
+{% extends "error" %}
+{% block message %}Zugriff über LTI ist für diesen Account deaktiviert.
+Wenn du dich mit Passwort registriert hast, aktiviere LTI in den Accounteinstellungen.
+Kontaktiere anderenfalls einen Administrator.{% endblock message %}
