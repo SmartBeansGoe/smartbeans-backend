@@ -1,0 +1,2 @@
+ALTER TABLE courses
+    ADD config TEXT NOT NULL DEFAULT '{}'

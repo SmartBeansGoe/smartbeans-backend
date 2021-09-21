@@ -19,10 +19,7 @@ pub fn route_get_meta(user: guards::User) -> Result<Json<Value>, Status> {
         "displayName": display_name,
         "passwordSet": password.is_some(),
         "ltiEnabled": lti_enabled,
-        "activeCourse": {
-            "name": user.course,
-            "title": crate::course::name_to_title(&user.course)
-        }
+        "activeCourse": user.course
     })))
 }
 

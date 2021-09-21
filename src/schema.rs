@@ -9,6 +9,7 @@ table! {
     courses (name) {
         name -> Varchar,
         title -> Text,
+        config -> Text,
     }
 }
 
