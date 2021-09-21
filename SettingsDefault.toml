@@ -5,6 +5,11 @@ user = "smartbeans"
 password = "smartbeans"
 database = "smartbeans"
 
+[sandbox]
+urls = [
+    "https://c109-223.cloud.gwdg.de:3000"
+]
+
 [auth]
 # Seconds until a session expires, if not refreshed by a route call
 session_duration = 3600

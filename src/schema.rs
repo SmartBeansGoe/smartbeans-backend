@@ -34,6 +34,22 @@ table! {
 }
 
 table! {
+    submissions (id) {
+        id -> Integer,
+        user -> Varchar,
+        course -> Varchar,
+        taskid -> Integer,
+        timestamp -> Bigint,
+        content -> Text,
+        #[sql_name = "type"]
+        type_ -> Varchar,
+        simplified -> Text,
+        details -> Text,
+        score -> Float,
+    }
+}
+
+table! {
     tasks (taskid) {
         taskid -> Integer,
         taskDescription -> Text,
@@ -58,6 +74,7 @@ allow_tables_to_appear_in_same_query!(
     courses,
     courseTask,
     sessions,
+    submissions,
     tasks,
     users,
 );

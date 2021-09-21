@@ -4,6 +4,7 @@ use rocket::http::Status;
 use serde_json::Value;
 
 pub mod tasks;
+pub mod submissions;
 
 #[get("/courses/<course>/meta")]
 pub fn route_get_course_meta(course: String) -> Result<Json<Value>, Status> {
