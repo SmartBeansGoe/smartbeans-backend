@@ -41,8 +41,7 @@ table! {
         taskid -> Integer,
         timestamp -> Bigint,
         content -> Text,
-        #[sql_name = "type"]
-        type_ -> Varchar,
+        resultType -> Varchar,
         simplified -> Text,
         details -> Text,
         score -> Float,

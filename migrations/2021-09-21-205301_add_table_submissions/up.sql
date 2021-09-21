@@ -5,7 +5,7 @@ CREATE TABLE submissions (
     taskid      INTEGER         NOT NULL,
     timestamp   BIGINT          NOT NULL,
     content     TEXT            NOT NULL,
-    type        VARCHAR(128)    NOT NULL,
+    resultType  VARCHAR(128)    NOT NULL,
     simplified  TEXT            NOT NULL,
     details     TEXT            NOT NULL,
     score       FLOAT           NOT NULL

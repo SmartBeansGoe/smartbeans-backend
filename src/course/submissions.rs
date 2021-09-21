@@ -2,8 +2,11 @@ use diesel::prelude::*;
 use rocket::http::Status;
 use rocket::serde::json::Json;
 use serde_json::Value;
+use rand::seq::SliceRandom;
 use crate::auth::guards;
 use crate::schema::submissions;
+use crate::SETTINGS;
+use reqwest::header::CONTENT_TYPE;
 
 #[get("/course/<course>/tasks/all/submissions", rank = 1)]
 pub fn route_get_all_submissions(user: guards::User, course: String) -> Result<Json<Vec<PublicSubmission>>, Status> {
@@ -41,6 +44,42 @@ pub fn route_get_single_submission(user: guards::User, course: String, taskid: i
         .next();
 
     Ok(Json(submission.ok_or(Status::NotFound)?))
+}
+
+#[post("/course/<course>/tasks/<taskid>/submissions", data = "<data>")]
+pub fn route_post_submission(user: guards::User, course: String, taskid: i32, data: Json<Value>) -> Result<Status, Status> {
+    if course != user.course {
+        return Err(Status::Forbidden);
+    }
+
+    let submission = data["submission"].as_str()
+        .ok_or(Status::BadRequest)?;
+
+    use crate::schema::tasks;
+    let (lang, tests) = tasks::table.filter(tasks::taskid.eq(taskid))
+        .select((tasks::lang, tasks::tests))
+        .first::<(String, String)>(&crate::database_connection())
+        .expect("Database error");
+
+    let result = submit_solution(taskid,&lang, &serde_json::from_str(&tests).unwrap(), submission);
+
+    use crate::schema::submissions;
+    diesel::insert_into(submissions::table)
+        .values((
+            submissions::user.eq(user.name),
+            submissions::course.eq(course),
+            submissions::taskid.eq(taskid),
+            submissions::timestamp.eq(crate::tools::epoch()),
+            submissions::content.eq(submission),
+            submissions::resultType.eq(result["type"].as_str().unwrap()),
+            submissions::simplified.eq(serde_json::to_string(&result["simplified"]).unwrap()),
+            submissions::details.eq(serde_json::to_string(&result["details"]).unwrap()),
+            submissions::score.eq(result["score"].as_f64().unwrap() as f32)
+        ))
+        .execute(&crate::database_connection())
+        .expect("Database error");
+
+    Ok(Status::Ok)
 }
 
 #[derive(Debug, Deserialize, Queryable)]
@@ -86,4 +125,28 @@ fn get_public_submissions(user: &str, course: &str) -> Vec<PublicSubmission> {
             }
         })
         .collect::<Vec<_>>()
+}
+
+fn submit_solution(taskid: i32, lang: &str, tests: &Value, submission: &str) -> Value {
+    let sandbox = SETTINGS.get::<Vec<String>>("sandbox.urls")
+        .expect("sandbox.urls missing in settings")
+        .choose(&mut rand::thread_rng())
+        .unwrap()
+        .to_string();
+
+    let body = json!({
+        "taskid": taskid,
+        "submission": submission,
+        "lang": lang,
+        "tests": tests
+    });
+
+    reqwest::blocking::Client::new()
+        .post(&format!("{}/evaluate", sandbox))
+        .header(CONTENT_TYPE, "application/json")
+        .json(&body)
+        .send()
+        .unwrap()
+        .json()
+        .unwrap()
 }
