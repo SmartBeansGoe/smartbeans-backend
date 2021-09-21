@@ -8,10 +8,8 @@ database = "smartbeans"
 [auth]
 # Seconds until a session expires, if not refreshed by a route call
 session_duration = 3600
-# Enable debug authentication route (/auth/login/debug)
-debug_route_enabled = false
-# Key that can be used for debug authentication route
-debug_key = "changeme"
+# Currently used for adding tasks and accessing debug auth route. Set to empty string if you want to disable it.
+admin_key = ""
 
 [auth.lti]
 # LTI consumer secret

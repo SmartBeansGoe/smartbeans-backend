@@ -10,7 +10,7 @@ pub mod guards;
 pub mod api_token;
 
 #[post("/auth/login/debug/<username>/<course>")]
-pub fn auth_debug(username: String, course: String, _key: guards::DebugKey) -> Result<String, Status> {
+pub fn auth_debug(username: String, course: String, _key: guards::AdminKey) -> Result<String, Status> {
     use crate::schema::users;
     users::table.filter(users::username.eq(&username))
         .select(users::username)

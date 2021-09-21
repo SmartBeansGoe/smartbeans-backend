@@ -4,6 +4,8 @@ use rocket::serde::json::Json;
 use serde_json::Value;
 use rocket::http::Status;
 use crate::course::name_to_title;
+use crate::auth::guards;
+use crate::schema::{tasks, courseTask};
 
 #[get("/courses/<course>/tasks")]
 pub fn route_get_tasks(course: String) -> Result<Json<Vec<PublicTask>>, Status> {
@@ -28,13 +30,62 @@ pub fn route_get_single_task(course: String, taskid: i32) -> Result<Json<PublicT
     Ok(Json(task))
 }
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[post("/task", data = "<data>")]
+pub fn route_post_task(_key: guards::AdminKey, data: Json<Value>) -> Result<Status, Status> {
+    let task = Task {
+        taskid: data["taskid"].as_i64().ok_or(Status::BadRequest)? as i32,
+        task_description: serde_json::to_string(&data["taskDescription"]).unwrap(),
+        solution: data["solution"].as_str().ok_or(Status::BadRequest)?.to_string(),
+        lang: data["lang"].as_str().ok_or(Status::BadRequest)?.to_string(),
+        tests: serde_json::to_string(&data["tests"]).unwrap()
+    };
+
+    let meta  = data["courseMetaData"].as_array()
+        .ok_or(Status::BadRequest)?
+        .into_iter()
+        .map(|val| {
+            Ok(Mapping {
+                course: val["courseName"].as_str().ok_or(Status::BadRequest)?.to_string(),
+                taskid: data["taskid"].as_i64().ok_or(Status::BadRequest)? as i32,
+                tags: serde_json::to_string(&val["tags"]).unwrap(),
+                order_by: val["orderBy"].as_i64().ok_or(Status::BadRequest)? as i32,
+                prerequisites: serde_json::to_string(&val["prerequisites"]).unwrap(),
+            }) as Result<Mapping, Status>
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+
+    diesel::insert_into(tasks::table)
+        .values(task)
+        .execute(&crate::database_connection())
+        .expect("Database error");
+
+    diesel::insert_into(courseTask::table)
+        .values(meta)
+        .execute(&crate::database_connection())
+        .expect("Database error");
+
+    Ok(Status::Ok)
+}
+
+#[derive(Debug, Serialize, Deserialize, Queryable, Insertable)]
 struct Task {
     taskid: i32,
+    #[column_name = "taskDescription"]
     task_description: String,
     solution: String,
     lang: String,
     tests: String
+}
+
+#[derive(Debug, Serialize, Deserialize, Queryable, Insertable)]
+#[table_name = "courseTask"]
+struct Mapping {
+    course: String,
+    taskid: i32,
+    tags: String,
+    #[column_name = "orderBy"]
+    order_by: i32,
+    prerequisites: String
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -48,22 +99,11 @@ pub struct PublicTask {
 }
 
 fn get_all_tasks() -> Vec<Task> {
-    use crate::schema::tasks;
     tasks::table.load::<Task>(&crate::database_connection())
         .expect("Database error")
 }
 
 fn get_course_tasks(course: &str) -> Vec<PublicTask> {
-    #[derive(Debug, Serialize, Deserialize, Queryable)]
-    struct Mapping {
-        course: String,
-        taskid: i32,
-        tags: String,
-        order_by: i32,
-        prerequisites: String
-    }
-
-    use crate::schema::courseTask;
     let mut mapping = courseTask::table.filter(courseTask::course.eq(course))
         .load::<Mapping>(&crate::database_connection())
         .expect("Database error")

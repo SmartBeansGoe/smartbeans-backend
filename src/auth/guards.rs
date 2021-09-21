@@ -40,17 +40,13 @@ impl<'r> FromRequest<'r> for User {
 }
 
 #[derive(Debug)]
-pub struct DebugKey { }
+pub struct AdminKey { }
 
 #[rocket::async_trait]
-impl<'r> FromRequest<'r> for DebugKey {
+impl<'r> FromRequest<'r> for AdminKey {
     type Error = ();
 
     async fn from_request(req: &'r Request<'_>) -> Outcome<Self, Self::Error> {
-        if !SETTINGS.get::<bool>("auth.debug_route_enabled").unwrap() {
-            return Outcome::Failure((Status::Forbidden, ()));
-        }
-
         let token = get_token(req);
         let token = if let Err(status) = token {
             return Outcome::Failure((status, ()));
@@ -59,11 +55,15 @@ impl<'r> FromRequest<'r> for DebugKey {
             token.unwrap()
         };
 
-        let debug_key = SETTINGS.get::<String>("auth.debug_key")
-            .expect("auth.debug_key not found in settings");
+        let admin_key = SETTINGS.get::<String>("auth.admin_key")
+            .expect("auth.admin_key not found in settings");
 
-        if debug_key == token {
-            return Outcome::Success(DebugKey { });
+        if admin_key == "" {
+            return Outcome::Failure((Status::Forbidden, ()));
+        }
+
+        if admin_key == token {
+            return Outcome::Success(AdminKey { });
         }
 
         Outcome::Failure((Status::Unauthorized, ()))
