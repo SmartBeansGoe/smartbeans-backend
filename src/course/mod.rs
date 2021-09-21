@@ -31,6 +31,7 @@ pub fn route_get_course_progress(user: guards::User, course: String) -> Result<J
     use crate::schema::submissions;
     let mut tasks = submissions::table.filter(submissions::course.eq(course))
         .filter(submissions::user.eq(user.name))
+        .filter(submissions::resultType.eq("SUCCESS"))
         .select(submissions::taskid)
         .load::<i32>(&crate::database_connection())
         .expect("Database error");
