@@ -1,3 +1,9 @@
+[rocket]
+# If provided, this settings will override settings provided in Rocket.toml or environment variables.
+# address = "127.0.0.1"
+# port = "8000"
+# log_level = "normal"
+
 [database]
 host = "localhost"
 port = 3306 # not sure if changing this actually has any effect
@@ -13,8 +19,9 @@ urls = [
 [auth]
 # Seconds until a session expires, if not refreshed by a route call
 session_duration = 3600
-# Currently used for adding tasks and accessing debug auth route. Set to empty string if you want to disable it.
-admin_key = ""
+# Currently used for adding tasks and accessing debug auth route.
+# Comment out to disable the it (and let routes that require it return a 403).
+# admin_key = "change me"
 
 [auth.lti]
 # LTI consumer secret

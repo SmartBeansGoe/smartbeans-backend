@@ -55,12 +55,10 @@ impl<'r> FromRequest<'r> for AdminKey {
             token.unwrap()
         };
 
-        let admin_key = SETTINGS.get::<String>("auth.admin_key")
-            .expect("auth.admin_key not found in settings");
-
-        if admin_key == "" {
-            return Outcome::Failure((Status::Forbidden, ()));
-        }
+        let admin_key = match SETTINGS.get::<String>("auth.admin_key") {
+            Ok(key) => key,
+            Err(_) => return Outcome::Failure((Status::Forbidden, ()))
+        };
 
         if admin_key == token {
             return Outcome::Success(AdminKey { });

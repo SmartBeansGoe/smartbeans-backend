@@ -1,13 +1,28 @@
 #[macro_use] extern crate rocket;
 #[macro_use] extern crate diesel_migrations;
 
+use rocket::Config;
+use smartbeans_backend::SETTINGS;
+
 #[rocket::main]
 async fn main() {
     // Run database migrations on startup
     embed_migrations!();
     embedded_migrations::run(&smartbeans_backend::database_connection()).unwrap();
 
-    rocket::build()
+    // Get rocket config from Settings file
+    let mut config = Config::figment();
+    if let Ok(address) = SETTINGS.get::<String>("rocket.address") {
+        config = config.merge(("address", address));
+    }
+    if let Ok(port) = SETTINGS.get::<u16>("rocket.port") {
+        config = config.merge(("port", port));
+    }
+    if let Ok(log_level) = SETTINGS.get::<String>("rocket.log_level") {
+        config = config.merge(("log_level", log_level));
+    }
+
+    rocket::custom(config)
         .mount("/", routes![
             smartbeans_backend::auth::lti::auth_lti,
             smartbeans_backend::auth::lti::put_lti_status,
