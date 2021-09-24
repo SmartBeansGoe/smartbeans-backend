@@ -58,4 +58,6 @@ WantedBy=multi-user.target
 
 ## License
 
-TODO
+Copyright (c) 2021 Niklas Birth and other contributors
+
+All contents of this repository are provided under the MIT License. See [LICENSE](https://github.com/SmartBeansGoe/smartbeans-backend/blob/master/LICENSE) for the full text.
