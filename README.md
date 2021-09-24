@@ -1,5 +1,7 @@
 # SmartBeans - Backend
 
+TODO: A bit of informative Text
+
 ## Installation instructions
 
 ### Prerequisites
