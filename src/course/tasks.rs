@@ -54,6 +54,14 @@ pub fn route_post_task(_key: guards::AdminKey, data: Json<Value>) -> Result<Stat
         })
         .collect::<Result<Vec<_>, _>>()?;
 
+    diesel::delete(tasks::table.filter(tasks::taskid.eq(task.taskid)))
+        .execute(&crate::database_connection())
+        .expect("Database error");
+
+    diesel::delete(courseTask::table.filter(courseTask::taskid.eq(task.taskid)))
+        .execute(&crate::database_connection())
+        .expect("Database error");
+
     diesel::insert_into(tasks::table)
         .values(task)
         .execute(&crate::database_connection())
