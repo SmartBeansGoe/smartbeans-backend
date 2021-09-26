@@ -6,6 +6,8 @@
 
 use config::Config;
 use diesel::prelude::*;
+use rocket::serde::json::Json;
+use serde_json::Value;
 
 #[allow(non_snake_case)]
 pub mod schema;
@@ -25,6 +27,14 @@ lazy_static! {
         config.merge(config::File::with_name("Settings.toml")).ok();
         config
     };
+}
+
+#[get("/info")]
+pub fn route_get_info() -> Json<Value> {
+    Json(json!({
+        "version": env!("CARGO_PKG_VERSION"),
+        "hash": env!("GIT_HASH")
+    }))
 }
 
 pub fn database_connection() -> MysqlConnection {

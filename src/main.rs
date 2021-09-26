@@ -24,6 +24,7 @@ async fn main() {
 
     rocket::custom(config)
         .mount("/", routes![
+            smartbeans_backend::route_get_info,
             smartbeans_backend::auth::lti::auth_lti,
             smartbeans_backend::auth::lti::put_lti_status,
             smartbeans_backend::auth::auth_debug,
