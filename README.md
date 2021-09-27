@@ -49,7 +49,7 @@ WantedBy=multi-user.target
 ### Backup and Update
 
 - All relevant data is stored in the database and Settings.toml. It should be sufficient to backup these files. If you want to be extra sure, you can of course save the entire folder.
-- To update to a newer version, just pull the changes and recompile (ans restart the systemd service, if you use it).
+- To update to a newer version, just pull the changes and recompile (and restart the systemd service, if you use it).
 
 ## Documentation
 

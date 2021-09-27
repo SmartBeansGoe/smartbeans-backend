@@ -8,7 +8,7 @@ use crate::schema::submissions;
 use crate::SETTINGS;
 use reqwest::header::CONTENT_TYPE;
 
-#[get("/course/<course>/tasks/all/submissions", rank = 1)]
+#[get("/courses/<course>/tasks/all/submissions", rank = 1)]
 pub fn route_get_all_submissions(user: guards::User, course: String) -> Result<Json<Vec<PublicSubmission>>, Status> {
     if course != user.course {
         return Err(Status::Forbidden);
@@ -17,7 +17,7 @@ pub fn route_get_all_submissions(user: guards::User, course: String) -> Result<J
     Ok(Json(get_public_submissions(&user.name, &course)))
 }
 
-#[get("/course/<course>/tasks/<taskid>/submissions", rank = 2)]
+#[get("/courses/<course>/tasks/<taskid>/submissions", rank = 2)]
 pub fn route_get_task_submissions(user: guards::User, course: String, taskid: i32) -> Result<Json<Vec<PublicSubmission>>, Status> {
     if course != user.course {
         return Err(Status::Forbidden);
@@ -31,7 +31,7 @@ pub fn route_get_task_submissions(user: guards::User, course: String, taskid: i3
     Ok(Json(submissions))
 }
 
-#[get("/course/<course>/tasks/<taskid>/submissions/<submissionid>")]
+#[get("/courses/<course>/tasks/<taskid>/submissions/<submissionid>")]
 pub fn route_get_single_submission(user: guards::User, course: String, taskid: i32, submissionid: i32) -> Result<Json<PublicSubmission>, Status> {
     if course != user.course {
         return Err(Status::Forbidden);
@@ -46,7 +46,7 @@ pub fn route_get_single_submission(user: guards::User, course: String, taskid: i
     Ok(Json(submission.ok_or(Status::NotFound)?))
 }
 
-#[post("/course/<course>/tasks/<taskid>/submissions", data = "<data>")]
+#[post("/courses/<course>/tasks/<taskid>/submissions", data = "<data>")]
 pub fn route_post_submission(user: guards::User, course: String, taskid: i32, data: Json<Value>) -> Result<Status, Status> {
     if course != user.course {
         return Err(Status::Forbidden);
