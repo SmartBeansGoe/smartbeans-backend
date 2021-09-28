@@ -47,7 +47,7 @@ pub fn route_get_single_submission(user: guards::User, course: String, taskid: i
 }
 
 #[post("/courses/<course>/tasks/<taskid>/submissions", data = "<data>")]
-pub fn route_post_submission(user: guards::User, course: String, taskid: i32, data: Json<Value>) -> Result<Status, Status> {
+pub async fn route_post_submission(user: guards::User, course: String, taskid: i32, data: Json<Value>) -> Result<Status, Status> {
     if course != user.course {
         return Err(Status::Forbidden);
     }
@@ -61,7 +61,7 @@ pub fn route_post_submission(user: guards::User, course: String, taskid: i32, da
         .first::<(String, String)>(&crate::database_connection())
         .expect("Database error");
 
-    let result = submit_solution(taskid,&lang, &serde_json::from_str(&tests).unwrap(), submission);
+    let result = submit_solution(taskid,&lang, &serde_json::from_str(&tests).unwrap(), submission).await;
 
     use crate::schema::submissions;
     diesel::insert_into(submissions::table)
@@ -127,7 +127,7 @@ fn get_public_submissions(user: &str, course: &str) -> Vec<PublicSubmission> {
         .collect::<Vec<_>>()
 }
 
-fn submit_solution(taskid: i32, lang: &str, tests: &Value, submission: &str) -> Value {
+pub async fn submit_solution(taskid: i32, lang: &str, tests: &Value, submission: &str) -> Value {
     let sandbox = SETTINGS.get::<Vec<String>>("sandbox.urls")
         .expect("sandbox.urls missing in settings")
         .choose(&mut rand::thread_rng())
@@ -141,12 +141,14 @@ fn submit_solution(taskid: i32, lang: &str, tests: &Value, submission: &str) -> 
         "tests": tests
     });
 
-    reqwest::blocking::Client::new()
+    reqwest::Client::new()
         .post(&format!("{}/evaluate", sandbox))
         .header(CONTENT_TYPE, "application/json")
         .json(&body)
         .send()
+        .await
         .unwrap()
         .json()
+        .await
         .unwrap()
 }
