@@ -47,7 +47,7 @@ pub fn route_get_single_submission(user: guards::User, course: String, taskid: i
 }
 
 #[post("/courses/<course>/tasks/<taskid>/submissions", data = "<data>")]
-pub async fn route_post_submission(user: guards::User, course: String, taskid: i32, data: Json<Value>) -> Result<Status, Status> {
+pub async fn route_post_submission(user: guards::User, course: String, taskid: i32, data: Json<Value>) -> Result<Json<Value>, Status> {
     if course != user.course {
         return Err(Status::Forbidden);
     }
@@ -79,7 +79,10 @@ pub async fn route_post_submission(user: guards::User, course: String, taskid: i
         .execute(&crate::database_connection())
         .expect("Database error");
 
-    Ok(Status::Ok)
+    Ok(Json(json!({
+        "type": result["type"].as_str().unwrap(),
+        "score": result["score"].as_f64().unwrap()
+    })))
 }
 
 #[derive(Debug, Deserialize, Queryable)]
